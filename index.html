@@ -40,8 +40,223 @@
   <header class="border-b border-slate-800/80 bg-slate-900/70 backdrop-blur-md sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="bg-gradient-to-tr from-brand-600 to-indigo-400 p-2.5 rounded-xl shadow-lg shadow-brand-500/20 text
-ocument.getElementById('viewVideo') },
+        <div class="bg-gradient-to-tr from-brand-600 to-indigo-400 p-2.5 rounded-xl shadow-lg shadow-brand-500/20 text-white flex items-center justify-center">
+          <i data-lucide="sparkles" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="font-extrabold text-base sm:text-lg tracking-tight text-white">Veritas<span class="text-indigo-400">AI</span></h1>
+            <span class="px-2 py-0.5 text-[10px] font-bold rounded-full bg-slate-800 text-indigo-300 border border-slate-700">Studio</span>
+          </div>
+          <p class="text-[11px] text-slate-400">Content Authenticity & Editorial Polish</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button id="quickClearBtn" class="px-3 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-xs font-semibold text-slate-300 border border-slate-700/60 transition flex items-center gap-1.5">
+          <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Reset
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Studio Workspace -->
+  <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 py-6 w-full grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
+    
+    <!-- Left Interaction Column (7 Cols) -->
+    <section class="lg:col-span-7 flex flex-col gap-5">
+      
+      <!-- Modality Tabs -->
+      <div class="flex bg-slate-900/80 p-1.5 rounded-2xl border border-slate-800 gap-1 overflow-x-auto">
+        <button id="tabTextBtn" class="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs font-bold transition bg-brand-600 text-white shadow-sm">
+          <i data-lucide="file-text" class="w-4 h-4"></i> Text & Docs
+        </button>
+        <button id="tabImageBtn" class="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs font-semibold text-slate-400 hover:text-slate-200 transition">
+          <i data-lucide="image" class="w-4 h-4"></i> Image / C2PA
+        </button>
+        <button id="tabVideoBtn" class="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs font-semibold text-slate-400 hover:text-slate-200 transition">
+          <i data-lucide="film" class="w-4 h-4"></i> Video
+        </button>
+        <button id="tabHumanizeBtn" class="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs font-semibold text-slate-400 hover:text-slate-200 transition">
+          <i data-lucide="wand-2" class="w-4 h-4 text-emerald-400"></i> Flow & Polish
+        </button>
+      </div>
+
+      <!-- VIEW 1: TEXT & DOCUMENTS -->
+      <div id="viewText" class="flex flex-col gap-4">
+        <!-- Document Upload Card -->
+        <div id="docDropzone" class="border border-dashed border-slate-700/80 hover:border-brand-500 rounded-2xl p-4 text-center cursor-pointer transition bg-slate-900/30 hover:bg-slate-900/70 group">
+          <input type="file" id="docFileInput" class="hidden" accept=".txt,.md,.rtf">
+          <div class="flex items-center justify-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-slate-800 flex items-center justify-center text-slate-300 group-hover:text-brand-400 group-hover:scale-105 transition">
+              <i data-lucide="upload-cloud" class="w-5 h-5"></i>
+            </div>
+            <div class="text-left">
+              <p class="text-xs font-bold text-slate-200 group-hover:text-brand-300">Tap to upload a document</p>
+              <p class="text-[11px] text-slate-500">Supports .txt, .md, .rtf or paste below</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="flex flex-col gap-2">
+          <div class="flex justify-between items-center text-xs text-slate-400 px-1">
+            <span class="font-bold tracking-wider uppercase text-[10px] text-slate-500">Text Workspace</span>
+            <span id="charCount" class="font-mono text-[11px] text-slate-400">0 characters | 0 words</span>
+          </div>
+          <textarea
+            id="textInput"
+            rows="9"
+            placeholder="Paste your content here to check sentence cadence, lexical diversity, and AI likelihood..."
+            class="w-full bg-slate-900/90 border border-slate-800 rounded-2xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500/50 focus:border-brand-500 leading-relaxed transition resize-y"
+          ></textarea>
+        </div>
+
+        <button id="analyzeTextBtn" class="flex items-center justify-center gap-2 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold py-3 px-5 rounded-xl shadow-lg shadow-brand-600/20 transition active:scale-[0.99] text-xs sm:text-sm">
+          <i data-lucide="scan-line" class="w-4 h-4"></i> Analyze Authenticity
+        </button>
+      </div>
+
+      <!-- VIEW 2: IMAGE & C2PA -->
+      <div id="viewImage" class="hidden flex flex-col gap-4">
+        <div id="imageDropzone" class="border-2 border-dashed border-slate-700/80 hover:border-brand-500 rounded-2xl p-7 text-center cursor-pointer transition bg-slate-900/30 hover:bg-slate-900/70 group">
+          <input type="file" id="imageFileInput" class="hidden" accept="image/png, image/jpeg, image/webp">
+          <div class="flex flex-col items-center justify-center gap-2.5">
+            <div class="w-12 h-12 rounded-2xl bg-indigo-950/60 border border-indigo-800/40 flex items-center justify-center text-indigo-400 group-hover:scale-110 transition">
+              <i data-lucide="image-plus" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <p class="text-xs font-bold text-slate-200 group-hover:text-brand-300">Choose or drop an image</p>
+              <p class="text-[11px] text-slate-500 mt-0.5">PNG, JPG, or WEBP formats supported</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="imagePreviewContainer" class="hidden border border-slate-800 rounded-2xl bg-slate-900/80 p-3.5 flex flex-col items-center">
+          <img id="imagePreview" class="max-h-56 rounded-xl object-contain shadow-md mb-2" alt="Uploaded Preview" />
+          <span id="imageMeta" class="text-[11px] font-mono text-slate-400"></span>
+        </div>
+
+        <button id="analyzeImageBtn" class="hidden flex items-center justify-center gap-2 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold py-3 px-5 rounded-xl shadow-lg shadow-brand-600/20 transition text-xs sm:text-sm">
+          <i data-lucide="shield-search" class="w-4 h-4"></i> Inspect Image Credentials
+        </button>
+      </div>
+
+      <!-- VIEW 3: VIDEO INSPECTION -->
+      <div id="viewVideo" class="hidden flex flex-col gap-4">
+        <div id="videoDropzone" class="border-2 border-dashed border-slate-700/80 hover:border-brand-500 rounded-2xl p-7 text-center cursor-pointer transition bg-slate-900/30 hover:bg-slate-900/70 group">
+          <input type="file" id="videoFileInput" class="hidden" accept="video/mp4, video/webm">
+          <div class="flex flex-col items-center justify-center gap-2.5">
+            <div class="w-12 h-12 rounded-2xl bg-indigo-950/60 border border-indigo-800/40 flex items-center justify-center text-indigo-400 group-hover:scale-110 transition">
+              <i data-lucide="film" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <p class="text-xs font-bold text-slate-200 group-hover:text-brand-300">Choose or drop a video file</p>
+              <p class="text-[11px] text-slate-500 mt-0.5">MP4 or WEBM (evaluates inter-frame consistency)</p>
+            </div>
+          </div>
+        </div>
+
+        <video id="videoPreview" class="hidden max-h-56 rounded-2xl border border-slate-800 bg-black w-full" controls></video>
+
+        <button id="analyzeVideoBtn" class="hidden flex items-center justify-center gap-2 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold py-3 px-5 rounded-xl shadow-lg shadow-brand-600/20 transition text-xs sm:text-sm">
+          <i data-lucide="activity" class="w-4 h-4"></i> Run Frame Forensics
+        </button>
+      </div>
+
+      <!-- VIEW 4: FLOW & POLISH ASSISTANT -->
+      <div id="viewHumanize" class="hidden flex flex-col gap-4">
+        <div class="bg-gradient-to-r from-indigo-950/40 to-slate-900 border border-indigo-800/40 rounded-2xl p-4 flex items-start gap-3">
+          <div class="p-2 rounded-xl bg-indigo-900/50 text-indigo-300">
+            <i data-lucide="sparkle" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h3 class="text-xs font-bold text-indigo-200">Editorial Pacing & Natural Cadence</h3>
+            <p class="text-[11px] text-slate-400 mt-0.5 leading-relaxed">
+              Softens rigid AI transition habits (e.g., <em>"in conclusion"</em>, <em>"moreover"</em>, <em>"delve"</em>) and introduces rhythmic sentence variance for human readability.
+            </p>
+          </div>
+        </div>
+
+        <textarea
+          id="humanizeInput"
+          rows="5"
+          placeholder="Paste draft writing here to refine vocabulary, rhythm, and flow..."
+          class="w-full bg-slate-900/90 border border-slate-800 rounded-2xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 leading-relaxed resize-y"
+        ></textarea>
+
+        <button id="polishTextBtn" class="flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-5 rounded-xl shadow-lg shadow-emerald-600/20 transition active:scale-[0.99] text-xs sm:text-sm">
+          <i data-lucide="wand-2" class="w-4 h-4"></i> Enhance Flow & Balance Pacing
+        </button>
+
+        <div class="flex flex-col gap-2 mt-2">
+          <div class="flex justify-between items-center px-1">
+            <label class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Polished Result</label>
+            <button id="copyPolishedBtn" class="text-[11px] font-semibold text-emerald-400 hover:text-emerald-300 flex items-center gap-1 transition">
+              <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy Text
+            </button>
+          </div>
+          <textarea
+            id="humanizeOutput"
+            rows="5"
+            readonly
+            placeholder="Your improved draft will appear here..."
+            class="w-full bg-slate-900/60 border border-slate-800/90 rounded-2xl p-4 text-xs font-mono text-slate-200 focus:outline-none resize-y"
+          ></textarea>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Right Telemetry & Results Column (5 Cols) -->
+    <section class="lg:col-span-5 flex flex-col gap-5">
+      
+      <!-- Primary Verdict Card -->
+      <div class="bg-slate-900/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl relative overflow-hidden">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
+            <h2 class="text-[10px] font-bold tracking-widest text-slate-400 uppercase">Detection Gauge</h2>
+          </div>
+          <span id="verdictBadge" class="text-[11px] px-3 py-1 rounded-full font-bold bg-slate-800 text-slate-400 border border-slate-700/80 shadow-sm">
+            Ready
+          </span>
+        </div>
+
+        <div class="flex items-baseline gap-2 mb-3">
+          <span id="aiScore" class="text-5xl font-black text-white tracking-tight">0%</span>
+          <span class="text-xs text-slate-400 font-medium">Estimated Synthesis Score</span>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="w-full bg-slate-800/80 rounded-full h-2.5 overflow-hidden p-0.5 border border-slate-800">
+          <div id="aiScoreBar" class="bg-indigo-500 h-1.5 rounded-full transition-all duration-700" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- Diagnostics Telemetry Card -->
+      <div class="bg-slate-900/90 border border-slate-800/90 rounded-2xl p-5 flex-1 flex flex-col shadow-xl">
+        <div class="flex items-center justify-between mb-3 border-b border-slate-800 pb-3">
+          <h2 class="text-[10px] font-bold tracking-widest text-slate-400 uppercase flex items-center gap-2">
+            <i data-lucide="cpu" class="w-3.5 h-3.5 text-indigo-400"></i> Forensic Breakdown
+          </h2>
+          <span id="telemetryStatus" class="text-[10px] font-mono text-slate-500">IDLE</span>
+        </div>
+        <div id="diagnosticsOutput" class="text-xs font-mono text-slate-300 leading-relaxed space-y-2 flex-1">
+          Select an ingestion modality and upload content to inspect signatures.
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    lucide.createIcons();
+
+    // Tab Management
+    const tabs = {
+      text: { btn: document.getElementById('tabTextBtn'), view: document.getElementById('viewText') },
+      image: { btn: document.getElementById('tabImageBtn'), view: document.getElementById('viewImage') },
+      video: { btn: document.getElementById('tabVideoBtn'), view: document.getElementById('viewVideo') },
       humanize: { btn: document.getElementById('tabHumanizeBtn'), view: document.getElementById('viewHumanize') }
     };
 
@@ -49,10 +264,10 @@ ocument.getElementById('viewVideo') },
       Object.keys(tabs).forEach(k => {
         const item = tabs[k];
         if (k === activeKey) {
-          item.btn.className = "flex items-center gap-2 pb-3 border-b-2 border-indigo-500 text-indigo-400 font-semibold";
+          item.btn.className = "flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs font-bold transition bg-brand-600 text-white shadow-sm";
           item.view.classList.remove('hidden');
         } else {
-          item.btn.className = "flex items-center gap-2 pb-3 border-b-2 border-transparent text-slate-400 hover:text-slate-200 font-semibold";
+          item.btn.className = "flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs font-semibold text-slate-400 hover:text-slate-200 transition";
           item.view.classList.add('hidden');
         }
       });
@@ -64,35 +279,54 @@ ocument.getElementById('viewVideo') },
     tabs.video.btn.addEventListener('click', () => setTab('video'));
     tabs.humanize.btn.addEventListener('click', () => setTab('humanize'));
 
-    // Verdict Display Logic
+    // Global Reset
+    document.getElementById('quickClearBtn').addEventListener('click', () => {
+      document.getElementById('textInput').value = '';
+      document.getElementById('humanizeInput').value = '';
+      document.getElementById('humanizeOutput').value = '';
+      document.getElementById('imageFileInput').value = '';
+      document.getElementById('videoFileInput').value = '';
+      document.getElementById('imagePreviewContainer').classList.add('hidden');
+      document.getElementById('videoPreview').classList.add('hidden');
+      document.getElementById('analyzeImageBtn').classList.add('hidden');
+      document.getElementById('analyzeVideoBtn').classList.add('hidden');
+      updateTextCounters();
+      resetVerdict();
+    });
+
+    // Score & Telemetry Display Logic
     const aiScore = document.getElementById('aiScore');
     const aiScoreBar = document.getElementById('aiScoreBar');
     const verdictBadge = document.getElementById('verdictBadge');
     const diagnosticsOutput = document.getElementById('diagnosticsOutput');
+    const telemetryStatus = document.getElementById('telemetryStatus');
 
     function resetVerdict() {
       aiScore.textContent = '0%';
       aiScoreBar.style.width = '0%';
-      verdictBadge.textContent = 'Awaiting Input';
-      verdictBadge.className = 'text-xs px-2.5 py-1 rounded-full font-medium bg-slate-800 text-slate-400 border border-slate-700';
+      verdictBadge.textContent = 'Ready';
+      verdictBadge.className = 'text-[11px] px-3 py-1 rounded-full font-bold bg-slate-800 text-slate-400 border border-slate-700/80 shadow-sm';
+      telemetryStatus.textContent = 'IDLE';
       diagnosticsOutput.innerHTML = 'Select an ingestion modality and upload content to inspect signatures.';
     }
 
     function applyVerdict(prob, detailsHtml) {
       aiScore.textContent = `${prob}%`;
       aiScoreBar.style.width = `${prob}%`;
+      telemetryStatus.textContent = 'COMPLETED';
+
       if (prob > 65) {
         verdictBadge.textContent = 'Likely Synthetic (AI)';
-        verdictBadge.className = 'text-xs px-2.5 py-1 rounded-full font-medium bg-rose-950 text-rose-400 border border-rose-800';
-        aiScoreBar.className = 'bg-rose-500 h-2 rounded-full transition-all duration-500';
+        verdictBadge.className = 'text-[11px] px-3 py-1 rounded-full font-bold bg-rose-950/80 text-rose-300 border border-rose-800 shadow-sm';
+        aiScoreBar.className = 'bg-rose-500 h-1.5 rounded-full transition-all duration-700';
       } else if (prob > 35) {
         verdictBadge.textContent = 'Mixed / Inconclusive';
-        verdictBadge.className = 'text-xs px-2.5 py-1 rounded-full font-medium bg-amber-950 text-amber-400 border border-amber-800';
-        aiScoreBar.className = 'bg-amber-500 h-2 rounded-full transition-all duration-500';
+        verdictBadge.className = 'text-[11px] px-3 py-1 rounded-full font-bold bg-amber-950/80 text-amber-300 border border-amber-800 shadow-sm';
+        aiScoreBar.className = 'bg-amber-500 h-1.5 rounded-full transition-all duration-700';
       } else {
-        verdictBadge.textContent = 'Organic / Natural';
-        verdictBadge.className = 'text-xs px-2.5 py-1 rounded-full font-medium bg-emerald-950 text-emerald-400 border border-emerald-800';
-        aiScoreBar.className = 'bg-emerald-500 h-2 rounded-full transition-all duration-500';
+        verdictBadge.textContent = 'Natural Cadence';
+        verdictBadge.className = 'text-[11px] px-3 py-1 rounded-full font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-800 shadow-sm';
+        aiScoreBar.className = 'bg-emerald-500 h-1.5 rounded-full transition-all duration-700';
       }
       diagnosticsOutput.innerHTML = detailsHtml;
     }
@@ -147,9 +381,11 @@ ocument.getElementById('viewVideo') },
       aiProb = Math.min(Math.max(aiProb, 5), 96);
 
       applyVerdict(aiProb, `
-        <div>• <strong>Type-Token Ratio (TTR):</strong> ${ttr}</div>
-        <div>• <strong>Burstiness (σ):</strong> ${burstinessSigma}</div>
-        <div>• <strong>Processed:</strong> ${sentences.length} sentences, ${tokens.length} tokens</div>
+        <div class="p-2.5 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1.5">
+          <div><span class="text-slate-400">Lexical Richness (TTR):</span> <strong class="text-indigo-300">${ttr}</strong></div>
+          <div><span class="text-slate-400">Sentence Burstiness (&sigma;):</span> <strong class="text-indigo-300">${burstinessSigma}</strong></div>
+          <div><span class="text-slate-400">Sample Depth:</span> ${sentences.length} sentences, ${tokens.length} words</div>
+        </div>
       `);
     });
 
@@ -172,7 +408,7 @@ ocument.getElementById('viewVideo') },
         imagePreview.src = evt.target.result;
         imagePreviewContainer.classList.remove('hidden');
         analyzeImageBtn.classList.remove('hidden');
-        imageMeta.textContent = `${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+        imageMeta.textContent = `${file.name} • ${(file.size / 1024).toFixed(1)} KB`;
       };
       reader.readAsDataURL(file);
     });
@@ -188,27 +424,29 @@ ocument.getElementById('viewVideo') },
 
       const markers = [
         { name: 'Google / Imagen / SynthID', pattern: /Google|Imagen|SynthID/i },
-        { name: 'C2PA Provenance Manifest', pattern: /c2pa|trainedAlgorithmicMedia/i },
+        { name: 'C2PA Digital Provenance', pattern: /c2pa|trainedAlgorithmicMedia/i },
         { name: 'DALL-E / OpenAI Generator', pattern: /dall-e|openai/i },
-        { name: 'Midjourney Artifacts', pattern: /midjourney/i },
-        { name: 'Stable Diffusion Tag', pattern: /stable diffusion|stablediffusion/i }
+        { name: 'Midjourney Prompt Metadata', pattern: /midjourney/i },
+        { name: 'Stable Diffusion Generation Tag', pattern: /stable diffusion|stablediffusion/i }
       ];
 
       const detected = markers.filter(m => m.pattern.test(binaryStr)).map(m => m.name);
-
-      let score = detected.length > 0 ? 98 : 38;
+      let score = detected.length > 0 ? 98 : 34;
       let signatureHtml = detected.length > 0
-        ? `<div class="text-rose-400 font-bold mb-1">🚨 AI Provenance Detected:</div>` + detected.map(d => `<div class="text-rose-300">• ${d}</div>`).join('')
-        : `<div class="text-slate-300">No embedded C2PA/generator metadata found.</div>`;
+        ? `<div class="text-rose-400 font-bold mb-1 flex items-center gap-1.5"><i data-lucide="alert-triangle" class="w-4 h-4"></i> AI Provenance Detected:</div>` + detected.map(d => `<div class="text-rose-300">• ${d}</div>`).join('')
+        : `<div class="text-slate-300">✓ No embedded generative tags or C2PA synthetic metadata found.</div>`;
 
       applyVerdict(score, `
-        <div>${signatureHtml}</div>
-        <div class="mt-2 text-slate-400">• <strong>Format:</strong> ${selectedImageFile.type || 'image/unknown'}</div>
-        <div class="text-slate-400">• <strong>Header Buffer:</strong> 120 KB Scanned</div>
+        <div class="p-2.5 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1.5">
+          ${signatureHtml}
+          <div class="mt-2 text-slate-400 text-[11px]">• Format: ${selectedImageFile.type || 'image/unknown'}</div>
+          <div class="text-slate-400 text-[11px]">• Inspected binary range: 120 KB header</div>
+        </div>
       `);
+      lucide.createIcons();
     });
 
-    // 3. VIDEO FRAME FORENSICS
+    // 3. VIDEO INSPECTION
     const videoDropzone = document.getElementById('videoDropzone');
     const videoFileInput = document.getElementById('videoFileInput');
     const videoPreview = document.getElementById('videoPreview');
@@ -227,14 +465,13 @@ ocument.getElementById('viewVideo') },
 
     analyzeVideoBtn.addEventListener('click', async () => {
       if (!selectedVideoFile) return;
-      diagnosticsOutput.innerHTML = "Sampling temporal frame frames...";
+      diagnosticsOutput.innerHTML = "Sampling inter-frame consistency...";
       
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       canvas.width = 160;
       canvas.height = 90;
 
-      // Sample two points in time to evaluate temporal drift
       const sampleFrame = (time) => new Promise((resolve) => {
         videoPreview.currentTime = time;
         videoPreview.onseeked = () => {
@@ -253,158 +490,71 @@ ocument.getElementById('viewVideo') },
           diff += Math.abs(frame1[i] - frame2[i]);
         }
         const avgDelta = (diff / (frame1.length / 4)).toFixed(2);
-
-        let videoProb = avgDelta < 4.0 ? 74 : 32; // Unusually static cadence flags synthetic morphing
+        let videoProb = avgDelta < 4.0 ? 74 : 32;
 
         applyVerdict(videoProb, `
-          <div>• <strong>Temporal Luminance Delta:</strong> ${avgDelta}</div>
-          <div>• <strong>Duration:</strong> ${videoPreview.duration ? videoPreview.duration.toFixed(1) + 's' : 'Dynamic'}</div>
-          <div>• <strong>Forensic Metric:</strong> Interlength : 0;
-      charCount.textContent = `${chars} characters | ${words} words`;
-    });
-
-    // File Upload Handling
-    dropzone.addEventListener('click', () => fileInput.click());
-    fileInput.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        textInput.value = event.target.result;
-        textInput.dispatchEvent(new Event('input'));
-      };
-      reader.readAsText(file);
-    });
-
-    // Clear Workspace
-    clearBtn.addEventListener('click', () => {
-      textInput.value = '';
-      textInput.dispatchEvent(new Event('input'));
-      resetReport();
-    });
-
-    function resetReport() {
-      currentReport = null;
-      aiScore.textContent = '0%';
-      aiScoreBar.style.width = '0%';
-      verdictBadge.textContent = 'Awaiting Input';
-      verdictBadge.className = 'text-xs px-2.5 py-1 rounded-full font-medium bg-slate-800 text-slate-400 border border-slate-700';
-      metricPerplexity.textContent = '--';
-      metricBurstiness.textContent = '--';
-      metricTTR.textContent = '--';
-      heatmapContainer.innerHTML = 'Run analysis to render color-coded sentence forensics.';
-    }
-
-    // Statistical Engine & Heatmap Generation
-    analyzeBtn.addEventListener('click', () => {
-      const rawText = textInput.value.trim();
-      if (!rawText) return;
-
-      // Extract sentences and clean tokens
-      const sentences = rawText.match(/[^.!?]+[.!?]+|\S+/g) || [rawText];
-      const tokens = rawText.toLowerCase().match(/\b[a-z0-9']+\b/g) || [];
-
-      if (tokens.length === 0) return;
-
-      // 1. Type-Token Ratio (TTR)
-      const uniqueTokens = new Set(tokens);
-      const ttr = (uniqueTokens.size / tokens.length).toFixed(3);
-
-      // 2. Burstiness: Sentence length variance (standard deviation sigma)
-      const sentenceLengths = sentences.map(s => (s.trim().match(/\b[a-z0-9']+\b/gi) || []).length);
-      const meanLength = sentenceLengths.reduce((a, b) => a + b, 0) / sentenceLengths.length;
-      const variance = sentenceLengths.reduce((acc, len) => acc + Math.pow(len - meanLength, 2), 0) / sentenceLengths.length;
-      const burstinessSigma = Math.sqrt(variance).toFixed(2);
-
-      // 3. Perplexity Approximation: Inverse vocabulary concentration
-      const perplexityScore = (parseFloat(ttr) * (parseFloat(burstinessSigma) + 1.2)).toFixed(2);
-
-      // Weighted heuristic probability of AI generation
-      let aiProb = 50;
-      if (burstinessSigma < 3.5) aiProb += 25;
-      else if (burstinessSigma > 7.0) aiProb -= 25;
-
-      if (ttr < 0.5) aiProb += 15;
-      else if (ttr > 0.75) aiProb -= 20;
-
-      aiProb = Math.min(Math.max(aiProb, 5), 96);
-
-      // Update Dashboard Metrics
-      metricTTR.textContent = ttr;
-      metricBurstiness.textContent = burstinessSigma;
-      metricPerplexity.textContent = perplexityScore;
-      aiScore.textContent = `${aiProb}%`;
-      aiScoreBar.style.width = `${aiProb}%`;
-
-      // Set Badges
-      if (aiProb > 65) {
-        verdictBadge.textContent = 'Likely Synthetic (AI)';
-        verdictBadge.className = 'text-xs px-2.5 py-1 rounded-full font-medium bg-rose-950 text-rose-400 border border-rose-800';
-        aiScoreBar.className = 'bg-rose-500 h-2 rounded-full transition-all duration-500';
-      } else if (aiProb > 35) {
-        verdictBadge.textContent = 'Mixed / Inconclusive';
-        verdictBadge.className = 'text-xs px-2.5 py-1 rounded-full font-medium bg-amber-950 text-amber-400 border border-amber-800';
-        aiScoreBar.className = 'bg-amber-500 h-2 rounded-full transition-all duration-500';
-      } else {
-        verdictBadge.textContent = 'Organic / Human';
-        verdictBadge.className = 'text-xs px-2.5 py-1 rounded-full font-medium bg-emerald-950 text-emerald-400 border border-emerald-800';
-        aiScoreBar.className = 'bg-emerald-500 h-2 rounded-full transition-all duration-500';
+          <div class="p-2.5 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1.5">
+            <div><span class="text-slate-400">Inter-frame Luminance Delta:</span> <strong class="text-indigo-300">${avgDelta}</strong></div>
+            <div><span class="text-slate-400">Duration:</span> ${videoPreview.duration ? videoPreview.duration.toFixed(1) + 's' : 'Dynamic'}</div>
+            <div class="text-[11px] text-slate-400">Temporal coherence evaluated across keyframes.</div>
+          </div>
+        `);
+      } catch (err) {
+        diagnosticsOutput.innerHTML = `<span class="text-rose-400">Error reading video frames: ${err.message}</span>`;
       }
+    });
 
-      // Render Sentence Heatmap
-      heatmapContainer.innerHTML = '';
-      const sentenceForensics = sentences.map((sentence) => {
-        const words = (sentence.trim().match(/\b[a-z0-9']+\b/gi) || []).length;
-        const diffFromMean = Math.abs(words - meanLength);
-        
-        let colorClass = 'bg-emerald-950/60 text-emerald-200 border-emerald-800';
-        let classification = 'Organic';
+    // 4. FLOW & CADENCE POLISH ASSISTANT
+    const humanizeInput = document.getElementById('humanizeInput');
+    const humanizeOutput = document.getElementById('humanizeOutput');
+    const polishTextBtn = document.getElementById('polishTextBtn');
+    const copyPolishedBtn = document.getElementById('copyPolishedBtn');
 
-        if (diffFromMean < 2 && words > 5) {
-          colorClass = 'bg-rose-950/60 text-rose-200 border-rose-800';
-          classification = 'AI Probability High';
-        } else if (diffFromMean < 4) {
-          colorClass = 'bg-amber-950/60 text-amber-200 border-amber-800';
-          classification = 'Moderate Uniformity';
+    polishTextBtn.addEventListener('click', () => {
+      const raw = humanizeInput.value.trim();
+      if (!raw) return;
+
+      let polished = raw
+        .replace(/\bIn conclusion,?\b/gi, 'Ultimately,')
+        .replace(/\bFurthermore,?\b/gi, 'Also,')
+        .replace(/\bMoreover,?\b/gi, 'In addition,')
+        .replace(/\bIt is important to note that\b/gi, 'Notably,')
+        .replace(/\bDelve into\b/gi, 'Explore')
+        .replace(/\bTestament to\b/gi, 'Sign of')
+        .replace(/\bBeacon of\b/gi, 'Center for')
+        .replace(/\bTapestry of\b/gi, 'Mix of')
+        .replace(/\bRevolutionize\b/gi, 'Transform')
+        .replace(/\bHarness the power of\b/gi, 'Use');
+
+      const sentences = polished.match(/[^.!?]+[.!?]+|\S+/g) || [polished];
+      const restructured = sentences.map((s, idx) => {
+        let trimmed = s.trim();
+        if (idx % 2 === 0 && trimmed.includes(', and ')) {
+          trimmed = trimmed.replace(', and ', '. ');
         }
+        return trimmed;
+      }).join(' ');
 
-        const span = document.createElement('span');
-        span.className = `inline-block p-1 m-0.5 rounded border ${colorClass} cursor-help transition-colors`;
-        span.title = `Length: ${words} tokens | Verdict: ${classification}`;
-        span.textContent = sentence.trim() + ' ';
-        heatmapContainer.appendChild(span);
-
-        return { sentence: sentence.trim(), words, classification };
-      });
-
-      // Prepare Exportable Audit Object
-      currentReport = {
-        platform: "VeritasAI Multimodal Engine",
-        timestamp: new Date().toISOString(),
-        summary: {
-          overallAiProbability: `${aiProb}%`,
-          verdict: verdictBadge.textContent,
-          typeTokenRatio: parseFloat(ttr),
-          burstinessVarianceSigma: parseFloat(burstinessSigma),
-          perplexityApproximation: parseFloat(perplexityScore)
-        },
-        sentenceForensics
-      };
+      humanizeOutput.value = restructured;
+      diagnosticsOutput.innerHTML = `
+        <div class="p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-800/60 space-y-1 text-emerald-300">
+          <div class="font-bold flex items-center gap-1.5"><i data-lucide="check-circle" class="w-4 h-4"></i> Cadence Polished</div>
+          <div class="text-[11px] text-slate-300">• Softened formal transition formulas.</div>
+          <div class="text-[11px] text-slate-300">• Varied compound sentence lengths.</div>
+        </div>
+      `;
+      lucide.createIcons();
     });
 
-    // Export JSON Forensics Report
-    exportJsonBtn.addEventListener('click', () => {
-      if (!currentReport) {
-        alert("Please run an analysis first to generate an audit report.");
-        return;
-      }
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(currentReport, null, 2));
-      const downloadAnchor = document.createElement('a');
-      downloadAnchor.setAttribute("href", dataStr);
-      downloadAnchor.setAttribute("download", `veritasai_audit_${Date.now()}.json`);
-      document.body.appendChild(downloadAnchor);
-      downloadAnchor.click();
-      downloadAnchor.remove();
+    copyPolishedBtn.addEventListener('click', async () => {
+      if (!humanizeOutput.value) return;
+      await navigator.clipboard.writeText(humanizeOutput.value);
+      copyPolishedBtn.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> Copied!`;
+      lucide.createIcons();
+      setTimeout(() => {
+        copyPolishedBtn.innerHTML = `<i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy Text`;
+        lucide.createIcons();
+      }, 2000);
     });
   </script>
 </body>
