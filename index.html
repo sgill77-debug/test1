@@ -3,174 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VeritasAI - Multimodal Forensics & Editorial Studio</title>
+  <title>VeritasAI Studio - Content Authenticity & Editorial Polish</title>
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
   <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            }
+          }
+        }
+      }
+    }
+  </script>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans antialiased selection:bg-indigo-500 selection:text-white">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans antialiased selection:bg-brand-500 selection:text-white">
 
-  <!-- Header -->
-  <header class="border-b border-slate-800 bg-slate-900/60 backdrop-blur sticky top-0 z-50">
+  <!-- Top Navigation Bar -->
+  <header class="border-b border-slate-800/80 bg-slate-900/70 backdrop-blur-md sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="bg-indigo-600 p-2 rounded-lg text-white">
-          <i data-lucide="shield-check" class="w-5 h-5"></i>
-        </div>
-        <div>
-          <h1 class="font-bold text-lg leading-tight tracking-tight">Veritas<span class="text-indigo-400">AI</span></h1>
-          <p class="text-xs text-slate-400">Multimodal Detection & Editorial Flow Studio</p>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <!-- Main Container -->
-  <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 py-6 w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
-    
-    <!-- Left Column: Tabs & Inputs (7 cols) -->
-    <section class="lg:col-span-7 flex flex-col gap-5">
-      
-      <!-- Primary Tab Bar -->
-      <div class="flex border-b border-slate-800 space-x-4 text-xs font-semibold overflow-x-auto">
-        <button id="tabTextBtn" class="flex items-center gap-2 pb-3 border-b-2 border-indigo-500 text-indigo-400">
-          <i data-lucide="file-text" class="w-4 h-4"></i> Text & Documents
-        </button>
-        <button id="tabImageBtn" class="flex items-center gap-2 pb-3 border-b-2 border-transparent text-slate-400 hover:text-slate-200">
-          <i data-lucide="image" class="w-4 h-4"></i> Image / C2PA
-        </button>
-        <button id="tabVideoBtn" class="flex items-center gap-2 pb-3 border-b-2 border-transparent text-slate-400 hover:text-slate-200">
-          <i data-lucide="film" class="w-4 h-4"></i> Video Cadence
-        </button>
-        <button id="tabHumanizeBtn" class="flex items-center gap-2 pb-3 border-b-2 border-transparent text-slate-400 hover:text-slate-200">
-          <i data-lucide="pen-tool" class="w-4 h-4"></i> Flow & Polish
-        </button>
-      </div>
-
-      <!-- VIEW 1: TEXT & DOCUMENTS -->
-      <div id="viewText" class="flex flex-col gap-4">
-        <div id="docDropzone" class="border border-dashed border-slate-700 hover:border-indigo-500 rounded-xl p-3 text-center cursor-pointer transition bg-slate-900/40">
-          <input type="file" id="docFileInput" class="hidden" accept=".txt,.md,.rtf">
-          <p class="text-xs text-slate-300">
-            <span class="text-indigo-400 font-semibold">Upload Document</span> (.txt, .md, .rtf) or paste below
-          </p>
-        </div>
-        <div class="flex justify-between items-center text-xs text-slate-400">
-          <label class="font-bold uppercase tracking-wider">Raw Text Ingestion</label>
-          <span id="charCount">0 characters | 0 words</span>
-        </div>
-        <textarea
-          id="textInput"
-          rows="10"
-          placeholder="Paste text here to evaluate burstiness, perplexity proxy, and sentence variance..."
-          class="w-full bg-slate-900 border border-slate-700 rounded-xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 leading-relaxed"
-        ></textarea>
-        <button id="analyzeTextBtn" class="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2.5 px-4 rounded-lg shadow-lg shadow-indigo-600/20 transition text-sm">
-          <i data-lucide="scan-line" class="w-4 h-4"></i> Run Document Forensics
-        </button>
-      </div>
-
-      <!-- VIEW 2: IMAGE & C2PA -->
-      <div id="viewImage" class="hidden flex flex-col gap-4">
-        <div id="imageDropzone" class="border-2 border-dashed border-slate-700 hover:border-indigo-500 rounded-xl p-6 text-center cursor-pointer transition bg-slate-900/40">
-          <input type="file" id="imageFileInput" class="hidden" accept="image/png, image/jpeg, image/webp">
-          <div class="flex flex-col items-center justify-center gap-2">
-            <i data-lucide="image-plus" class="w-8 h-8 text-indigo-400"></i>
-            <p class="text-xs text-slate-200 font-medium">Upload Image (.png, .jpg, .webp)</p>
-            <p class="text-[11px] text-slate-500">Scans C2PA manifests, SynthID/Imagen markers, and generative metadata</p>
-          </div>
-        </div>
-        <div id="imagePreviewContainer" class="hidden border border-slate-800 rounded-xl bg-slate-900 p-3 flex flex-col items-center">
-          <img id="imagePreview" class="max-h-56 rounded object-contain mb-2" alt="Uploaded Preview" />
-          <span id="imageMeta" class="text-xs text-slate-400"></span>
-        </div>
-        <button id="analyzeImageBtn" class="hidden flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2.5 px-4 rounded-lg transition text-sm">
-          <i data-lucide="sparkles" class="w-4 h-4"></i> Inspect Image Provenance
-        </button>
-      </div>
-
-      <!-- VIEW 3: VIDEO INSPECTION -->
-      <div id="viewVideo" class="hidden flex flex-col gap-4">
-        <div id="videoDropzone" class="border-2 border-dashed border-slate-700 hover:border-indigo-500 rounded-xl p-6 text-center cursor-pointer transition bg-slate-900/40">
-          <input type="file" id="videoFileInput" class="hidden" accept="video/mp4, video/webm">
-          <div class="flex flex-col items-center justify-center gap-2">
-            <i data-lucide="video" class="w-8 h-8 text-indigo-400"></i>
-            <p class="text-xs text-slate-200 font-medium">Upload Video File (.mp4, .webm)</p>
-            <p class="text-[11px] text-slate-500">Examines inter-frame jitter, temporal luminance, and pixel drift</p>
-          </div>
-        </div>
-        <video id="videoPreview" class="hidden max-h-56 rounded-xl border border-slate-800 bg-black w-full" controls></video>
-        <button id="analyzeVideoBtn" class="hidden flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2.5 px-4 rounded-lg transition text-sm">
-          <i data-lucide="activity" class="w-4 h-4"></i> Run Temporal Frame Forensics
-        </button>
-      </div>
-
-      <!-- VIEW 4: EDITORIAL HUMAN-FLOW POLISH -->
-      <div id="viewHumanize" class="hidden flex flex-col gap-4">
-        <div class="bg-indigo-950/30 border border-indigo-800/40 rounded-xl p-3.5 text-xs text-indigo-300">
-          <strong class="font-semibold">Editorial Assistant:</strong> Reconstructs repetitive syntax, breaks monotonous sentence rhythm, and removes formulaic AI transition clichés.
-        </div>
-        <textarea
-          id="humanizeInput"
-          rows="6"
-          placeholder="Paste text you want to rewrite for better cadence, sentence variety, and natural flow..."
-          class="w-full bg-slate-900 border border-slate-700 rounded-xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        ></textarea>
-        <button id="polishTextBtn" class="flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-medium py-2.5 px-4 rounded-lg transition text-sm">
-          <i data-lucide="wand-2" class="w-4 h-4"></i> Restructure & Polish Flow
-        </button>
-        <div class="flex flex-col gap-1 mt-2">
-          <label class="text-xs text-slate-400 font-bold uppercase tracking-wider">Polished Output</label>
-          <textarea
-            id="humanizeOutput"
-            rows="6"
-            readonly
-            placeholder="Your polished text will appear here..."
-            class="w-full bg-slate-900/60 border border-slate-800 rounded-xl p-4 text-xs font-mono text-slate-200 focus:outline-none"
-          ></textarea>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- Right Column: Results & Diagnostics (5 cols) -->
-    <section class="lg:col-span-5 flex flex-col gap-5">
-      
-      <!-- Verdict Card -->
-      <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-5">
-        <div class="flex items-center justify-between mb-3">
-          <h2 class="text-xs font-bold tracking-wide text-slate-400 uppercase">Detection Verdict</h2>
-          <span id="verdictBadge" class="text-xs px-2.5 py-1 rounded-full font-medium bg-slate-800 text-slate-400 border border-slate-700">
-            Awaiting Input
-          </span>
-        </div>
-        <div class="flex items-baseline gap-2 mb-2">
-          <span id="aiScore" class="text-4xl font-extrabold text-white">0%</span>
-          <span class="text-xs text-slate-400 font-medium">Estimated Synthesis Score</span>
-        </div>
-        <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
-          <div id="aiScoreBar" class="bg-indigo-500 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
-        </div>
-      </div>
-
-      <!-- Diagnostic Telemetry -->
-      <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-5 flex-1 flex flex-col">
-        <h2 class="text-xs font-bold tracking-wide text-slate-400 uppercase mb-3">Diagnostic Telemetry</h2>
-        <div id="diagnosticsOutput" class="text-xs font-mono text-slate-400 leading-relaxed space-y-2">
-          Select an ingestion modality and upload content to inspect signatures.
-        </div>
-      </div>
-
-    </section>
-  </main>
-
-  <script>
-    lucide.createIcons();
-
-    // Tab Management
-    const tabs = {
-      text: { btn: document.getElementById('tabTextBtn'), view: document.getElementById('viewText') },
-      image: { btn: document.getElementById('tabImageBtn'), view: document.getElementById('viewImage') },
-      video: { btn: document.getElementById('tabVideoBtn'), view: document.getElementById('viewVideo') },
+        <div class="bg-gradient-to-tr from-brand-600 to-indigo-400 p-2.5 rounded-xl shadow-lg shadow-brand-500/20 text
+ocument.getElementById('viewVideo') },
       humanize: { btn: document.getElementById('tabHumanizeBtn'), view: document.getElementById('viewHumanize') }
     };
 
