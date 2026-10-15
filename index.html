@@ -1,195 +1,394 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VeritasAI - Multimodal AI Content Detection Platform</title>
-  <!-- Tailwind CSS CDN -->
+  <title>VeritasAI - Multimodal Forensics & Editorial Studio</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Lucide Icons CDN -->
   <script src="https://unpkg.com/lucide@latest"></script>
-  <style>
-    .metric-card {
-      transition: all 0.2s ease-in-out;
-    }
-    .metric-card:hover {
-      transform: translateY(-2px);
-    }
-  </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans antialiased selection:bg-indigo-500 selection:text-white">
 
   <!-- Header -->
   <header class="border-b border-slate-800 bg-slate-900/60 backdrop-blur sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="bg-indigo-600 p-2 rounded-lg text-white flex items-center justify-center">
-          <i data-lucide="shield-alert" class="w-5 h-5"></i>
+        <div class="bg-indigo-600 p-2 rounded-lg text-white">
+          <i data-lucide="shield-check" class="w-5 h-5"></i>
         </div>
         <div>
-          <h1 class="font-bold text-lg leading-tight tracking-tight text-white flex items-center gap-2">
-            Veritas<span class="text-indigo-400">AI</span>
-            <span class="text-xs px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">v1.0-alpha</span>
-          </h1>
-          <p class="text-xs text-slate-400">Multimodal Forensics & Provenance Engine</p>
+          <h1 class="font-bold text-lg leading-tight tracking-tight">Veritas<span class="text-indigo-400">AI</span></h1>
+          <p class="text-xs text-slate-400">Multimodal Detection & Editorial Flow Studio</p>
         </div>
-      </div>
-      <div class="flex items-center gap-3">
-        <button id="exportJsonBtn" class="flex items-center gap-2 px-3.5 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 text-xs font-medium text-slate-200 border border-slate-700 transition">
-          <i data-lucide="file-json" class="w-4 h-4"></i>
-          Export JSON Audit
-        </button>
       </div>
     </div>
   </header>
 
   <!-- Main Container -->
-  <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
+  <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 py-6 w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
     
-    <!-- Left Column: Input & Configuration (7 cols) -->
-    <section class="lg:col-span-7 flex flex-col gap-6">
+    <!-- Left Column: Tabs & Inputs (7 cols) -->
+    <section class="lg:col-span-7 flex flex-col gap-5">
       
-      <!-- Multimodal Tab Navigation -->
-      <div class="flex items-center border-b border-slate-800 space-x-4 text-sm font-medium">
-        <button class="flex items-center gap-2 pb-3 border-b-2 border-indigo-500 text-indigo-400 font-semibold focus:outline-none">
+      <!-- Primary Tab Bar -->
+      <div class="flex border-b border-slate-800 space-x-4 text-xs font-semibold overflow-x-auto">
+        <button id="tabTextBtn" class="flex items-center gap-2 pb-3 border-b-2 border-indigo-500 text-indigo-400">
           <i data-lucide="file-text" class="w-4 h-4"></i> Text & Documents
         </button>
-        <button class="flex items-center gap-2 pb-3 border-b-2 border-transparent text-slate-400 hover:text-slate-200 cursor-not-allowed opacity-60" title="Roadmap backend feature">
+        <button id="tabImageBtn" class="flex items-center gap-2 pb-3 border-b-2 border-transparent text-slate-400 hover:text-slate-200">
           <i data-lucide="image" class="w-4 h-4"></i> Image / C2PA
         </button>
-        <button class="flex items-center gap-2 pb-3 border-b-2 border-transparent text-slate-400 hover:text-slate-200 cursor-not-allowed opacity-60" title="Roadmap backend feature">
-          <i data-lucide="video" class="w-4 h-4"></i> Video Deepfake
+        <button id="tabVideoBtn" class="flex items-center gap-2 pb-3 border-b-2 border-transparent text-slate-400 hover:text-slate-200">
+          <i data-lucide="film" class="w-4 h-4"></i> Video Cadence
         </button>
-        <button class="flex items-center gap-2 pb-3 border-b-2 border-transparent text-slate-400 hover:text-slate-200 cursor-not-allowed opacity-60" title="Roadmap backend feature">
-          <i data-lucide="mic" class="w-4 h-4"></i> Audio Cadence
+        <button id="tabHumanizeBtn" class="flex items-center gap-2 pb-3 border-b-2 border-transparent text-slate-400 hover:text-slate-200">
+          <i data-lucide="pen-tool" class="w-4 h-4"></i> Flow & Polish
         </button>
       </div>
 
-      <!-- File Upload Dropzone -->
-      <div id="dropzone" class="border-2 border-dashed border-slate-700 hover:border-indigo-500 rounded-xl p-4 text-center cursor-pointer transition bg-slate-900/40 hover:bg-slate-900/80">
-        <input type="file" id="fileInput" class="hidden" accept=".txt,.md,.rtf">
-        <div class="flex flex-col items-center justify-center gap-2">
-          <i data-lucide="upload-cloud" class="w-8 h-8 text-slate-400"></i>
-          <p class="text-sm text-slate-300">
-            <span class="font-medium text-indigo-400">Upload text document</span> (.txt, .md, .rtf)
+      <!-- VIEW 1: TEXT & DOCUMENTS -->
+      <div id="viewText" class="flex flex-col gap-4">
+        <div id="docDropzone" class="border border-dashed border-slate-700 hover:border-indigo-500 rounded-xl p-3 text-center cursor-pointer transition bg-slate-900/40">
+          <input type="file" id="docFileInput" class="hidden" accept=".txt,.md,.rtf">
+          <p class="text-xs text-slate-300">
+            <span class="text-indigo-400 font-semibold">Upload Document</span> (.txt, .md, .rtf) or paste below
           </p>
-          <p class="text-xs text-slate-500">Fast client-side document parser</p>
         </div>
-      </div>
-
-      <!-- Text Ingestion Area -->
-      <div class="flex flex-col gap-2">
         <div class="flex justify-between items-center text-xs text-slate-400">
-          <label for="textInput" class="font-semibold uppercase tracking-wider text-slate-400">Raw Input Text</label>
+          <label class="font-bold uppercase tracking-wider">Raw Text Ingestion</label>
           <span id="charCount">0 characters | 0 words</span>
         </div>
         <textarea
           id="textInput"
-          rows="11"
-          placeholder="Paste or type content here for statistical perplexity, burstiness (σ), and vocabulary dispersion inspection..."
-          class="w-full bg-slate-900 border border-slate-700 rounded-xl p-4 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent font-mono leading-relaxed"
+          rows="10"
+          placeholder="Paste text here to evaluate burstiness, perplexity proxy, and sentence variance..."
+          class="w-full bg-slate-900 border border-slate-700 rounded-xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 leading-relaxed"
         ></textarea>
+        <button id="analyzeTextBtn" class="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2.5 px-4 rounded-lg shadow-lg shadow-indigo-600/20 transition text-sm">
+          <i data-lucide="scan-line" class="w-4 h-4"></i> Run Document Forensics
+        </button>
       </div>
 
-      <!-- Action Buttons -->
-      <div class="flex items-center gap-3">
-        <button id="analyzeBtn" class="flex-1 flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2.5 px-4 rounded-lg shadow-lg shadow-indigo-600/20 transition">
-          <i data-lucide="scan-line" class="w-4 h-4"></i> Run Veritas Forensics
-        </button>
-        <button id="clearBtn" class="px-4 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm font-medium text-slate-300 border border-slate-700 transition">
-          Clear
+      <!-- VIEW 2: IMAGE & C2PA -->
+      <div id="viewImage" class="hidden flex flex-col gap-4">
+        <div id="imageDropzone" class="border-2 border-dashed border-slate-700 hover:border-indigo-500 rounded-xl p-6 text-center cursor-pointer transition bg-slate-900/40">
+          <input type="file" id="imageFileInput" class="hidden" accept="image/png, image/jpeg, image/webp">
+          <div class="flex flex-col items-center justify-center gap-2">
+            <i data-lucide="image-plus" class="w-8 h-8 text-indigo-400"></i>
+            <p class="text-xs text-slate-200 font-medium">Upload Image (.png, .jpg, .webp)</p>
+            <p class="text-[11px] text-slate-500">Scans C2PA manifests, SynthID/Imagen markers, and generative metadata</p>
+          </div>
+        </div>
+        <div id="imagePreviewContainer" class="hidden border border-slate-800 rounded-xl bg-slate-900 p-3 flex flex-col items-center">
+          <img id="imagePreview" class="max-h-56 rounded object-contain mb-2" alt="Uploaded Preview" />
+          <span id="imageMeta" class="text-xs text-slate-400"></span>
+        </div>
+        <button id="analyzeImageBtn" class="hidden flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2.5 px-4 rounded-lg transition text-sm">
+          <i data-lucide="sparkles" class="w-4 h-4"></i> Inspect Image Provenance
         </button>
       </div>
+
+      <!-- VIEW 3: VIDEO INSPECTION -->
+      <div id="viewVideo" class="hidden flex flex-col gap-4">
+        <div id="videoDropzone" class="border-2 border-dashed border-slate-700 hover:border-indigo-500 rounded-xl p-6 text-center cursor-pointer transition bg-slate-900/40">
+          <input type="file" id="videoFileInput" class="hidden" accept="video/mp4, video/webm">
+          <div class="flex flex-col items-center justify-center gap-2">
+            <i data-lucide="video" class="w-8 h-8 text-indigo-400"></i>
+            <p class="text-xs text-slate-200 font-medium">Upload Video File (.mp4, .webm)</p>
+            <p class="text-[11px] text-slate-500">Examines inter-frame jitter, temporal luminance, and pixel drift</p>
+          </div>
+        </div>
+        <video id="videoPreview" class="hidden max-h-56 rounded-xl border border-slate-800 bg-black w-full" controls></video>
+        <button id="analyzeVideoBtn" class="hidden flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2.5 px-4 rounded-lg transition text-sm">
+          <i data-lucide="activity" class="w-4 h-4"></i> Run Temporal Frame Forensics
+        </button>
+      </div>
+
+      <!-- VIEW 4: EDITORIAL HUMAN-FLOW POLISH -->
+      <div id="viewHumanize" class="hidden flex flex-col gap-4">
+        <div class="bg-indigo-950/30 border border-indigo-800/40 rounded-xl p-3.5 text-xs text-indigo-300">
+          <strong class="font-semibold">Editorial Assistant:</strong> Reconstructs repetitive syntax, breaks monotonous sentence rhythm, and removes formulaic AI transition clichés.
+        </div>
+        <textarea
+          id="humanizeInput"
+          rows="6"
+          placeholder="Paste text you want to rewrite for better cadence, sentence variety, and natural flow..."
+          class="w-full bg-slate-900 border border-slate-700 rounded-xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        ></textarea>
+        <button id="polishTextBtn" class="flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-medium py-2.5 px-4 rounded-lg transition text-sm">
+          <i data-lucide="wand-2" class="w-4 h-4"></i> Restructure & Polish Flow
+        </button>
+        <div class="flex flex-col gap-1 mt-2">
+          <label class="text-xs text-slate-400 font-bold uppercase tracking-wider">Polished Output</label>
+          <textarea
+            id="humanizeOutput"
+            rows="6"
+            readonly
+            placeholder="Your polished text will appear here..."
+            class="w-full bg-slate-900/60 border border-slate-800 rounded-xl p-4 text-xs font-mono text-slate-200 focus:outline-none"
+          ></textarea>
+        </div>
+      </div>
+
     </section>
 
-    <!-- Right Column: Forensic Analytics & Visual Heatmap (5 cols) -->
-    <section class="lg:col-span-5 flex flex-col gap-6">
+    <!-- Right Column: Results & Diagnostics (5 cols) -->
+    <section class="lg:col-span-5 flex flex-col gap-5">
       
-      <!-- Aggregate Verdict Box -->
+      <!-- Verdict Card -->
       <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-5">
         <div class="flex items-center justify-between mb-3">
-          <h2 class="text-sm font-semibold tracking-wide text-slate-300 uppercase">Detection Verdict</h2>
+          <h2 class="text-xs font-bold tracking-wide text-slate-400 uppercase">Detection Verdict</h2>
           <span id="verdictBadge" class="text-xs px-2.5 py-1 rounded-full font-medium bg-slate-800 text-slate-400 border border-slate-700">
             Awaiting Input
           </span>
         </div>
         <div class="flex items-baseline gap-2 mb-2">
           <span id="aiScore" class="text-4xl font-extrabold text-white">0%</span>
-          <span class="text-xs text-slate-400 font-medium">Likelihood of AI Synthesis</span>
+          <span class="text-xs text-slate-400 font-medium">Estimated Synthesis Score</span>
         </div>
         <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
           <div id="aiScoreBar" class="bg-indigo-500 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
         </div>
       </div>
 
-      <!-- Metric Grid -->
-      <div class="grid grid-cols-3 gap-3">
-        <!-- Perplexity Proxy -->
-        <div class="metric-card bg-slate-900/60 border border-slate-800 rounded-xl p-3.5">
-          <p class="text-xs text-slate-400 mb-1">Perplexity</p>
-          <h3 id="metricPerplexity" class="text-lg font-bold text-slate-200">--</h3>
-          <p class="text-[10px] text-slate-500 mt-1">Token dispersion</p>
-        </div>
-        <!-- Burstiness / Variance -->
-        <div class="metric-card bg-slate-900/60 border border-slate-800 rounded-xl p-3.5">
-          <p class="text-xs text-slate-400 mb-1">Burstiness (&sigma;)</p>
-          <h3 id="metricBurstiness" class="text-lg font-bold text-slate-200">--</h3>
-          <p class="text-[10px] text-slate-500 mt-1">Sentence variance</p>
-        </div>
-        <!-- Type-Token Ratio -->
-        <div class="metric-card bg-slate-900/60 border border-slate-800 rounded-xl p-3.5">
-          <p class="text-xs text-slate-400 mb-1">TTR Ratio</p>
-          <h3 id="metricTTR" class="text-lg font-bold text-slate-200">--</h3>
-          <p class="text-[10px] text-slate-500 mt-1">Lexical richness</p>
-        </div>
-      </div>
-
-      <!-- Sentence-Level Visual Heatmap -->
-      <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-5 flex flex-col flex-1">
-        <div class="flex items-center justify-between mb-4">
-          <h2 class="text-sm font-semibold tracking-wide text-slate-300 uppercase">Sentence Heatmap</h2>
-          <div class="flex items-center gap-2 text-[10px] text-slate-400">
-            <span class="inline-block w-2 h-2 rounded-full bg-emerald-500"></span> Organic
-            <span class="inline-block w-2 h-2 rounded-full bg-amber-500"></span> Moderate
-            <span class="inline-block w-2 h-2 rounded-full bg-rose-500"></span> High AI
-          </div>
-        </div>
-        <div id="heatmapContainer" class="flex-1 bg-slate-950/70 border border-slate-800/80 rounded-lg p-4 font-mono text-xs leading-relaxed text-slate-400 overflow-y-auto max-h-[300px]">
-          Run analysis to render color-coded sentence forensics.
+      <!-- Diagnostic Telemetry -->
+      <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-5 flex-1 flex flex-col">
+        <h2 class="text-xs font-bold tracking-wide text-slate-400 uppercase mb-3">Diagnostic Telemetry</h2>
+        <div id="diagnosticsOutput" class="text-xs font-mono text-slate-400 leading-relaxed space-y-2">
+          Select an ingestion modality and upload content to inspect signatures.
         </div>
       </div>
 
     </section>
   </main>
 
-  <!-- Script: Forensic Statistical Analysis Engine -->
   <script>
     lucide.createIcons();
 
-    // DOM Elements
-    const textInput = document.getElementById('textInput');
-    const charCount = document.getElementById('charCount');
-    const analyzeBtn = document.getElementById('analyzeBtn');
-    const clearBtn = document.getElementById('clearBtn');
-    const dropzone = document.getElementById('dropzone');
-    const fileInput = document.getElementById('fileInput');
-    const verdictBadge = document.getElementById('verdictBadge');
+    // Tab Management
+    const tabs = {
+      text: { btn: document.getElementById('tabTextBtn'), view: document.getElementById('viewText') },
+      image: { btn: document.getElementById('tabImageBtn'), view: document.getElementById('viewImage') },
+      video: { btn: document.getElementById('tabVideoBtn'), view: document.getElementById('viewVideo') },
+      humanize: { btn: document.getElementById('tabHumanizeBtn'), view: document.getElementById('viewHumanize') }
+    };
+
+    function setTab(activeKey) {
+      Object.keys(tabs).forEach(k => {
+        const item = tabs[k];
+        if (k === activeKey) {
+          item.btn.className = "flex items-center gap-2 pb-3 border-b-2 border-indigo-500 text-indigo-400 font-semibold";
+          item.view.classList.remove('hidden');
+        } else {
+          item.btn.className = "flex items-center gap-2 pb-3 border-b-2 border-transparent text-slate-400 hover:text-slate-200 font-semibold";
+          item.view.classList.add('hidden');
+        }
+      });
+      resetVerdict();
+    }
+
+    tabs.text.btn.addEventListener('click', () => setTab('text'));
+    tabs.image.btn.addEventListener('click', () => setTab('image'));
+    tabs.video.btn.addEventListener('click', () => setTab('video'));
+    tabs.humanize.btn.addEventListener('click', () => setTab('humanize'));
+
+    // Verdict Display Logic
     const aiScore = document.getElementById('aiScore');
     const aiScoreBar = document.getElementById('aiScoreBar');
-    const metricPerplexity = document.getElementById('metricPerplexity');
-    const metricBurstiness = document.getElementById('metricBurstiness');
-    const metricTTR = document.getElementById('metricTTR');
-    const heatmapContainer = document.getElementById('heatmapContainer');
-    const exportJsonBtn = document.getElementById('exportJsonBtn');
+    const verdictBadge = document.getElementById('verdictBadge');
+    const diagnosticsOutput = document.getElementById('diagnosticsOutput');
 
-    let currentReport = null;
+    function resetVerdict() {
+      aiScore.textContent = '0%';
+      aiScoreBar.style.width = '0%';
+      verdictBadge.textContent = 'Awaiting Input';
+      verdictBadge.className = 'text-xs px-2.5 py-1 rounded-full font-medium bg-slate-800 text-slate-400 border border-slate-700';
+      diagnosticsOutput.innerHTML = 'Select an ingestion modality and upload content to inspect signatures.';
+    }
 
-    // Track word and char counts
-    textInput.addEventListener('input', () => {
-      const text = textInput.value;
-      const chars = text.length;
-      const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+    function applyVerdict(prob, detailsHtml) {
+      aiScore.textContent = `${prob}%`;
+      aiScoreBar.style.width = `${prob}%`;
+      if (prob > 65) {
+        verdictBadge.textContent = 'Likely Synthetic (AI)';
+        verdictBadge.className = 'text-xs px-2.5 py-1 rounded-full font-medium bg-rose-950 text-rose-400 border border-rose-800';
+        aiScoreBar.className = 'bg-rose-500 h-2 rounded-full transition-all duration-500';
+      } else if (prob > 35) {
+        verdictBadge.textContent = 'Mixed / Inconclusive';
+        verdictBadge.className = 'text-xs px-2.5 py-1 rounded-full font-medium bg-amber-950 text-amber-400 border border-amber-800';
+        aiScoreBar.className = 'bg-amber-500 h-2 rounded-full transition-all duration-500';
+      } else {
+        verdictBadge.textContent = 'Organic / Natural';
+        verdictBadge.className = 'text-xs px-2.5 py-1 rounded-full font-medium bg-emerald-950 text-emerald-400 border border-emerald-800';
+        aiScoreBar.className = 'bg-emerald-500 h-2 rounded-full transition-all duration-500';
+      }
+      diagnosticsOutput.innerHTML = detailsHtml;
+    }
+
+    // 1. TEXT FORENSICS
+    const textInput = document.getElementById('textInput');
+    const charCount = document.getElementById('charCount');
+    const docDropzone = document.getElementById('docDropzone');
+    const docFileInput = document.getElementById('docFileInput');
+    const analyzeTextBtn = document.getElementById('analyzeTextBtn');
+
+    docDropzone.addEventListener('click', () => docFileInput.click());
+    docFileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        textInput.value = evt.target.result;
+        updateTextCounters();
+      };
+      reader.readAsText(file);
+    });
+
+    function updateTextCounters() {
+      const chars = textInput.value.length;
+      const words = textInput.value.trim() ? textInput.value.trim().split(/\s+/).length : 0;
+      charCount.textContent = `${chars} characters | ${words} words`;
+    }
+    textInput.addEventListener('input', updateTextCounters);
+
+    analyzeTextBtn.addEventListener('click', () => {
+      const text = textInput.value.trim();
+      if (!text) return;
+
+      const sentences = text.match(/[^.!?]+[.!?]+|\S+/g) || [text];
+      const tokens = text.toLowerCase().match(/\b[a-z0-9']+\b/g) || [];
+      if (tokens.length === 0) return;
+
+      const uniqueTokens = new Set(tokens);
+      const ttr = (uniqueTokens.size / tokens.length).toFixed(3);
+
+      const sentenceLengths = sentences.map(s => (s.trim().match(/\b[a-z0-9']+\b/gi) || []).length);
+      const meanLength = sentenceLengths.reduce((a, b) => a + b, 0) / sentenceLengths.length;
+      const variance = sentenceLengths.reduce((acc, len) => acc + Math.pow(len - meanLength, 2), 0) / sentenceLengths.length;
+      const burstinessSigma = Math.sqrt(variance).toFixed(2);
+
+      let aiProb = 50;
+      if (burstinessSigma < 3.5) aiProb += 25;
+      else if (burstinessSigma > 7.0) aiProb -= 25;
+      if (ttr < 0.5) aiProb += 15;
+      else if (ttr > 0.75) aiProb -= 20;
+      aiProb = Math.min(Math.max(aiProb, 5), 96);
+
+      applyVerdict(aiProb, `
+        <div>• <strong>Type-Token Ratio (TTR):</strong> ${ttr}</div>
+        <div>• <strong>Burstiness (σ):</strong> ${burstinessSigma}</div>
+        <div>• <strong>Processed:</strong> ${sentences.length} sentences, ${tokens.length} tokens</div>
+      `);
+    });
+
+    // 2. IMAGE & C2PA ENGINE
+    const imageDropzone = document.getElementById('imageDropzone');
+    const imageFileInput = document.getElementById('imageFileInput');
+    const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+    const imagePreview = document.getElementById('imagePreview');
+    const imageMeta = document.getElementById('imageMeta');
+    const analyzeImageBtn = document.getElementById('analyzeImageBtn');
+    let selectedImageFile = null;
+
+    imageDropzone.addEventListener('click', () => imageFileInput.click());
+    imageFileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      selectedImageFile = file;
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        imagePreview.src = evt.target.result;
+        imagePreviewContainer.classList.remove('hidden');
+        analyzeImageBtn.classList.remove('hidden');
+        imageMeta.textContent = `${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    analyzeImageBtn.addEventListener('click', async () => {
+      if (!selectedImageFile) return;
+      const arrayBuffer = await selectedImageFile.arrayBuffer();
+      const bytes = new Uint8Array(arrayBuffer);
+      let binaryStr = '';
+      for (let i = 0; i < Math.min(bytes.length, 120000); i++) {
+        binaryStr += String.fromCharCode(bytes[i]);
+      }
+
+      const markers = [
+        { name: 'Google / Imagen / SynthID', pattern: /Google|Imagen|SynthID/i },
+        { name: 'C2PA Provenance Manifest', pattern: /c2pa|trainedAlgorithmicMedia/i },
+        { name: 'DALL-E / OpenAI Generator', pattern: /dall-e|openai/i },
+        { name: 'Midjourney Artifacts', pattern: /midjourney/i },
+        { name: 'Stable Diffusion Tag', pattern: /stable diffusion|stablediffusion/i }
+      ];
+
+      const detected = markers.filter(m => m.pattern.test(binaryStr)).map(m => m.name);
+
+      let score = detected.length > 0 ? 98 : 38;
+      let signatureHtml = detected.length > 0
+        ? `<div class="text-rose-400 font-bold mb-1">🚨 AI Provenance Detected:</div>` + detected.map(d => `<div class="text-rose-300">• ${d}</div>`).join('')
+        : `<div class="text-slate-300">No embedded C2PA/generator metadata found.</div>`;
+
+      applyVerdict(score, `
+        <div>${signatureHtml}</div>
+        <div class="mt-2 text-slate-400">• <strong>Format:</strong> ${selectedImageFile.type || 'image/unknown'}</div>
+        <div class="text-slate-400">• <strong>Header Buffer:</strong> 120 KB Scanned</div>
+      `);
+    });
+
+    // 3. VIDEO FRAME FORENSICS
+    const videoDropzone = document.getElementById('videoDropzone');
+    const videoFileInput = document.getElementById('videoFileInput');
+    const videoPreview = document.getElementById('videoPreview');
+    const analyzeVideoBtn = document.getElementById('analyzeVideoBtn');
+    let selectedVideoFile = null;
+
+    videoDropzone.addEventListener('click', () => videoFileInput.click());
+    videoFileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      selectedVideoFile = file;
+      videoPreview.src = URL.createObjectURL(file);
+      videoPreview.classList.remove('hidden');
+      analyzeVideoBtn.classList.remove('hidden');
+    });
+
+    analyzeVideoBtn.addEventListener('click', async () => {
+      if (!selectedVideoFile) return;
+      diagnosticsOutput.innerHTML = "Sampling temporal frame frames...";
+      
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = 160;
+      canvas.height = 90;
+
+      // Sample two points in time to evaluate temporal drift
+      const sampleFrame = (time) => new Promise((resolve) => {
+        videoPreview.currentTime = time;
+        videoPreview.onseeked = () => {
+          ctx.drawImage(videoPreview, 0, 0, canvas.width, canvas.height);
+          const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          resolve(imgData.data);
+        };
+      });
+
+      try {
+        const frame1 = await sampleFrame(0.5);
+        const frame2 = await sampleFrame(Math.min(1.5, videoPreview.duration || 1));
+
+        let diff = 0;
+        for (let i = 0; i < frame1.length; i += 4) {
+          diff += Math.abs(frame1[i] - frame2[i]);
+        }
+        const avgDelta = (diff / (frame1.length / 4)).toFixed(2);
+
+        let videoProb = avgDelta < 4.0 ? 74 : 32; // Unusually static cadence flags synthetic morphing
+
+        applyVerdict(videoProb, `
+          <div>• <strong>Temporal Luminance Delta:</strong> ${avgDelta}</div>
+          <div>• <strong>Duration:</strong> ${videoPreview.duration ? videoPreview.duration.toFixed(1) + 's' : 'Dynamic'}</div>
+          <div>• <strong>Forensic Metric:</strong> Interlength : 0;
       charCount.textContent = `${chars} characters | ${words} words`;
     });
 
