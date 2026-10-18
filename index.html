@@ -5,15 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VeritasAI Studio - Multimodal Forensics & Editorial Suite</title>
   
-  <!-- Modern Typography: Plus Jakarta Sans & JetBrains Mono -->
+  <!-- Modern Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   
   <!-- Tailwind CSS & Lucide Icons -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
-  <!-- html2pdf.js for Branded PDF Export -->
+  <!-- PDF Exporter -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <script>
@@ -29,53 +29,21 @@
               400: '#818cf8',
               500: '#6366f1',
               600: '#4f46e5',
-              700: '#4338ca',
             }
           }
         }
       }
     }
   </script>
-
-  <style>
-    /* Subtle background grid pattern & glow effects */
-    .bg-grid {
-      background-size: 32px 32px;
-      background-image: 
-        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    }
-    .glow-indigo {
-      box-shadow: 0 0 35px -5px rgba(99, 102, 241, 0.18);
-    }
-    .custom-scroll::-webkit-scrollbar {
-      width: 5px;
-      height: 5px;
-    }
-    .custom-scroll::-webkit-scrollbar-thumb {
-      background: #334155;
-      border-radius: 4px;
-    }
-    .custom-scroll::-webkit-scrollbar-track {
-      background: rgba(15, 23, 42, 0.6);
-    }
-  </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans antialiased selection:bg-brand-500 selection:text-white relative bg-grid">
-
-  <!-- Ambient Light Orbs -->
-  <div class="fixed top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-indigo-600/10 blur-[130px] pointer-events-none -z-10"></div>
-  <div class="fixed bottom-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-emerald-600/10 blur-[130px] pointer-events-none -z-10"></div>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans antialiased selection:bg-brand-500 selection:text-white">
 
   <!-- Header -->
-  <header class="border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-xl sticky top-0 z-50 transition-all">
+  <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="relative flex items-center justify-center">
-          <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-brand-600 to-indigo-400 flex items-center justify-center text-white shadow-lg shadow-brand-500/25">
-            <i data-lucide="shield-check" class="w-5 h-5"></i>
-          </div>
-          <span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 border-2 border-slate-950 rounded-full"></span>
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-brand-600 to-indigo-400 flex items-center justify-center text-white shadow-lg shadow-brand-500/25">
+          <i data-lucide="shield-check" class="w-5 h-5"></i>
         </div>
         <div>
           <div class="flex items-center gap-2">
@@ -86,19 +54,14 @@
         </div>
       </div>
 
-      <!-- Quick Action Toolbar -->
-      <div class="flex items-center gap-2 sm:gap-3">
-        <button id="exportPdfBtn" title="Download Formatted PDF Summary" class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-xs font-semibold text-slate-300 border border-slate-700/80 transition flex items-center gap-1.5 shadow-sm active:scale-95">
+      <div class="flex items-center gap-2">
+        <button id="exportPdfBtn" class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-xs font-semibold text-slate-300 border border-slate-700 transition flex items-center gap-1.5">
           <i data-lucide="file-down" class="w-3.5 h-3.5 text-indigo-400"></i>
-          <span class="hidden sm:inline">Export PDF</span>
+          <span>PDF Report</span>
         </button>
-        <button id="exportJsonBtn" title="Export Raw Forensic JSON" class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-xs font-semibold text-slate-300 border border-slate-700/80 transition flex items-center gap-1.5 shadow-sm active:scale-95">
-          <i data-lucide="file-json" class="w-3.5 h-3.5 text-slate-400"></i>
-          <span class="hidden sm:inline">JSON</span>
-        </button>
-        <button id="quickResetBtn" title="Clear all fields" class="px-3 py-1.5 rounded-xl bg-slate-900/60 hover:bg-rose-950/40 text-xs font-semibold text-slate-400 hover:text-rose-300 border border-slate-800 hover:border-rose-800/60 transition flex items-center gap-1.5 active:scale-95">
+        <button id="quickResetBtn" class="px-3 py-1.5 rounded-xl bg-slate-900/60 hover:bg-slate-800 text-xs font-semibold text-slate-400 border border-slate-800 transition flex items-center gap-1.5">
           <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-          <span class="hidden sm:inline">Reset</span>
+          <span>Reset</span>
         </button>
       </div>
     </div>
@@ -110,13 +73,13 @@
     <!-- Left Workspace (7 Columns) -->
     <section class="lg:col-span-7 flex flex-col gap-5">
       
-      <!-- Interactive Modality Bar -->
-      <div class="flex bg-slate-900/70 p-1.5 rounded-2xl border border-slate-800/90 gap-1 overflow-x-auto shadow-inner">
-        <button id="tabTextBtn" class="flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-bold transition bg-brand-600 text-white shadow-sm whitespace-nowrap">
+      <!-- Modality Tabs -->
+      <div class="flex bg-slate-900/80 p-1.5 rounded-2xl border border-slate-800 gap-1 overflow-x-auto">
+        <button id="tabTextBtn" class="flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-bold transition bg-brand-600 text-white whitespace-nowrap">
           <i data-lucide="file-text" class="w-4 h-4"></i> Text & Ingestion
         </button>
         <button id="tabImageBtn" class="flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-semibold text-slate-400 hover:text-slate-200 transition whitespace-nowrap">
-          <i data-lucide="image" class="w-4 h-4"></i> Image & Metadata
+          <i data-lucide="image" class="w-4 h-4"></i> Image & EXIF
         </button>
         <button id="tabAudioBtn" class="flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-semibold text-slate-400 hover:text-slate-200 transition whitespace-nowrap">
           <i data-lucide="mic" class="w-4 h-4"></i> Audio Cadence
@@ -129,16 +92,16 @@
       <!-- TAB 1: TEXT & WEB INGESTION -->
       <div id="viewText" class="flex flex-col gap-4">
         
-        <!-- URL Ingestion Accordion/Bar -->
-        <div class="bg-slate-900/40 border border-slate-800/80 rounded-2xl p-3 flex flex-col sm:flex-row items-center gap-2">
-          <div class="flex items-center gap-2 w-full sm:w-auto text-slate-400 text-xs px-2">
-            <i data-lucide="link" class="w-4 h-4 text-indigo-400 flex-shrink-0"></i>
+        <!-- URL Ingestion Bar -->
+        <div class="bg-slate-900/50 border border-slate-800 rounded-2xl p-3 flex flex-col sm:flex-row items-center gap-2">
+          <div class="flex items-center gap-2 text-slate-400 text-xs px-1">
+            <i data-lucide="link" class="w-4 h-4 text-indigo-400"></i>
             <span class="font-medium whitespace-nowrap">Web Ingest:</span>
           </div>
           <input 
             type="url" 
             id="urlInput" 
-            placeholder="Paste blog or article URL (e.g., https://example.com/article)..." 
+            placeholder="Paste public article URL..." 
             class="flex-1 w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-brand-500 font-mono"
           />
           <button id="fetchUrlBtn" class="w-full sm:w-auto px-4 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-200 border border-slate-700 transition flex items-center justify-center gap-1.5">
@@ -150,8 +113,8 @@
         <div id="docDropzone" class="border border-dashed border-slate-700/80 hover:border-brand-500 rounded-2xl p-4 text-center cursor-pointer transition bg-slate-900/30 hover:bg-slate-900/70 group">
           <input type="file" id="docFileInput" class="hidden" accept=".txt,.md,.rtf">
           <div class="flex items-center justify-center gap-3">
-            <div class="w-9 h-9 rounded-xl bg-slate-800 flex items-center justify-center text-slate-300 group-hover:text-brand-400 group-hover:scale-105 transition">
-              <i data-lucide="upload-cloud" class="w-5 h-5"></i>
+            <div class="w-8 h-8 rounded-xl bg-slate-800 flex items-center justify-center text-slate-300 group-hover:text-brand-400 transition">
+              <i data-lucide="upload-cloud" class="w-4 h-4"></i>
             </div>
             <div class="text-left">
               <p class="text-xs font-bold text-slate-200 group-hover:text-brand-300">Upload text document (.txt, .md, .rtf)</p>
@@ -163,14 +126,14 @@
         <!-- Text Input Area -->
         <div class="flex flex-col gap-2">
           <div class="flex justify-between items-center text-xs text-slate-400 px-1">
-            <span class="font-bold tracking-wider uppercase text-[10px] text-slate-500">Document Content</span>
+            <span class="font-bold tracking-wider uppercase text-[10px] text-slate-500">Document Text</span>
             <span id="charCount" class="font-mono text-[11px] text-slate-400">0 chars | 0 words</span>
           </div>
           <textarea
             id="textInput"
             rows="8"
             placeholder="Paste text here to evaluate readability scores, burstiness (σ), clichés, and synthetic pattern distributions..."
-            class="w-full bg-slate-900/80 border border-slate-800 rounded-2xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500/50 focus:border-brand-500 leading-relaxed transition resize-y"
+            class="w-full bg-slate-900/80 border border-slate-800 rounded-2xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500/50 leading-relaxed resize-y"
           ></textarea>
         </div>
 
@@ -179,7 +142,7 @@
         </button>
       </div>
 
-      <!-- TAB 2: IMAGE & METADATA FORENSICS -->
+      <!-- TAB 2: IMAGE & EXIF METADATA -->
       <div id="viewImage" class="hidden flex flex-col gap-4">
         <div id="imageDropzone" class="border-2 border-dashed border-slate-700/80 hover:border-brand-500 rounded-2xl p-7 text-center cursor-pointer transition bg-slate-900/30 hover:bg-slate-900/70 group">
           <input type="file" id="imageFileInput" class="hidden" accept="image/png, image/jpeg, image/webp">
@@ -198,7 +161,6 @@
           <img id="imagePreview" class="max-h-56 rounded-xl object-contain shadow-md mb-2" alt="Uploaded Preview" />
           <span id="imageMeta" class="text-[11px] font-mono text-slate-400"></span>
           
-          <!-- Image Stripper / Utility Actions -->
           <div class="flex items-center gap-2 mt-3">
             <button id="stripExifBtn" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 border border-slate-700 flex items-center gap-1.5 transition">
               <i data-lucide="eraser" class="w-3.5 h-3.5 text-amber-400"></i> Strip Tracking Metadata
@@ -209,7 +171,7 @@
           </div>
         </div>
 
-        <button id="analyzeImageBtn" class="hidden flex items-center justify-center gap-2 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold py-3 px-5 rounded-xl shadow-lg shadow-brand-600/20 transition text-xs sm:text-sm">
+        <button id="analyzeImageBtn" class="hidden flex items-center justify-center gap-2 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold py-3 px-5 rounded-xl shadow-lg transition text-xs sm:text-sm">
           <i data-lucide="shield-search" class="w-4 h-4"></i> Inspect Image Authenticity
         </button>
       </div>
@@ -234,38 +196,24 @@
           <span id="audioMeta" class="text-[11px] font-mono text-slate-400 text-center"></span>
         </div>
 
-        <button id="analyzeAudioBtn" class="hidden flex items-center justify-center gap-2 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold py-3 px-5 rounded-xl shadow-lg shadow-brand-600/20 transition text-xs sm:text-sm">
+        <button id="analyzeAudioBtn" class="hidden flex items-center justify-center gap-2 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold py-3 px-5 rounded-xl shadow-lg transition text-xs sm:text-sm">
           <i data-lucide="activity" class="w-4 h-4"></i> Run Audio Cadence Forensics
         </button>
       </div>
 
       <!-- TAB 4: EDITORIAL POLISH & DIFF COMPARISON -->
       <div id="viewHumanize" class="hidden flex flex-col gap-4">
-        <div class="bg-gradient-to-r from-indigo-950/30 to-slate-900 border border-indigo-800/40 rounded-2xl p-4 flex items-start gap-3">
-          <div class="p-2 rounded-xl bg-indigo-900/50 text-indigo-300">
-            <i data-lucide="sparkle" class="w-4 h-4"></i>
-          </div>
-          <div>
-            <h3 class="text-xs font-bold text-indigo-200">Editorial Pacing & Cliché Reducer</h3>
-            <p class="text-[11px] text-slate-400 mt-0.5 leading-relaxed">
-              Detects overused AI tropes (<em>"delve"</em>, <em>"moreover"</em>, <em>"testament"</em>), rewrites robotic transitions, and provides a side-by-side visual difference comparison[span_2](start_span)[span_2](end_span).
-            </p>
-          </div>
-        </div>
-
-        <!-- Raw Draft Input -->
         <textarea
           id="humanizeInput"
           rows="5"
-          placeholder="Paste draft writing here to refine vocabulary, soften AI cadence, and review changes..."
-          class="w-full bg-slate-900/90 border border-slate-800 rounded-2xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 leading-relaxed resize-y"
+          placeholder="Paste draft writing here to refine vocabulary, soften AI cadence, and review side-by-side changes..."
+          class="w-full bg-slate-900/90 border border-slate-800 rounded-2xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 leading-relaxed resize-y"
         ></textarea>
 
         <button id="polishTextBtn" class="flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-5 rounded-xl shadow-lg shadow-emerald-600/20 transition active:scale-[0.99] text-xs sm:text-sm">
           <i data-lucide="wand-2" class="w-4 h-4"></i> Enhance Flow & Generate Diff
         </button>
 
-        <!-- Polished Text Output -->
         <div class="flex flex-col gap-2 mt-2">
           <div class="flex justify-between items-center px-1">
             <label class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Polished Result</label>
@@ -284,7 +232,7 @@
 
         <!-- Side-by-Side Visual Diff View -->
         <div id="diffContainer" class="hidden flex flex-col gap-2 p-3 bg-slate-950/70 border border-slate-800 rounded-2xl">
-          <span class="text-[10px] font-bold tracking-wider text-slate-400 uppercase">Interactive Diff Comparison:</span>
+          <span class="text-[10px] font-bold tracking-wider text-slate-400 uppercase">Visual Cadence Diff:</span>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs font-mono leading-relaxed">
             <div class="p-3 bg-rose-950/20 border border-rose-900/40 rounded-xl">
               <p class="text-[10px] font-bold text-rose-400 mb-1">ORIGINAL DRAFT</p>
@@ -303,11 +251,11 @@
     <!-- Right Column: Analytics, Gauges & Printable Report (5 Columns) -->
     <section class="lg:col-span-5 flex flex-col gap-5">
       
-      <!-- Printable Container (Targeted by html2pdf) -->
+      <!-- Printable Container -->
       <div id="reportContainer" class="flex flex-col gap-5">
         
         <!-- Primary Verdict Card -->
-        <div class="bg-slate-900/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl relative overflow-hidden glow-indigo">
+        <div class="bg-slate-900/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl relative overflow-hidden">
           <div class="flex items-center justify-between mb-4">
             <div class="flex items-center gap-2">
               <span class="w-2.5 h-2.5 rounded-full bg-brand-500 animate-pulse"></span>
@@ -333,228 +281,62 @@
           <div class="bg-slate-900/70 border border-slate-800/80 rounded-xl p-3 text-center">
             <p class="text-[10px] text-slate-400 font-medium uppercase">Readability</p>
             <h4 id="readabilityScore" class="text-base font-bold text-slate-200 mt-0.5">--</h4>
-            <p id="mentById('docDropzone');
-    const docFileInput = document.getElementById('docFileInput');
-    const analyzeTextBtn = document.getElementById('analyzeTextBtn');
-
-    docDropzone.addEventListener('click', () => docFileInput.click());
-    docFileInput.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = (evt) => {
-        textInput.value = evt.target.result;
-        updateTextCounters();
-      };
-      reader.readAsText(file);
-    });
-
-    function updateTextCounters() {
-      const chars = textInput.value.length;
-      const words = textInput.value.trim() ? textInput.value.trim().split(/\s+/).length : 0;
-      charCount.textContent = `${chars} characters | ${words} words`;
-    }
-    textInput.addEventListener('input', updateTextCounters);
-
-    analyzeTextBtn.addEventListener('click', () => {
-      const text = textInput.value.trim();
-      if (!text) return;
-
-      const sentences = text.match(/[^.!?]+[.!?]+|\S+/g) || [text];
-      const tokens = text.toLowerCase().match(/\b[a-z0-9']+\b/g) || [];
-      if (tokens.length === 0) return;
-
-      const uniqueTokens = new Set(tokens);
-      const ttr = (uniqueTokens.size / tokens.length).toFixed(3);
-
-      const sentenceLengths = sentences.map(s => (s.trim().match(/\b[a-z0-9']+\b/gi) || []).length);
-      const meanLength = sentenceLengths.reduce((a, b) => a + b, 0) / sentenceLengths.length;
-      const variance = sentenceLengths.reduce((acc, len) => acc + Math.pow(len - meanLength, 2), 0) / sentenceLengths.length;
-      const burstinessSigma = Math.sqrt(variance).toFixed(2);
-
-      let aiProb = 50;
-      if (burstinessSigma < 3.5) aiProb += 25;
-      else if (burstinessSigma > 7.0) aiProb -= 25;
-      if (ttr < 0.5) aiProb += 15;
-      else if (ttr > 0.75) aiProb -= 20;
-      aiProb = Math.min(Math.max(aiProb, 5), 96);
-
-      applyVerdict(aiProb, `
-        <div class="p-2.5 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1.5">
-          <div><span class="text-slate-400">Lexical Richness (TTR):</span> <strong class="text-indigo-300">${ttr}</strong></div>
-          <div><span class="text-slate-400">Sentence Burstiness (&sigma;):</span> <strong class="text-indigo-300">${burstinessSigma}</strong></div>
-          <div><span class="text-slate-400">Sample Depth:</span> ${sentences.length} sentences, ${tokens.length} words</div>
-        </div>
-      `);
-    });
-
-    // 2. IMAGE & C2PA ENGINE
-    const imageDropzone = document.getElementById('imageDropzone');
-    const imageFileInput = document.getElementById('imageFileInput');
-    const imagePreviewContainer = document.getElementById('imagePreviewContainer');
-    const imagePreview = document.getElementById('imagePreview');
-    const imageMeta = document.getElementById('imageMeta');
-    const analyzeImageBtn = document.getElementById('analyzeImageBtn');
-    let selectedImageFile = null;
-
-    imageDropzone.addEventListener('click', () => imageFileInput.click());
-    imageFileInput.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
-      selectedImageFile = file;
-      const reader = new FileReader();
-      reader.onload = (evt) => {
-        imagePreview.src = evt.target.result;
-        imagePreviewContainer.classList.remove('hidden');
-        analyzeImageBtn.classList.remove('hidden');
-        imageMeta.textContent = `${file.name} • ${(file.size / 1024).toFixed(1)} KB`;
-      };
-      reader.readAsDataURL(file);
-    });
-
-    analyzeImageBtn.addEventListener('click', async () => {
-      if (!selectedImageFile) return;
-      const arrayBuffer = await selectedImageFile.arrayBuffer();
-      const bytes = new Uint8Array(arrayBuffer);
-      let binaryStr = '';
-      for (let i = 0; i < Math.min(bytes.length, 120000); i++) {
-        binaryStr += String.fromCharCode(bytes[i]);
-      }
-
-      const markers = [
-        { name: 'Google / Imagen / SynthID', pattern: /Google|Imagen|SynthID/i },
-        { name: 'C2PA Digital Provenance', pattern: /c2pa|trainedAlgorithmicMedia/i },
-        { name: 'DALL-E / OpenAI Generator', pattern: /dall-e|openai/i },
-        { name: 'Midjourney Prompt Metadata', pattern: /midjourney/i },
-        { name: 'Stable Diffusion Generation Tag', pattern: /stable diffusion|stablediffusion/i }
-      ];
-
-      const detected = markers.filter(m => m.pattern.test(binaryStr)).map(m => m.name);
-      let score = detected.length > 0 ? 98 : 34;
-      let signatureHtml = detected.length > 0
-        ? `<div class="text-rose-400 font-bold mb-1 flex items-center gap-1.5"><i data-lucide="alert-triangle" class="w-4 h-4"></i> AI Provenance Detected:</div>` + detected.map(d => `<div class="text-rose-300">• ${d}</div>`).join('')
-        : `<div class="text-slate-300">✓ No embedded generative tags or C2PA synthetic metadata found.</div>`;
-
-      applyVerdict(score, `
-        <div class="p-2.5 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1.5">
-          ${signatureHtml}
-          <div class="mt-2 text-slate-400 text-[11px]">• Format: ${selectedImageFile.type || 'image/unknown'}</div>
-          <div class="text-slate-400 text-[11px]">• Inspected binary range: 120 KB header</div>
-        </div>
-      `);
-      lucide.createIcons();
-    });
-
-    // 3. VIDEO INSPECTION
-    const videoDropzone = document.getElementById('videoDropzone');
-    const videoFileInput = document.getElementById('videoFileInput');
-    const videoPreview = document.getElementById('videoPreview');
-    const analyzeVideoBtn = document.getElementById('analyzeVideoBtn');
-    let selectedVideoFile = null;
-
-    videoDropzone.addEventListener('click', () => videoFileInput.click());
-    videoFileInput.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
-      selectedVideoFile = file;
-      videoPreview.src = URL.createObjectURL(file);
-      videoPreview.classList.remove('hidden');
-      analyzeVideoBtn.classList.remove('hidden');
-    });
-
-    analyzeVideoBtn.addEventListener('click', async () => {
-      if (!selectedVideoFile) return;
-      diagnosticsOutput.innerHTML = "Sampling inter-frame consistency...";
-      
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      canvas.width = 160;
-      canvas.height = 90;
-
-      const sampleFrame = (time) => new Promise((resolve) => {
-        videoPreview.currentTime = time;
-        videoPreview.onseeked = () => {
-          ctx.drawImage(videoPreview, 0, 0, canvas.width, canvas.height);
-          const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-          resolve(imgData.data);
-        };
-      });
-
-      try {
-        const frame1 = await sampleFrame(0.5);
-        const frame2 = await sampleFrame(Math.min(1.5, videoPreview.duration || 1));
-
-        let diff = 0;
-        for (let i = 0; i < frame1.length; i += 4) {
-          diff += Math.abs(frame1[i] - frame2[i]);
-        }
-        const avgDelta = (diff / (frame1.length / 4)).toFixed(2);
-        let videoProb = avgDelta < 4.0 ? 74 : 32;
-
-        applyVerdict(videoProb, `
-          <div class="p-2.5 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1.5">
-            <div><span class="text-slate-400">Inter-frame Luminance Delta:</span> <strong class="text-indigo-300">${avgDelta}</strong></div>
-            <div><span class="text-slate-400">Duration:</span> ${videoPreview.duration ? videoPreview.duration.toFixed(1) + 's' : 'Dynamic'}</div>
-            <div class="text-[11px] text-slate-400">Temporal coherence evaluated across keyframes.</div>
+            <p id="gradeLevelSub" class="text-[9px] text-slate-500">Flesch-Kincaid</p>
           </div>
-        `);
-      } catch (err) {
-        diagnosticsOutput.innerHTML = `<span class="text-rose-400">Error reading video frames: ${err.message}</span>`;
-      }
-    });
-
-    // 4. FLOW & CADENCE POLISH ASSISTANT
-    const humanizeInput = document.getElementById('humanizeInput');
-    const humanizeOutput = document.getElementById('humanizeOutput');
-    const polishTextBtn = document.getElementById('polishTextBtn');
-    const copyPolishedBtn = document.getElementById('copyPolishedBtn');
-
-    polishTextBtn.addEventListener('click', () => {
-      const raw = humanizeInput.value.trim();
-      if (!raw) return;
-
-      let polished = raw
-        .replace(/\bIn conclusion,?\b/gi, 'Ultimately,')
-        .replace(/\bFurthermore,?\b/gi, 'Also,')
-        .replace(/\bMoreover,?\b/gi, 'In addition,')
-        .replace(/\bIt is important to note that\b/gi, 'Notably,')
-        .replace(/\bDelve into\b/gi, 'Explore')
-        .replace(/\bTestament to\b/gi, 'Sign of')
-        .replace(/\bBeacon of\b/gi, 'Center for')
-        .replace(/\bTapestry of\b/gi, 'Mix of')
-        .replace(/\bRevolutionize\b/gi, 'Transform')
-        .replace(/\bHarness the power of\b/gi, 'Use');
-
-      const sentences = polished.match(/[^.!?]+[.!?]+|\S+/g) || [polished];
-      const restructured = sentences.map((s, idx) => {
-        let trimmed = s.trim();
-        if (idx % 2 === 0 && trimmed.includes(', and ')) {
-          trimmed = trimmed.replace(', and ', '. ');
-        }
-        return trimmed;
-      }).join(' ');
-
-      humanizeOutput.value = restructured;
-      diagnosticsOutput.innerHTML = `
-        <div class="p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-800/60 space-y-1 text-emerald-300">
-          <div class="font-bold flex items-center gap-1.5"><i data-lucide="check-circle" class="w-4 h-4"></i> Cadence Polished</div>
-          <div class="text-[11px] text-slate-300">• Softened formal transition formulas.</div>
-          <div class="text-[11px] text-slate-300">• Varied compound sentence lengths.</div>
+          <div class="bg-slate-900/70 border border-slate-800/80 rounded-xl p-3 text-center">
+            <p class="text-[10px] text-slate-400 font-medium uppercase">Burstiness (σ)</p>
+            <h4 id="metricBurstiness" class="text-base font-bold text-slate-200 mt-0.5">--</h4>
+            <p class="text-[9px] text-slate-500">Sentence variance</p>
+          </div>
+          <div class="bg-slate-900/70 border border-slate-800/80 rounded-xl p-3 text-center">
+            <p class="text-[10px] text-slate-400 font-medium uppercase">TTR Lexical</p>
+            <h4 id="metricTTR" class="text-base font-bold text-slate-200 mt-0.5">--</h4>
+            <p class="text-[9px] text-slate-500">Vocabulary ratio</p>
+          </div>
         </div>
-      `;
-      lucide.createIcons();
-    });
 
-    copyPolishedBtn.addEventListener('click', async () => {
-      if (!humanizeOutput.value) return;
-      await navigator.clipboard.writeText(humanizeOutput.value);
-      copyPolishedBtn.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> Copied!`;
-      lucide.createIcons();
-      setTimeout(() => {
-        copyPolishedBtn.innerHTML = `<i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy Text`;
-        lucide.createIcons();
-      }, 2000);
-    });
-  </script>
-</body>
-</html>
+        <!-- Cliché Alert Box -->
+        <div id="clicheAlertBox" class="hidden bg-amber-950/30 border border-amber-800/50 rounded-2xl p-3.5">
+          <div class="flex items-center gap-1.5 text-amber-300 text-xs font-bold mb-1.5">
+            <i data-lucide="alert-circle" class="w-4 h-4 text-amber-400"></i>
+            <span>AI Clichés & Formulaic Patterns Flagged</span>
+          </div>
+          <div id="clicheBadges" class="flex flex-wrap gap-1.5 mt-1"></div>
+        </div>
+
+        <!-- Diagnostics Telemetry Card -->
+        <div class="bg-slate-900/90 border border-slate-800/90 rounded-2xl p-5 flex flex-col shadow-xl">
+          <div class="flex items-center justify-between mb-3 border-b border-slate-800 pb-3">
+            <h2 class="text-[10px] font-bold tracking-widest text-slate-400 uppercase flex items-center gap-2">
+              <i data-lucide="cpu" class="w-3.5 h-3.5 text-brand-400"></i> Forensic Breakdown
+            </h2>
+            <span id="telemetryStatus" class="text-[10px] font-mono text-slate-500">IDLE</span>
+          </div>
+          <div id="diagnosticsOutput" class="text-xs font-mono text-slate-300 leading-relaxed space-y-2 max-h-[340px] overflow-y-auto">
+            Select an ingestion modality and upload content to run deep-scan telemetry.
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <script>
+    lucide.createIcons();
+
+    // Tab Controller
+    const tabs = {
+      text: { btn: document.getElementById('tabTextBtn'), view: document.getElementById('viewText') },
+      image: { btn: document.getElementById('tabImageBtn'), view: document.getElementById('viewImage') },
+      audio: { btn: document.getElementById('tabAudioBtn'), view: document.getElementById('viewAudio') },
+      humanize: { btn: document.getElementById('tabHumanizeBtn'), view: document.getElementById('viewHumanize') }
+    };
+
+    function setTab(activeKey) {
+      Object.keys(tabs).forEach(k => {
+        const item = tabs[k];
+        if (k === activeKey) {
+          item.btn.className = "flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-bold transition bg-brand-600 text-white whitespace-nowrap";
+          item.view.classList.remove('hidden');
+        } else {
+          item.btn.className = "flex-1 flex items-center justify-center gap-2 py-2 px-3 
