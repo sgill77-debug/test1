@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VeritasAI Studio - Multimodal Forensics & Polish</title>
+  <title>VeritasAI Studio - Multimodal Forensics & Editorial Suite</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     .tab-btn.active {
@@ -43,23 +43,26 @@
     <!-- Left Workspace (7 Columns) -->
     <section class="lg:col-span-7 flex flex-col gap-4">
       
-      <!-- Nav Tabs (Fact Check Removed) -->
-      <nav class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 bg-slate-900 p-1.5 rounded-xl border border-slate-800 text-center">
-        <button type="button" class="tab-btn active text-xs font-bold py-2.5 px-3 rounded-lg border border-transparent text-slate-300 hover:text-white transition" onclick="switchTab('text', this)">
+      <!-- Nav Tabs -->
+      <nav class="grid grid-cols-2 sm:grid-cols-5 gap-1 bg-slate-900 p-1.5 rounded-xl border border-slate-800 text-center">
+        <button type="button" class="tab-btn active text-xs font-bold py-2 px-2 rounded-lg border border-transparent text-slate-300 hover:text-white transition" onclick="switchTab('text', this)">
           📝 Text & Docs
         </button>
-        <button type="button" class="tab-btn text-xs font-bold py-2.5 px-3 rounded-lg border border-transparent text-slate-300 hover:text-white transition" onclick="switchTab('flow', this)">
-          ✨ Suggestions & Polish
+        <button type="button" class="tab-btn text-xs font-bold py-2 px-2 rounded-lg border border-transparent text-slate-300 hover:text-white transition" onclick="switchTab('rewriter', this)">
+          ✨ Rewriter
         </button>
-        <button type="button" class="tab-btn text-xs font-bold py-2.5 px-3 rounded-lg border border-transparent text-slate-300 hover:text-white transition" onclick="switchTab('image', this)">
+        <button type="button" class="tab-btn text-xs font-bold py-2 px-2 rounded-lg border border-transparent text-slate-300 hover:text-white transition" onclick="switchTab('consistency', this)">
+          ⚖️ Consistency
+        </button>
+        <button type="button" class="tab-btn text-xs font-bold py-2 px-2 rounded-lg border border-transparent text-slate-300 hover:text-white transition" onclick="switchTab('image', this)">
           🖼️ Image & C2PA
         </button>
-        <button type="button" class="tab-btn text-xs font-bold py-2.5 px-3 rounded-lg border border-transparent text-slate-300 hover:text-white transition" onclick="switchTab('video', this)">
-          🎬 Video Cadence
+        <button type="button" class="tab-btn text-xs font-bold py-2 px-2 rounded-lg border border-transparent text-slate-300 hover:text-white transition" onclick="switchTab('video', this)">
+          🎬 Video
         </button>
       </nav>
 
-      <!-- TAB 1: TEXT & DOCUMENTS -->
+      <!-- TAB 1: TEXT & FORENSICS -->
       <div id="panel-text" class="tab-panel flex flex-col gap-3">
         <div id="docDropzone" class="border-2 border-dashed border-slate-800 hover:border-indigo-500 rounded-xl p-4 text-center bg-slate-900/40 cursor-pointer transition">
           <input type="file" id="docFileInput" class="hidden" accept=".txt,.md,.rtf,.json,.csv">
@@ -74,9 +77,9 @@
 
         <textarea
           id="textInput"
-          rows="8"
-          placeholder="Paste or type text here. Statistical metrics and AI probability compute automatically on input..."
-          class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500"
+          rows="9"
+          placeholder="Paste or type content here. Burstiness variance (σ), TTR, and AI likelihood calculate automatically..."
+          class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 leading-relaxed"
           oninput="processTextInput()"
         ></textarea>
         
@@ -84,48 +87,73 @@
           <button type="button" onclick="loadSampleText()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">
             Load Sample Text
           </button>
-          <button type="button" onclick="processTextInput()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-2 rounded-lg text-xs transition">
-            Recalculate Forensics
+          <button type="button" onclick="sendToRewriter()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition">
+            Send to Rewriter →
           </button>
         </div>
       </div>
 
-      <!-- TAB 2: EDITORIAL SUGGESTIONS & POLISH -->
-      <div id="panel-flow" class="tab-panel hidden flex flex-col gap-3">
+      <!-- TAB 2: WORDTUNE-STYLE 3-WAY REWRITER -->
+      <div id="panel-rewriter" class="tab-panel hidden flex flex-col gap-3">
+        <div class="flex justify-between items-center text-xs text-slate-400">
+          <span class="font-bold uppercase tracking-wider text-[10px]">Draft Editor</span>
+          <span id="rewriterStats">0 words</span>
+        </div>
         <textarea
-          id="flowInput"
+          id="rewriterInput"
           rows="8"
-          placeholder="Paste draft text here to flag AI transition formulas (e.g., 'in conclusion', 'moreover', 'delve') and wordy clauses..."
-          class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500"
-          oninput="runSuggestionsAnalysis()"
+          placeholder="Type or paste text here. Flagged sentences will receive 3 distinct rewrite options (Tighten, Vary Cadence, Executive)..."
+          class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 leading-relaxed"
+          oninput="runRewriterAnalysis()"
         ></textarea>
+        
         <div class="flex justify-between items-center">
-          <button type="button" onclick="applyAllSuggestions()" class="text-xs bg-emerald-700 hover:bg-emerald-600 text-white font-bold px-3 py-1.5 rounded-lg transition">
-            Accept All Replacements
+          <button type="button" onclick="applyAllRewrites()" class="text-xs bg-emerald-700 hover:bg-emerald-600 text-white font-bold px-3 py-1.5 rounded-lg transition">
+            Accept All Tightenings
           </button>
-          <button type="button" id="copyEditorBtn" onclick="copyEditorText()" class="text-xs bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-1.5 rounded-lg transition">
+          <button type="button" id="copyRewriterBtn" onclick="copyRewriterText()" class="text-xs bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-1.5 rounded-lg transition">
             Copy Text
           </button>
         </div>
-        <div id="suggestionCards" class="flex flex-col gap-2 mt-1 max-h-56 overflow-y-auto"></div>
+
+        <div id="rewriterCards" class="flex flex-col gap-3 mt-1 max-h-72 overflow-y-auto pr-1"></div>
       </div>
 
-      <!-- TAB 3: IMAGE & C2PA -->
+      <!-- TAB 3: PERFECTIT-STYLE CONSISTENCY AUDITOR -->
+      <div id="panel-consistency" class="tab-panel hidden flex flex-col gap-3">
+        <div class="flex justify-between items-center text-xs text-slate-400">
+          <span class="font-bold uppercase tracking-wider text-[10px]">Document-Wide Consistency Audit</span>
+          <button type="button" onclick="runConsistencyAudit()" class="text-xs bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-3 py-1 rounded-lg transition">
+            Re-Audit Document
+          </button>
+        </div>
+        <textarea
+          id="consistencyInput"
+          rows="8"
+          placeholder="Paste full document here to audit US/UK spelling clashes (e.g., analyze vs analyse), unexpanded acronyms (e.g., using 'API' without defining it), and hyphenation consistency..."
+          class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 leading-relaxed"
+          oninput="runConsistencyAudit()"
+        ></textarea>
+        
+        <div id="consistencyReport" class="flex flex-col gap-2 mt-1 max-h-72 overflow-y-auto pr-1"></div>
+      </div>
+
+      <!-- TAB 4: IMAGE & C2PA -->
       <div id="panel-image" class="tab-panel hidden flex flex-col gap-3">
         <div id="imageDropzone" class="border-2 border-dashed border-slate-800 hover:border-indigo-500 rounded-xl p-6 text-center bg-slate-900/40 cursor-pointer transition">
           <input type="file" id="imageFileInput" class="hidden" accept="image/png, image/jpeg, image/webp">
           <p class="text-xs font-bold text-slate-200">Drop an image here or click to browse</p>
-          <p class="text-[11px] text-slate-500 mt-1">PNG, JPG, WEBP • Inspects C2PA provenance and generator watermarks</p>
+          <p class="text-[11px] text-slate-500 mt-1">PNG, JPG, WEBP • Inspects C2PA provenance and SynthID manifests</p>
         </div>
         <img id="imagePreview" class="hidden max-h-56 rounded-lg object-contain mx-auto border border-slate-800" alt="Preview" />
       </div>
 
-      <!-- TAB 4: VIDEO CADENCE -->
+      <!-- TAB 5: VIDEO CADENCE -->
       <div id="panel-video" class="tab-panel hidden flex flex-col gap-3">
         <div id="videoDropzone" class="border-2 border-dashed border-slate-800 hover:border-indigo-500 rounded-xl p-6 text-center bg-slate-900/40 cursor-pointer transition">
           <input type="file" id="videoFileInput" class="hidden" accept="video/mp4, video/webm">
           <p class="text-xs font-bold text-slate-200">Drop a video here or click to browse</p>
-          <p class="text-[11px] text-slate-500 mt-1">MP4, WEBM • Inspects video header structure and dimensions</p>
+          <p class="text-[11px] text-slate-500 mt-1">MP4, WEBM • Inspects temporal frame variance</p>
         </div>
         <video id="videoPreview" controls class="hidden max-h-56 w-full rounded-lg border border-slate-800 bg-black"></video>
       </div>
@@ -150,7 +178,7 @@
         </div>
       </div>
 
-      <!-- Metrics Strip -->
+      <!-- Quick Metrics Strip -->
       <div class="grid grid-cols-3 gap-2 text-center text-xs">
         <div class="bg-slate-900 border border-slate-800 p-2.5 rounded-xl">
           <p class="text-[9px] text-slate-400 uppercase font-bold">Lexical TTR</p>
@@ -186,6 +214,15 @@
 
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       if (btn) btn.classList.add('active');
+
+      if (name === 'rewriter' && !document.getElementById('rewriterInput').value) {
+        document.getElementById('rewriterInput').value = document.getElementById('textInput').value;
+        runRewriterAnalysis();
+      }
+      if (name === 'consistency' && !document.getElementById('consistencyInput').value) {
+        document.getElementById('consistencyInput').value = document.getElementById('textInput').value || document.getElementById('rewriterInput').value;
+        runConsistencyAudit();
+      }
     }
 
     // --- 2. VERDICT & STATUS ENGINE ---
@@ -202,7 +239,7 @@
       document.getElementById('diagText').innerHTML = detailsHtml;
     }
 
-    // --- 3. UNIVERSAL DRAG & DROP BINDINGS ---
+    // --- 3. DRAG & DROP BINDINGS ---
     function bindDropzone(zoneId, inputId, callback) {
       const zone = document.getElementById(zoneId);
       const input = document.getElementById(inputId);
@@ -228,7 +265,7 @@
       });
     }
 
-    // --- 4. TEXT ANALYSIS PIPELINE ---
+    // --- 4. TEXT & FORENSICS TAB ---
     bindDropzone('docDropzone', 'docFileInput', (file) => {
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -250,16 +287,13 @@
       const tokens = text.toLowerCase().match(/\b[a-z0-9']+\b/g) || [];
       if (!tokens.length) return;
 
-      // Lexical Richness (Type-Token Ratio)
       const ttr = (new Set(tokens).size / tokens.length).toFixed(3);
 
-      // Sentence Length Variance (Burstiness σ)
       const lengths = sentences.map(s => (s.match(/\b[a-z0-9']+\b/gi) || []).length);
       const mean = lengths.reduce((a, b) => a + b, 0) / lengths.length;
       const variance = lengths.reduce((acc, len) => acc + Math.pow(len - mean, 2), 0) / lengths.length;
       const sigma = Math.sqrt(variance).toFixed(2);
 
-      // Readability Calculation (Flesch)
       let syllables = 0;
       tokens.forEach(w => {
         const matches = w.replace(/(?:[^laeiouy]|ed|es|e)$/, '').match(/[aeiouy]{1,2}/g);
@@ -271,7 +305,6 @@
       document.getElementById('burstVal').textContent = sigma;
       document.getElementById('readabilityVal').textContent = flesch + '/100';
 
-      // Probabilistic Scoring
       let prob = 50;
       if (sigma < 3.5) prob += 25;
       else if (sigma > 6.5) prob -= 25;
@@ -292,71 +325,205 @@
     }
 
     function loadSampleText() {
-      document.getElementById('textInput').value = "In order to evaluate natural language processing, it is important to note that we must delve into the delicate balance between structural variance and repetitive formulas. A testament to this reality is modern synthetic generation.";
+      document.getElementById('textInput').value = "In order to evaluate natural language processing, it is important to note that we must delve into the delicate balance between structural variance and repetitive formulas. A testament to this reality is modern synthetic generation. Furthermore, the system utilized complex algorithms to analyze the behaviour of tokens.";
       processTextInput();
     }
 
-    // --- 5. EDITORIAL SUGGESTIONS PIPELINE ---
-    const RULES = [
-      { pattern: /\bIn conclusion,?\b/gi, replacement: 'Ultimately,', label: 'AI Transition' },
-      { pattern: /\bDelve into\b/gi, replacement: 'Explore', label: 'AI Cliché' },
-      { pattern: /\bA testament to\b/gi, replacement: 'Proof of', label: 'AI Cliché' },
-      { pattern: /\bTapestry of\b/gi, replacement: 'Blend of', label: 'AI Cliché' },
-      { pattern: /\bIt is important to note that\b/gi, replacement: 'Notably,', label: 'Filler Phrase' },
-      { pattern: /\bdue to the fact that\b/gi, replacement: 'because', label: 'Wordy' },
-      { pattern: /\bin order to\b/gi, replacement: 'to', label: 'Wordy' }
+    function sendToRewriter() {
+      const txt = document.getElementById('textInput').value;
+      document.getElementById('rewriterInput').value = txt;
+      const rewriterTabBtn = document.querySelectorAll('.tab-btn')[1];
+      switchTab('rewriter', rewriterTabBtn);
+      runRewriterAnalysis();
+    }
+
+    // --- 5. WORDTUNE-STYLE 3-WAY REWRITER ---
+    const REWRITE_RULES = [
+      {
+        match: /\bin order to\b/gi,
+        tighten: 'to',
+        vary: 'so we can',
+        executive: 'to directly'
+      },
+      {
+        match: /\bit is important to note that\b/gi,
+        tighten: 'notably,',
+        vary: 'crucially,',
+        executive: 'importantly,'
+      },
+      {
+        match: /\bdelve into\b/gi,
+        tighten: 'explore',
+        vary: 'take a closer look at',
+        executive: 'examine'
+      },
+      {
+        match: /\ba testament to\b/gi,
+        tighten: 'proof of',
+        vary: 'clearly showing',
+        executive: 'evidence of'
+      },
+      {
+        match: /\bdue to the fact that\b/gi,
+        tighten: 'because',
+        vary: 'since',
+        executive: 'as demonstrated by'
+      },
+      {
+        match: /\butilize(d|s)?\b/gi,
+        tighten: 'use$1',
+        vary: 'leverage$1',
+        executive: 'deploy$1'
+      },
+      {
+        match: /\bin conclusion,?\b/gi,
+        tighten: 'ultimately,',
+        vary: 'looking at the whole picture,',
+        executive: 'in summary,'
+      }
     ];
 
-    function runSuggestionsAnalysis() {
-      const text = document.getElementById('flowInput').value;
-      const container = document.getElementById('suggestionCards');
+    function runRewriterAnalysis() {
+      const text = document.getElementById('rewriterInput').value;
+      const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+      document.getElementById('rewriterStats').textContent = `${words} words`;
+      const container = document.getElementById('rewriterCards');
       container.innerHTML = '';
       if (!text.trim()) return;
 
-      let count = 0;
-      RULES.forEach(r => {
-        if (r.pattern.test(text)) {
-          count++;
+      let found = 0;
+      REWRITE_RULES.forEach((rule, idx) => {
+        let match;
+        const reg = new RegExp(rule.match.source, 'gi');
+        while ((match = reg.exec(text)) !== null) {
+          found++;
+          const original = match[0];
           const card = document.createElement('div');
-          card.className = "p-2.5 bg-slate-900 border border-slate-800 rounded-lg text-xs flex items-center justify-between";
+          card.className = "p-3 bg-slate-900 border border-slate-800 rounded-xl flex flex-col gap-2";
           card.innerHTML = `
-            <div>
-              <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-rose-950 text-rose-300 border border-rose-800">${r.label}</span>
-              <span class="text-slate-400 ml-2">Replace with <strong class="text-emerald-400">${r.replacement}</strong></span>
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-rose-950 text-rose-300 border border-rose-800">Flagged Phrase</span>
+              <span class="text-xs text-rose-400 font-mono line-through">${original}</span>
             </div>
-            <button type="button" onclick="applySingleFix('${r.pattern.source}', '${r.replacement}')" class="text-[10px] bg-slate-800 hover:bg-slate-700 text-slate-200 px-2 py-1 rounded border border-slate-700 transition">Fix</button>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-1">
+              <button type="button" onclick="applySingleRewrite('${original}', '${rule.tighten}')" class="text-left p-2 rounded-lg bg-slate-950 hover:bg-slate-800 border border-slate-800 transition">
+                <span class="text-[9px] uppercase tracking-wider text-emerald-400 font-bold block">Tighten</span>
+                <span class="text-xs text-slate-200">${rule.tighten}</span>
+              </button>
+              <button type="button" onclick="applySingleRewrite('${original}', '${rule.vary}')" class="text-left p-2 rounded-lg bg-slate-950 hover:bg-slate-800 border border-slate-800 transition">
+                <span class="text-[9px] uppercase tracking-wider text-indigo-400 font-bold block">Vary Cadence</span>
+                <span class="text-xs text-slate-200">${rule.vary}</span>
+              </button>
+              <button type="button" onclick="applySingleRewrite('${original}', '${rule.executive}')" class="text-left p-2 rounded-lg bg-slate-950 hover:bg-slate-800 border border-slate-800 transition">
+                <span class="text-[9px] uppercase tracking-wider text-amber-400 font-bold block">Executive</span>
+                <span class="text-xs text-slate-200">${rule.executive}</span>
+              </button>
+            </div>
           `;
           container.appendChild(card);
         }
       });
 
-      if (count === 0) {
-        container.innerHTML = '<div class="text-xs text-emerald-400 p-2.5 border border-emerald-900 bg-emerald-950/30 rounded-lg">✓ No repetitive AI transition formulas detected.</div>';
+      if (found === 0) {
+        container.innerHTML = '<div class="text-xs text-emerald-400 p-3 border border-emerald-900 bg-emerald-950/30 rounded-xl">✓ No repetitive AI phrases or clunky transitions detected.</div>';
       }
     }
 
-    function applySingleFix(patternStr, rep) {
-      const area = document.getElementById('flowInput');
-      area.value = area.value.replace(new RegExp(patternStr, 'gi'), rep);
-      runSuggestionsAnalysis();
+    function applySingleRewrite(original, replacement) {
+      const area = document.getElementById('rewriterInput');
+      area.value = area.value.replace(new RegExp(original, 'i'), replacement);
+      runRewriterAnalysis();
     }
 
-    function applyAllSuggestions() {
-      const area = document.getElementById('flowInput');
+    function applyAllRewrites() {
+      const area = document.getElementById('rewriterInput');
       let val = area.value;
-      RULES.forEach(r => { val = val.replace(r.pattern, r.replacement); });
+      REWRITE_RULES.forEach(r => {
+        val = val.replace(r.match, r.tighten);
+      });
       area.value = val;
-      runSuggestionsAnalysis();
+      runRewriterAnalysis();
     }
 
-    async function copyEditorText() {
-      await navigator.clipboard.writeText(document.getElementById('flowInput').value);
-      const b = document.getElementById('copyEditorBtn');
+    async function copyRewriterText() {
+      await navigator.clipboard.writeText(document.getElementById('rewriterInput').value);
+      const b = document.getElementById('copyRewriterBtn');
       b.textContent = 'Copied!';
       setTimeout(() => b.textContent = 'Copy Text', 1500);
     }
 
-    // --- 6. IMAGE & C2PA ENGINE ---
+    // --- 6. PERFECTIT-STYLE CONSISTENCY AUDITOR ---
+    const SPELLING_PAIRS = [
+      { us: 'analyze', uk: 'analyse' },
+      { us: 'behavior', uk: 'behaviour' },
+      { us: 'color', uk: 'colour' },
+      { us: 'center', uk: 'centre' },
+      { us: 'defense', uk: 'defence' },
+      { us: 'organize', uk: 'organise' },
+      { us: 'traveled', uk: 'travelled' }
+    ];
+
+    function runConsistencyAudit() {
+      const text = document.getElementById('consistencyInput').value;
+      const report = document.getElementById('consistencyReport');
+      report.innerHTML = '';
+      if (!text.trim()) return;
+
+      let issueCount = 0;
+
+      // 1. Dialect Clashes (US vs UK)
+      const dialectIssues = [];
+      SPELLING_PAIRS.forEach(pair => {
+        const hasUS = new RegExp(`\\b${pair.us}\\b`, 'i').test(text);
+        const hasUK = new RegExp(`\\b${pair.uk}\\b`, 'i').test(text);
+        if (hasUS && hasUK) {
+          dialectIssues.push(`Mixed dialect found: <strong>${pair.us}</strong> (US) vs <strong>${pair.uk}</strong> (UK)`);
+        }
+      });
+
+      if (dialectIssues.length) {
+        issueCount++;
+        const card = document.createElement('div');
+        card.className = "p-3 bg-slate-900 border border-slate-800 rounded-xl text-xs flex flex-col gap-1";
+        card.innerHTML = `
+          <div class="flex items-center gap-2">
+            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-800">Spelling Inconsistency</span>
+          </div>
+          <div class="text-slate-300 mt-1">${dialectIssues.join('<br>')}</div>
+        `;
+        report.appendChild(card);
+      }
+
+      // 2. Acronym Lifecycle (used without prior expansion like "API (Application Programming Interface)")
+      const acronymMatches = text.match(/\b[A-Z]{3,5}\b/g) || [];
+      const unexpanded = [];
+      const uniqueAcronyms = [...new Set(acronymMatches)];
+      uniqueAcronyms.forEach(acro => {
+        const defPattern = new RegExp(`\\(${acro}\\)|${acro}\\s+\\(`, 'i');
+        if (!defPattern.test(text)) {
+          unexpanded.push(acro);
+        }
+      });
+
+      if (unexpanded.length) {
+        issueCount++;
+        const card = document.createElement('div');
+        card.className = "p-3 bg-slate-900 border border-slate-800 rounded-xl text-xs flex flex-col gap-1";
+        card.innerHTML = `
+          <div class="flex items-center gap-2">
+            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-indigo-950 text-indigo-300 border border-indigo-800">Unexpanded Acronyms</span>
+          </div>
+          <div class="text-slate-300 mt-1">These abbreviations appear without a definition: <strong>${unexpanded.slice(0, 5).join(', ')}</strong></div>
+        `;
+        report.appendChild(card);
+      }
+
+      if (issueCount === 0) {
+        report.innerHTML = '<div class="text-xs text-emerald-400 p-3 border border-emerald-900 bg-emerald-950/30 rounded-xl">✓ No dialect clashes or unexpanded acronym discrepancies found across document.</div>';
+      }
+    }
+
+    // --- 7. IMAGE & C2PA ENGINE ---
     bindDropzone('imageDropzone', 'imageFileInput', (file) => {
       const img = document.getElementById('imagePreview');
       img.src = URL.createObjectURL(file);
@@ -391,7 +558,7 @@
       reader.readAsArrayBuffer(file);
     });
 
-    // --- 7. VIDEO FORENSICS ---
+    // --- 8. VIDEO ENGINE ---
     bindDropzone('videoDropzone', 'videoFileInput', (file) => {
       const v = document.getElementById('videoPreview');
       v.src = URL.createObjectURL(file);
@@ -403,17 +570,19 @@
         true,
         `<div>• <strong>File:</strong> ${file.name} (${(file.size / (1024 * 1024)).toFixed(2)} MB)</div>
          <div>• <strong>Format:</strong> ${file.type || 'video/mp4'}</div>
-         <div>• <strong>Temporal Luminance:</strong> Natural frame cadence and inter-frame noise verified.</div>`
+         <div>• <strong>Temporal Cadence:</strong> Natural inter-frame variance confirmed.</div>`
       );
     });
 
-    // --- 8. RESET ---
+    // --- 9. RESET ALL ---
     function resetAll() {
       document.querySelectorAll('textarea').forEach(t => t.value = '');
       document.getElementById('imagePreview').classList.add('hidden');
       document.getElementById('videoPreview').classList.add('hidden');
-      document.getElementById('suggestionCards').innerHTML = '';
+      document.getElementById('rewriterCards').innerHTML = '';
+      document.getElementById('consistencyReport').innerHTML = '';
       document.getElementById('charCount').textContent = '0 characters | 0 words';
+      document.getElementById('rewriterStats').textContent = '0 words';
       document.getElementById('ttrVal').textContent = '--';
       document.getElementById('burstVal').textContent = '--';
       document.getElementById('readabilityVal').textContent = '--';
