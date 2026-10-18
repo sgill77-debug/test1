@@ -28,30 +28,244 @@
             brand: {
               400: '#818cf8',
               500: '#6366f1',
-              600
-ex items-start gap-3">
+              600: '#4f46e5',
+              700: '#4338ca',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Subtle background grid pattern & glow effects */
+    .bg-grid {
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    }
+    .glow-indigo {
+      box-shadow: 0 0 35px -5px rgba(99, 102, 241, 0.18);
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 4px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.6);
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans antialiased selection:bg-brand-500 selection:text-white relative bg-grid">
+
+  <!-- Ambient Light Orbs -->
+  <div class="fixed top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-indigo-600/10 blur-[130px] pointer-events-none -z-10"></div>
+  <div class="fixed bottom-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-emerald-600/10 blur-[130px] pointer-events-none -z-10"></div>
+
+  <!-- Header -->
+  <header class="border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-xl sticky top-0 z-50 transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="relative flex items-center justify-center">
+          <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-brand-600 to-indigo-400 flex items-center justify-center text-white shadow-lg shadow-brand-500/25">
+            <i data-lucide="shield-check" class="w-5 h-5"></i>
+          </div>
+          <span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 border-2 border-slate-950 rounded-full"></span>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="font-extrabold text-base sm:text-lg tracking-tight text-white">Veritas<span class="text-indigo-400">AI</span></h1>
+            <span class="px-2 py-0.5 text-[10px] font-bold rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">Studio Pro</span>
+          </div>
+          <p class="text-[11px] text-slate-400">Forensics, Content Integrity & Flow Optimization</p>
+        </div>
+      </div>
+
+      <!-- Quick Action Toolbar -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <button id="exportPdfBtn" title="Download Formatted PDF Summary" class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-xs font-semibold text-slate-300 border border-slate-700/80 transition flex items-center gap-1.5 shadow-sm active:scale-95">
+          <i data-lucide="file-down" class="w-3.5 h-3.5 text-indigo-400"></i>
+          <span class="hidden sm:inline">Export PDF</span>
+        </button>
+        <button id="exportJsonBtn" title="Export Raw Forensic JSON" class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-xs font-semibold text-slate-300 border border-slate-700/80 transition flex items-center gap-1.5 shadow-sm active:scale-95">
+          <i data-lucide="file-json" class="w-3.5 h-3.5 text-slate-400"></i>
+          <span class="hidden sm:inline">JSON</span>
+        </button>
+        <button id="quickResetBtn" title="Clear all fields" class="px-3 py-1.5 rounded-xl bg-slate-900/60 hover:bg-rose-950/40 text-xs font-semibold text-slate-400 hover:text-rose-300 border border-slate-800 hover:border-rose-800/60 transition flex items-center gap-1.5 active:scale-95">
+          <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+          <span class="hidden sm:inline">Reset</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 py-6 w-full grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
+    
+    <!-- Left Workspace (7 Columns) -->
+    <section class="lg:col-span-7 flex flex-col gap-5">
+      
+      <!-- Interactive Modality Bar -->
+      <div class="flex bg-slate-900/70 p-1.5 rounded-2xl border border-slate-800/90 gap-1 overflow-x-auto shadow-inner">
+        <button id="tabTextBtn" class="flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-bold transition bg-brand-600 text-white shadow-sm whitespace-nowrap">
+          <i data-lucide="file-text" class="w-4 h-4"></i> Text & Ingestion
+        </button>
+        <button id="tabImageBtn" class="flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-semibold text-slate-400 hover:text-slate-200 transition whitespace-nowrap">
+          <i data-lucide="image" class="w-4 h-4"></i> Image & Metadata
+        </button>
+        <button id="tabAudioBtn" class="flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-semibold text-slate-400 hover:text-slate-200 transition whitespace-nowrap">
+          <i data-lucide="mic" class="w-4 h-4"></i> Audio Cadence
+        </button>
+        <button id="tabHumanizeBtn" class="flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-semibold text-slate-400 hover:text-slate-200 transition whitespace-nowrap">
+          <i data-lucide="pen-tool" class="w-4 h-4 text-emerald-400"></i> Flow & Diff
+        </button>
+      </div>
+
+      <!-- TAB 1: TEXT & WEB INGESTION -->
+      <div id="viewText" class="flex flex-col gap-4">
+        
+        <!-- URL Ingestion Accordion/Bar -->
+        <div class="bg-slate-900/40 border border-slate-800/80 rounded-2xl p-3 flex flex-col sm:flex-row items-center gap-2">
+          <div class="flex items-center gap-2 w-full sm:w-auto text-slate-400 text-xs px-2">
+            <i data-lucide="link" class="w-4 h-4 text-indigo-400 flex-shrink-0"></i>
+            <span class="font-medium whitespace-nowrap">Web Ingest:</span>
+          </div>
+          <input 
+            type="url" 
+            id="urlInput" 
+            placeholder="Paste blog or article URL (e.g., https://example.com/article)..." 
+            class="flex-1 w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-brand-500 font-mono"
+          />
+          <button id="fetchUrlBtn" class="w-full sm:w-auto px-4 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-200 border border-slate-700 transition flex items-center justify-center gap-1.5">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i> Fetch
+          </button>
+        </div>
+
+        <!-- Document File Dropzone -->
+        <div id="docDropzone" class="border border-dashed border-slate-700/80 hover:border-brand-500 rounded-2xl p-4 text-center cursor-pointer transition bg-slate-900/30 hover:bg-slate-900/70 group">
+          <input type="file" id="docFileInput" class="hidden" accept=".txt,.md,.rtf">
+          <div class="flex items-center justify-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-slate-800 flex items-center justify-center text-slate-300 group-hover:text-brand-400 group-hover:scale-105 transition">
+              <i data-lucide="upload-cloud" class="w-5 h-5"></i>
+            </div>
+            <div class="text-left">
+              <p class="text-xs font-bold text-slate-200 group-hover:text-brand-300">Upload text document (.txt, .md, .rtf)</p>
+              <p class="text-[11px] text-slate-500">Fast client-side file reading or paste content below</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text Input Area -->
+        <div class="flex flex-col gap-2">
+          <div class="flex justify-between items-center text-xs text-slate-400 px-1">
+            <span class="font-bold tracking-wider uppercase text-[10px] text-slate-500">Document Content</span>
+            <span id="charCount" class="font-mono text-[11px] text-slate-400">0 chars | 0 words</span>
+          </div>
+          <textarea
+            id="textInput"
+            rows="8"
+            placeholder="Paste text here to evaluate readability scores, burstiness (σ), clichés, and synthetic pattern distributions..."
+            class="w-full bg-slate-900/80 border border-slate-800 rounded-2xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500/50 focus:border-brand-500 leading-relaxed transition resize-y"
+          ></textarea>
+        </div>
+
+        <button id="analyzeTextBtn" class="flex items-center justify-center gap-2 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold py-3 px-5 rounded-xl shadow-lg shadow-brand-600/20 transition active:scale-[0.99] text-xs sm:text-sm">
+          <i data-lucide="scan-line" class="w-4 h-4"></i> Run Veritas Inspection
+        </button>
+      </div>
+
+      <!-- TAB 2: IMAGE & METADATA FORENSICS -->
+      <div id="viewImage" class="hidden flex flex-col gap-4">
+        <div id="imageDropzone" class="border-2 border-dashed border-slate-700/80 hover:border-brand-500 rounded-2xl p-7 text-center cursor-pointer transition bg-slate-900/30 hover:bg-slate-900/70 group">
+          <input type="file" id="imageFileInput" class="hidden" accept="image/png, image/jpeg, image/webp">
+          <div class="flex flex-col items-center justify-center gap-2">
+            <div class="w-12 h-12 rounded-2xl bg-indigo-950/60 border border-indigo-800/40 flex items-center justify-center text-indigo-400 group-hover:scale-110 transition">
+              <i data-lucide="image-plus" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <p class="text-xs font-bold text-slate-200 group-hover:text-brand-300">Choose or drop an image</p>
+              <p class="text-[11px] text-slate-500 mt-0.5">Scans C2PA signatures, EXIF tags, and synthetic smoothness</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="imagePreviewContainer" class="hidden border border-slate-800 rounded-2xl bg-slate-900/80 p-3.5 flex flex-col items-center">
+          <img id="imagePreview" class="max-h-56 rounded-xl object-contain shadow-md mb-2" alt="Uploaded Preview" />
+          <span id="imageMeta" class="text-[11px] font-mono text-slate-400"></span>
+          
+          <!-- Image Stripper / Utility Actions -->
+          <div class="flex items-center gap-2 mt-3">
+            <button id="stripExifBtn" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 border border-slate-700 flex items-center gap-1.5 transition">
+              <i data-lucide="eraser" class="w-3.5 h-3.5 text-amber-400"></i> Strip Tracking Metadata
+            </button>
+            <a id="downloadCleanLink" class="hidden px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-xs text-white font-medium flex items-center gap-1.5 transition">
+              <i data-lucide="download" class="w-3.5 h-3.5"></i> Download Clean
+            </a>
+          </div>
+        </div>
+
+        <button id="analyzeImageBtn" class="hidden flex items-center justify-center gap-2 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold py-3 px-5 rounded-xl shadow-lg shadow-brand-600/20 transition text-xs sm:text-sm">
+          <i data-lucide="shield-search" class="w-4 h-4"></i> Inspect Image Authenticity
+        </button>
+      </div>
+
+      <!-- TAB 3: AUDIO & CADENCE FORENSICS -->
+      <div id="viewAudio" class="hidden flex flex-col gap-4">
+        <div id="audioDropzone" class="border-2 border-dashed border-slate-700/80 hover:border-brand-500 rounded-2xl p-7 text-center cursor-pointer transition bg-slate-900/30 hover:bg-slate-900/70 group">
+          <input type="file" id="audioFileInput" class="hidden" accept="audio/mp3, audio/wav, audio/ogg, audio/mpeg">
+          <div class="flex flex-col items-center justify-center gap-2">
+            <div class="w-12 h-12 rounded-2xl bg-indigo-950/60 border border-indigo-800/40 flex items-center justify-center text-indigo-400 group-hover:scale-110 transition">
+              <i data-lucide="mic" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <p class="text-xs font-bold text-slate-200 group-hover:text-brand-300">Upload Audio File (.wav, .mp3, .ogg)</p>
+              <p class="text-[11px] text-slate-500 mt-0.5">Analyzes spectral cadence, silence variance, and synthetic vocoder profiles</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="audioPlayerContainer" class="hidden border border-slate-800 rounded-2xl bg-slate-900/80 p-4 flex flex-col gap-3">
+          <audio id="audioPreview" controls class="w-full"></audio>
+          <span id="audioMeta" class="text-[11px] font-mono text-slate-400 text-center"></span>
+        </div>
+
+        <button id="analyzeAudioBtn" class="hidden flex items-center justify-center gap-2 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold py-3 px-5 rounded-xl shadow-lg shadow-brand-600/20 transition text-xs sm:text-sm">
+          <i data-lucide="activity" class="w-4 h-4"></i> Run Audio Cadence Forensics
+        </button>
+      </div>
+
+      <!-- TAB 4: EDITORIAL POLISH & DIFF COMPARISON -->
+      <div id="viewHumanize" class="hidden flex flex-col gap-4">
+        <div class="bg-gradient-to-r from-indigo-950/30 to-slate-900 border border-indigo-800/40 rounded-2xl p-4 flex items-start gap-3">
           <div class="p-2 rounded-xl bg-indigo-900/50 text-indigo-300">
             <i data-lucide="sparkle" class="w-4 h-4"></i>
           </div>
           <div>
-            <h3 class="text-xs font-bold text-indigo-200">Editorial Pacing & Natural Cadence</h3>
+            <h3 class="text-xs font-bold text-indigo-200">Editorial Pacing & Cliché Reducer</h3>
             <p class="text-[11px] text-slate-400 mt-0.5 leading-relaxed">
-              Softens rigid AI transition habits (e.g., <em>"in conclusion"</em>, <em>"moreover"</em>, <em>"delve"</em>) and introduces rhythmic sentence variance for human readability.
+              Detects overused AI tropes (<em>"delve"</em>, <em>"moreover"</em>, <em>"testament"</em>), rewrites robotic transitions, and provides a side-by-side visual difference comparison[span_2](start_span)[span_2](end_span).
             </p>
           </div>
         </div>
 
+        <!-- Raw Draft Input -->
         <textarea
           id="humanizeInput"
           rows="5"
-          placeholder="Paste draft writing here to refine vocabulary, rhythm, and flow..."
+          placeholder="Paste draft writing here to refine vocabulary, soften AI cadence, and review changes..."
           class="w-full bg-slate-900/90 border border-slate-800 rounded-2xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 leading-relaxed resize-y"
         ></textarea>
 
         <button id="polishTextBtn" class="flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-5 rounded-xl shadow-lg shadow-emerald-600/20 transition active:scale-[0.99] text-xs sm:text-sm">
-          <i data-lucide="wand-2" class="w-4 h-4"></i> Enhance Flow & Balance Pacing
+          <i data-lucide="wand-2" class="w-4 h-4"></i> Enhance Flow & Generate Diff
         </button>
 
+        <!-- Polished Text Output -->
         <div class="flex flex-col gap-2 mt-2">
           <div class="flex justify-between items-center px-1">
             <label class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Polished Result</label>
@@ -67,138 +281,59 @@ ex items-start gap-3">
             class="w-full bg-slate-900/60 border border-slate-800/90 rounded-2xl p-4 text-xs font-mono text-slate-200 focus:outline-none resize-y"
           ></textarea>
         </div>
+
+        <!-- Side-by-Side Visual Diff View -->
+        <div id="diffContainer" class="hidden flex flex-col gap-2 p-3 bg-slate-950/70 border border-slate-800 rounded-2xl">
+          <span class="text-[10px] font-bold tracking-wider text-slate-400 uppercase">Interactive Diff Comparison:</span>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs font-mono leading-relaxed">
+            <div class="p-3 bg-rose-950/20 border border-rose-900/40 rounded-xl">
+              <p class="text-[10px] font-bold text-rose-400 mb-1">ORIGINAL DRAFT</p>
+              <div id="diffOriginal" class="text-rose-200/90 whitespace-pre-wrap"></div>
+            </div>
+            <div class="p-3 bg-emerald-950/20 border border-emerald-900/40 rounded-xl">
+              <p class="text-[10px] font-bold text-emerald-400 mb-1">POLISHED CADENCE</p>
+              <div id="diffEnhanced" class="text-emerald-200/90 whitespace-pre-wrap"></div>
+            </div>
+          </div>
+        </div>
       </div>
 
     </section>
 
-    <!-- Right Telemetry & Results Column (5 Cols) -->
+    <!-- Right Column: Analytics, Gauges & Printable Report (5 Columns) -->
     <section class="lg:col-span-5 flex flex-col gap-5">
       
-      <!-- Primary Verdict Card -->
-      <div class="bg-slate-900/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl relative overflow-hidden">
-        <div class="flex items-center justify-between mb-4">
-          <div class="flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
-            <h2 class="text-[10px] font-bold tracking-widest text-slate-400 uppercase">Detection Gauge</h2>
+      <!-- Printable Container (Targeted by html2pdf) -->
+      <div id="reportContainer" class="flex flex-col gap-5">
+        
+        <!-- Primary Verdict Card -->
+        <div class="bg-slate-900/90 border border-slate-800/90 rounded-2xl p-5 shadow-xl relative overflow-hidden glow-indigo">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-brand-500 animate-pulse"></span>
+              <h2 class="text-[10px] font-bold tracking-widest text-slate-400 uppercase">Detection Gauge</h2>
+            </div>
+            <span id="verdictBadge" class="text-[11px] px-3 py-1 rounded-full font-bold bg-slate-800 text-slate-400 border border-slate-700/80 shadow-sm">
+              Ready
+            </span>
           </div>
-          <span id="verdictBadge" class="text-[11px] px-3 py-1 rounded-full font-bold bg-slate-800 text-slate-400 border border-slate-700/80 shadow-sm">
-            Ready
-          </span>
+
+          <div class="flex items-baseline gap-2 mb-3">
+            <span id="aiScore" class="text-5xl font-black text-white tracking-tight">0%</span>
+            <span class="text-xs text-slate-400 font-medium">Likelihood of AI Synthesis</span>
+          </div>
+
+          <div class="w-full bg-slate-800/80 rounded-full h-2.5 overflow-hidden p-0.5 border border-slate-800">
+            <div id="aiScoreBar" class="bg-brand-500 h-1.5 rounded-full transition-all duration-700" style="width: 0%"></div>
+          </div>
         </div>
 
-        <div class="flex items-baseline gap-2 mb-3">
-          <span id="aiScore" class="text-5xl font-black text-white tracking-tight">0%</span>
-          <span class="text-xs text-slate-400 font-medium">Estimated Synthesis Score</span>
-        </div>
-
-        <!-- Progress Bar -->
-        <div class="w-full bg-slate-800/80 rounded-full h-2.5 overflow-hidden p-0.5 border border-slate-800">
-          <div id="aiScoreBar" class="bg-indigo-500 h-1.5 rounded-full transition-all duration-700" style="width: 0%"></div>
-        </div>
-      </div>
-
-      <!-- Diagnostics Telemetry Card -->
-      <div class="bg-slate-900/90 border border-slate-800/90 rounded-2xl p-5 flex-1 flex flex-col shadow-xl">
-        <div class="flex items-center justify-between mb-3 border-b border-slate-800 pb-3">
-          <h2 class="text-[10px] font-bold tracking-widest text-slate-400 uppercase flex items-center gap-2">
-            <i data-lucide="cpu" class="w-3.5 h-3.5 text-indigo-400"></i> Forensic Breakdown
-          </h2>
-          <span id="telemetryStatus" class="text-[10px] font-mono text-slate-500">IDLE</span>
-        </div>
-        <div id="diagnosticsOutput" class="text-xs font-mono text-slate-300 leading-relaxed space-y-2 flex-1">
-          Select an ingestion modality and upload content to inspect signatures.
-        </div>
-      </div>
-
-    </section>
-  </main>
-
-  <script>
-    lucide.createIcons();
-
-    // Tab Management
-    const tabs = {
-      text: { btn: document.getElementById('tabTextBtn'), view: document.getElementById('viewText') },
-      image: { btn: document.getElementById('tabImageBtn'), view: document.getElementById('viewImage') },
-      video: { btn: document.getElementById('tabVideoBtn'), view: document.getElementById('viewVideo') },
-      humanize: { btn: document.getElementById('tabHumanizeBtn'), view: document.getElementById('viewHumanize') }
-    };
-
-    function setTab(activeKey) {
-      Object.keys(tabs).forEach(k => {
-        const item = tabs[k];
-        if (k === activeKey) {
-          item.btn.className = "flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs font-bold transition bg-brand-600 text-white shadow-sm";
-          item.view.classList.remove('hidden');
-        } else {
-          item.btn.className = "flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs font-semibold text-slate-400 hover:text-slate-200 transition";
-          item.view.classList.add('hidden');
-        }
-      });
-      resetVerdict();
-    }
-
-    tabs.text.btn.addEventListener('click', () => setTab('text'));
-    tabs.image.btn.addEventListener('click', () => setTab('image'));
-    tabs.video.btn.addEventListener('click', () => setTab('video'));
-    tabs.humanize.btn.addEventListener('click', () => setTab('humanize'));
-
-    // Global Reset
-    document.getElementById('quickClearBtn').addEventListener('click', () => {
-      document.getElementById('textInput').value = '';
-      document.getElementById('humanizeInput').value = '';
-      document.getElementById('humanizeOutput').value = '';
-      document.getElementById('imageFileInput').value = '';
-      document.getElementById('videoFileInput').value = '';
-      document.getElementById('imagePreviewContainer').classList.add('hidden');
-      document.getElementById('videoPreview').classList.add('hidden');
-      document.getElementById('analyzeImageBtn').classList.add('hidden');
-      document.getElementById('analyzeVideoBtn').classList.add('hidden');
-      updateTextCounters();
-      resetVerdict();
-    });
-
-    // Score & Telemetry Display Logic
-    const aiScore = document.getElementById('aiScore');
-    const aiScoreBar = document.getElementById('aiScoreBar');
-    const verdictBadge = document.getElementById('verdictBadge');
-    const diagnosticsOutput = document.getElementById('diagnosticsOutput');
-    const telemetryStatus = document.getElementById('telemetryStatus');
-
-    function resetVerdict() {
-      aiScore.textContent = '0%';
-      aiScoreBar.style.width = '0%';
-      verdictBadge.textContent = 'Ready';
-      verdictBadge.className = 'text-[11px] px-3 py-1 rounded-full font-bold bg-slate-800 text-slate-400 border border-slate-700/80 shadow-sm';
-      telemetryStatus.textContent = 'IDLE';
-      diagnosticsOutput.innerHTML = 'Select an ingestion modality and upload content to inspect signatures.';
-    }
-
-    function applyVerdict(prob, detailsHtml) {
-      aiScore.textContent = `${prob}%`;
-      aiScoreBar.style.width = `${prob}%`;
-      telemetryStatus.textContent = 'COMPLETED';
-
-      if (prob > 65) {
-        verdictBadge.textContent = 'Likely Synthetic (AI)';
-        verdictBadge.className = 'text-[11px] px-3 py-1 rounded-full font-bold bg-rose-950/80 text-rose-300 border border-rose-800 shadow-sm';
-        aiScoreBar.className = 'bg-rose-500 h-1.5 rounded-full transition-all duration-700';
-      } else if (prob > 35) {
-        verdictBadge.textContent = 'Mixed / Inconclusive';
-        verdictBadge.className = 'text-[11px] px-3 py-1 rounded-full font-bold bg-amber-950/80 text-amber-300 border border-amber-800 shadow-sm';
-        aiScoreBar.className = 'bg-amber-500 h-1.5 rounded-full transition-all duration-700';
-      } else {
-        verdictBadge.textContent = 'Natural Cadence';
-        verdictBadge.className = 'text-[11px] px-3 py-1 rounded-full font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-800 shadow-sm';
-        aiScoreBar.className = 'bg-emerald-500 h-1.5 rounded-full transition-all duration-700';
-      }
-      diagnosticsOutput.innerHTML = detailsHtml;
-    }
-
-    // 1. TEXT FORENSICS
-    const textInput = document.getElementById('textInput');
-    const charCount = document.getElementById('charCount');
-    const docDropzone = document.getElementById('docDropzone');
+        <!-- Readability & Content Gauge Strip -->
+        <div class="grid grid-cols-3 gap-2">
+          <div class="bg-slate-900/70 border border-slate-800/80 rounded-xl p-3 text-center">
+            <p class="text-[10px] text-slate-400 font-medium uppercase">Readability</p>
+            <h4 id="readabilityScore" class="text-base font-bold text-slate-200 mt-0.5">--</h4>
+            <p id="mentById('docDropzone');
     const docFileInput = document.getElementById('docFileInput');
     const analyzeTextBtn = document.getElementById('analyzeTextBtn');
 
