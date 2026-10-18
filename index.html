@@ -3,188 +3,120 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VeritasAI Studio - Green Edition</title>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  
+  <title>VeritasAI Studio</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace'],
-          },
-          colors: {
-            brand: {
-              400: '#34d399',
-              500: '#10b981',
-              600: '#059669',
-              700: '#047857',
-            }
-          }
-        }
-      }
-    }
-  </script>
-
   <style>
-    .bg-grid {
-      background-size: 32px 32px;
-      background-image: 
-        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    }
-    .active-tab {
-      background: linear-gradient(to right, #059669, #10b981) !important;
-      color: #ffffff !important;
-      border-color: rgba(52, 211, 153, 0.4) !important;
-      box-shadow: 0 4px 14px -2px rgba(16, 185, 129, 0.4);
-    }
-    .custom-scroll::-webkit-scrollbar {
-      width: 4px;
-    }
-    .custom-scroll::-webkit-scrollbar-thumb {
-      background: #334155;
-      border-radius: 4px;
+    .tab-btn.active {
+      background: #4f46e5;
+      color: #ffffff;
+      border-color: #6366f1;
     }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans antialiased selection:bg-emerald-500 selection:text-white bg-grid relative overflow-x-hidden">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans">
 
   <!-- Header -->
-  <header class="border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-xl sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center text-white shadow-lg shadow-emerald-500/25">
-          <i data-lucide="shield-check" class="w-5 h-5"></i>
-        </div>
-        <div>
-          <div class="flex items-center gap-2">
-            <h1 class="font-extrabold text-base sm:text-lg tracking-tight text-white">Veritas<span class="text-emerald-400">AI</span></h1>
-            <span class="px-2 py-0.5 text-[10px] font-bold rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Studio Pro</span>
-          </div>
-          <p class="text-[11px] text-slate-400">Forensics, Fact Verification & Cadence Studio</p>
-        </div>
-      </div>
-
+  <header class="border-b border-slate-800 bg-slate-900/80 px-4 py-3 sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
       <div class="flex items-center gap-2">
-        <button type="button" id="exportPdfBtn" class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-xs font-semibold text-slate-300 border border-slate-700/80 transition flex items-center gap-1.5 active:scale-95 shadow-sm">
-          <i data-lucide="file-down" class="w-3.5 h-3.5 text-emerald-400"></i>
-          <span class="hidden sm:inline">Export PDF</span>
-        </button>
-        <button type="button" id="quickResetBtn" class="px-3 py-1.5 rounded-xl bg-slate-900/60 hover:bg-slate-800 text-xs font-semibold text-slate-400 border border-slate-800 transition flex items-center gap-1.5 active:scale-95">
-          <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-          <span>Reset</span>
+        <span class="text-xl">🛡️</span>
+        <h1 class="font-extrabold text-lg tracking-tight">Veritas<span class="text-indigo-400">AI</span></h1>
+      </div>
+      <div class="flex items-center gap-2">
+        <a href="https://github.com/sgill77-debug/testing1" target="_blank" rel="noopener noreferrer" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">
+          GitHub Repo ↗
+        </a>
+        <button type="button" onclick="resetAll()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">
+          Reset
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Main Container -->
-  <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 py-6 w-full grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
+  <!-- Main Grid -->
+  <main class="max-w-6xl mx-auto w-full p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 flex-1">
     
-    <!-- Left Workspace (7 Columns) -->
-    <section class="lg:col-span-7 flex flex-col gap-5">
+    <!-- Left Workspace (7 Cols) -->
+    <section class="lg:col-span-7 flex flex-col gap-4">
       
-      <!-- GRAPHIC CLICKABLE TABS -->
-      <div id="tabContainer" class="grid grid-cols-2 sm:grid-cols-5 gap-2 p-1.5 bg-slate-900/80 border border-slate-800/90 rounded-2xl shadow-inner backdrop-blur-md">
-        
-        <button type="button" id="tab_text" data-target="viewText" class="tab-btn active-tab flex items-center gap-2 p-2 rounded-xl transition duration-150 text-left border border-slate-800 bg-slate-950/40 text-slate-300 hover:text-white cursor-pointer">
-          <div class="w-7 h-7 rounded-lg bg-slate-800/80 flex items-center justify-center flex-shrink-0 text-emerald-400">
-            <i data-lucide="file-text" class="w-4 h-4"></i>
-          </div>
-          <div class="overflow-hidden">
-            <h4 class="text-xs font-bold truncate">Text</h4>
-            <p class="text-[9px] text-slate-400 truncate">Readability</p>
-          </div>
+      <!-- Nav Tabs -->
+      <nav class="grid grid-cols-3 sm:grid-cols-5 gap-1.5 bg-slate-900 p-1.5 rounded-xl border border-slate-800">
+        <button type="button" class="tab-btn active text-xs font-bold py-2 px-3 rounded-lg border border-transparent text-slate-300 hover:text-white transition" onclick="switchTab('text', this)">
+          📝 Text
         </button>
-
-        <button type="button" id="tab_fact" data-target="viewFact" class="tab-btn flex items-center gap-2 p-2 rounded-xl transition duration-150 text-left border border-slate-800 bg-slate-950/40 text-slate-300 hover:text-white cursor-pointer">
-          <div class="w-7 h-7 rounded-lg bg-slate-800/80 flex items-center justify-center flex-shrink-0 text-amber-400">
-            <i data-lucide="check-check" class="w-4 h-4"></i>
-          </div>
-          <div class="overflow-hidden">
-            <h4 class="text-xs font-bold truncate">Fact Check</h4>
-            <p class="text-[9px] text-slate-400 truncate">Evidence</p>
-          </div>
+        <button type="button" class="tab-btn text-xs font-bold py-2 px-3 rounded-lg border border-transparent text-slate-300 hover:text-white transition" onclick="switchTab('fact', this)">
+          🔍 Fact Check
         </button>
-
-        <button type="button" id="tab_image" data-target="viewImage" class="tab-btn flex items-center gap-2 p-2 rounded-xl transition duration-150 text-left border border-slate-800 bg-slate-950/40 text-slate-300 hover:text-white cursor-pointer">
-          <div class="w-7 h-7 rounded-lg bg-slate-800/80 flex items-center justify-center flex-shrink-0 text-teal-400">
-            <i data-lucide="image" class="w-4 h-4"></i>
-          </div>
-          <div class="overflow-hidden">
-            <h4 class="text-xs font-bold truncate">Image</h4>
-            <p class="text-[9px] text-slate-400 truncate">C2PA / EXIF</p>
-          </div>
+        <button type="button" class="tab-btn text-xs font-bold py-2 px-3 rounded-lg border border-transparent text-slate-300 hover:text-white transition" onclick="switchTab('image', this)">
+          🖼️ Image
         </button>
-
-        <button type="button" id="tab_audio" data-target="viewAudio" class="tab-btn flex items-center gap-2 p-2 rounded-xl transition duration-150 text-left border border-slate-800 bg-slate-950/40 text-slate-300 hover:text-white cursor-pointer">
-          <div class="w-7 h-7 rounded-lg bg-slate-800/80 flex items-center justify-center flex-shrink-0 text-cyan-400">
-            <i data-lucide="mic" class="w-4 h-4"></i>
-          </div>
-          <div class="overflow-hidden">
-            <h4 class="text-xs font-bold truncate">Audio</h4>
-            <p class="text-[9px] text-slate-400 truncate">Cadence</p>
-          </div>
+        <button type="button" class="tab-btn text-xs font-bold py-2 px-3 rounded-lg border border-transparent text-slate-300 hover:text-white transition" onclick="switchTab('audio', this)">
+          🎙️ Audio
         </button>
-
-        <button type="button" id="tab_humanize" data-target="viewHumanize" class="tab-btn flex items-center gap-2 p-2 rounded-xl transition duration-150 text-left border border-slate-800 bg-slate-950/40 text-slate-300 hover:text-white cursor-pointer">
-          <div class="w-7 h-7 rounded-lg bg-slate-800/80 flex items-center justify-center flex-shrink-0 text-emerald-400">
-            <i data-lucide="pen-tool" class="w-4 h-4"></i>
-          </div>
-          <div class="overflow-hidden">
-            <h4 class="text-xs font-bold truncate">Diff Flow</h4>
-            <p class="text-[9px] text-slate-400 truncate">Polish</p>
-          </div>
+        <button type="button" class="tab-btn text-xs font-bold py-2 px-3 rounded-lg border border-transparent text-slate-300 hover:text-white transition" onclick="switchTab('flow', this)">
+          ✨ Polish
         </button>
+      </nav>
 
-      </div>
-
-      <!-- TAB VIEW 1: TEXT & WEB INGESTION -->
-      <div id="viewText" class="tab-panel flex flex-col gap-4">
-        <div class="bg-slate-900/40 border border-slate-800/80 rounded-2xl p-3 flex flex-col sm:flex-row items-center gap-2">
-          <div class="flex items-center gap-2 text-slate-400 text-xs px-1">
-            <i data-lucide="link" class="w-4 h-4 text-emerald-400"></i>
-            <span class="font-medium whitespace-nowrap">Web Scrape:</span>
-          </div>
-          <input 
-            type="url" 
-            id="urlInput" 
-            placeholder="Paste public article URL..." 
-            class="flex-1 w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-emerald-500 font-mono"
-          />
-          <button type="button" id="fetchUrlBtn" class="w-full sm:w-auto px-4 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-200 border border-slate-700 transition flex items-center justify-center gap-1.5">
-            <i data-lucide="download" class="w-3.5 h-3.5"></i> Fetch
+      <!-- TAB 1: TEXT -->
+      <div id="panel-text" class="tab-panel flex flex-col gap-3">
+        <textarea
+          id="textInput"
+          rows="8"
+          placeholder="Paste text here to evaluate sentence variance, vocabulary richness, and AI probability..."
+          class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500"
+          oninput="updateCount()"
+        ></textarea>
+        <div class="flex justify-between items-center text-[11px] text-slate-400">
+          <span id="charCount">0 characters | 0 words</span>
+          <button type="button" onclick="analyzeText()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-2 rounded-lg text-xs transition">
+            Analyze Text
           </button>
         </div>
+      </div>
 
-        <div id="docDropzone" class="border border-dashed border-slate-700/80 hover:border-emerald-500 rounded-2xl p-4 text-center cursor-pointer transition bg-slate-900/30 hover:bg-slate-900/70 group">
-          <input type="file" id="docFileInput" class="hidden" accept=".txt,.md,.rtf">
-          <div class="flex items-center justify-center gap-3">
-            <div class="w-8 h-8 rounded-xl bg-slate-800 flex items-center justify-center text-slate-300 group-hover:text-emerald-400 transition">
-              <i data-lucide="upload-cloud" class="w-4 h-4"></i>
-            </div>
-            <div class="text-left">
-              <p class="text-xs font-bold text-slate-200 group-hover:text-emerald-300">Upload text document (.txt, .md, .rtf)</p>
-              <p class="text-[11px] text-slate-500">Fast client-side file reading</p>
-            </div>
-          </div>
+      <!-- TAB 2: FACT CHECK -->
+      <div id="panel-fact" class="tab-panel hidden flex flex-col gap-3">
+        <textarea
+          id="factInput"
+          rows="6"
+          placeholder="Paste statements to cross-reference (e.g. 'The Eiffel Tower was completed in 1889 in Paris')..."
+          class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-500"
+        ></textarea>
+        <button type="button" onclick="analyzeFact()" class="bg-amber-600 hover:bg-amber-500 text-white font-bold px-4 py-2 rounded-lg text-xs self-end transition">
+          Cross-Reference Live
+        </button>
+        <div id="factResults" class="flex flex-col gap-2 mt-1"></div>
+      </div>
+
+      <!-- TAB 3: IMAGE -->
+      <div id="panel-image" class="tab-panel hidden flex flex-col gap-3">
+        <div class="border-2 border-dashed border-slate-800 hover:border-indigo-500 rounded-xl p-6 text-center bg-slate-900/50 cursor-pointer" onclick="document.getElementById('imageFileInput').click()">
+          <input type="file" id="imageFileInput" class="hidden" accept="image/*" onchange="previewImage(this)">
+          <p class="text-xs font-bold text-slate-200">Click to choose an image</p>
+          <p class="text-[11px] text-slate-500 mt-1">Checks EXIF and C2PA provenance signatures</p>
         </div>
+        <img id="imagePreview" class="hidden max-h-56 rounded-lg object-contain mx-auto border border-slate-800" alt="Preview" />
+        <button id="imageBtn" type="button" onclick="analyzeImage()" class="hidden bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-2 rounded-lg text-xs self-end transition">
+          Scan Image Signatures
+        </button>
+      </div>
 
-        <div class="flex flex-col gap-2">
-          <div class="flex justify-between items-center text-xs text-slate-400 px-1">
-            <span class="font-bold tracking-wider uppercase text-[10px] text-slate-500">Document Text</span>
-            <span id="charCount" class="font-mono text-[11px] text-slate-400">0 chars | 0 words</span>
-          </div>
-          <textarea
+      <!-- TAB 4: AUDIO -->
+      <div id="panel-audio" class="tab-panel hidden flex flex-col gap-3">
+        <div class="border-2 border-dashed border-slate-800 hover:border-indigo-500 rounded-xl p-6 text-center bg-slate-900/50 cursor-pointer" onclick="document.getElementById('audioFileInput').click()">
+          <input type="file" id="audioFileInput" class="hidden" accept="audio/*" onchange="previewAudio(this)">
+          <p class="text-xs font-bold text-slate-200">Click to choose an audio file</p>
+          <p class="text-[11px] text-slate-500 mt-1">Evaluates cadence and speech pause ratios</p>
+        </div>
+        <audio id="audioPreview" controls class="hidden w-full mt-2"></audio>
+        <button id="audioBtn" type="button" onclick="analyzeAudio()" class="hidden bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-2 rounded-lg text-xs self-end transition">
+          Analyze Audio Cadence
+        </button>
+      </div>
+
+      <!-- TAB 5:
+   <textarea
             id="textInput"
             rows="8"
             placeholder="Paste text here to evaluate readability, burstiness (σ), and vocabulary dispersion..."
