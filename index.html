@@ -3,593 +3,453 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VeritasAI Studio - Multimodal Forensics & Integrity Suite</title>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  
+  <title>VeritasAI Studio - Intelligent Writing & Editorial Suite</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
   <style>
     .tab-btn.active {
       background: #4f46e5;
       color: #ffffff;
       border-color: #6366f1;
-      box-shadow: 0 4px 14px -2px rgba(99, 102, 241, 0.4);
+    }
+    .highlight-cliche {
+      background-color: rgba(244, 63, 94, 0.25);
+      border-bottom: 2px dashed #f43f5e;
+      cursor: pointer;
+    }
+    .highlight-wordy {
+      background-color: rgba(245, 158, 11, 0.25);
+      border-bottom: 2px dashed #f59e0b;
+      cursor: pointer;
+    }
+    .highlight-long {
+      background-color: rgba(99, 102, 241, 0.2);
+      border-bottom: 2px dotted #818cf8;
+      cursor: pointer;
     }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans">
 
-  <!-- Header -->
-  <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur-md px-4 py-3 sticky top-0 z-50">
+  <!-- Top Navigation Bar -->
+  <header class="border-b border-slate-800 bg-slate-900/80 px-4 py-3 sticky top-0 z-50 backdrop-blur">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-lg shadow-indigo-600/30">
-          <i data-lucide="shield-check" class="w-5 h-5"></i>
-        </div>
-        <div>
-          <h1 class="font-extrabold text-base tracking-tight">Veritas<span class="text-indigo-400">AI</span></h1>
-          <p class="text-[11px] text-slate-400">Multimodal Forensics, Verification & Editorial Suite</p>
-        </div>
+      <div class="flex items-center gap-2">
+        <span class="text-xl">🛡️</span>
+        <h1 class="font-extrabold text-lg tracking-tight">Veritas<span class="text-indigo-400">AI</span> Studio</h1>
       </div>
       <div class="flex items-center gap-2">
-        <button type="button" onclick="exportReportPdf()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg border border-slate-700 flex items-center gap-1.5 transition">
-          <i data-lucide="file-down" class="w-3.5 h-3.5 text-indigo-400"></i>
-          <span>Export PDF</span>
-        </button>
-        <button type="button" onclick="resetAll()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700 flex items-center gap-1.5 transition">
-          <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-          <span>Reset</span>
+        <a href="https://github.com/sgill77-debug/testing1" target="_blank" rel="noopener noreferrer" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">
+          GitHub Repo ↗
+        </a>
+        <button type="button" onclick="resetAll()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">
+          Reset All
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Main Container -->
+  <!-- Main Grid Layout -->
   <main class="max-w-7xl mx-auto w-full p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 flex-1">
     
-    <!-- Left Workspace (7 Columns) -->
+    <!-- Left Interaction Workspace (7 Cols) -->
     <section class="lg:col-span-7 flex flex-col gap-4">
       
-      <!-- Multimodal Tab Bar -->
-      <nav class="grid grid-cols-3 sm:grid-cols-6 gap-1 bg-slate-900 p-1.5 rounded-2xl border border-slate-800">
-        <button type="button" class="tab-btn active text-xs font-bold py-2.5 px-2 rounded-xl border border-transparent text-slate-300 hover:text-white transition flex items-center justify-center gap-1.5" onclick="switchTab('text', this)">
-          <i data-lucide="file-text" class="w-3.5 h-3.5"></i> Text
+      <!-- Multimodal Tab Navigation -->
+      <nav class="grid grid-cols-3 sm:grid-cols-6 gap-1 bg-slate-900 p-1.5 rounded-xl border border-slate-800 text-center">
+        <button type="button" class="tab-btn active text-xs font-bold py-2 px-2 rounded-lg border border-transparent text-slate-300 hover:text-white transition" onclick="switchTab('flow', this)">
+          ✨ Suggestions
         </button>
-        <button type="button" class="tab-btn text-xs font-bold py-2.5 px-2 rounded-xl border border-transparent text-slate-300 hover:text-white transition flex items-center justify-center gap-1.5" onclick="switchTab('fact', this)">
-          <i data-lucide="check-check" class="w-3.5 h-3.5 text-amber-400"></i> Fact
+        <button type="button" class="tab-btn text-xs font-bold py-2 px-2 rounded-lg border border-transparent text-slate-300 hover:text-white transition" onclick="switchTab('text', this)">
+          📝 Forensics
         </button>
-        <button type="button" class="tab-btn text-xs font-bold py-2.5 px-2 rounded-xl border border-transparent text-slate-300 hover:text-white transition flex items-center justify-center gap-1.5" onclick="switchTab('image', this)">
-          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-400"></i> Image
+        <button type="button" class="tab-btn text-xs font-bold py-2 px-2 rounded-lg border border-transparent text-slate-300 hover:text-white transition" onclick="switchTab('fact', this)">
+          🔍 Fact Check
         </button>
-        <button type="button" class="tab-btn text-xs font-bold py-2.5 px-2 rounded-xl border border-transparent text-slate-300 hover:text-white transition flex items-center justify-center gap-1.5" onclick="switchTab('video', this)">
-          <i data-lucide="film" class="w-3.5 h-3.5 text-purple-400"></i> Video
+        <button type="button" class="tab-btn text-xs font-bold py-2 px-2 rounded-lg border border-transparent text-slate-300 hover:text-white transition" onclick="switchTab('image', this)">
+          🖼️ Image
         </button>
-        <button type="button" class="tab-btn text-xs font-bold py-2.5 px-2 rounded-xl border border-transparent text-slate-300 hover:text-white transition flex items-center justify-center gap-1.5" onclick="switchTab('audio', this)">
-          <i data-lucide="mic" class="w-3.5 h-3.5 text-rose-400"></i> Audio
+        <button type="button" class="tab-btn text-xs font-bold py-2 px-2 rounded-lg border border-transparent text-slate-300 hover:text-white transition" onclick="switchTab('video', this)">
+          🎬 Video
         </button>
-        <button type="button" class="tab-btn text-xs font-bold py-2.5 px-2 rounded-xl border border-transparent text-slate-300 hover:text-white transition flex items-center justify-center gap-1.5" onclick="switchTab('flow', this)">
-          <i data-lucide="pen-tool" class="w-3.5 h-3.5 text-emerald-400"></i> Polish
+        <button type="button" class="tab-btn text-xs font-bold py-2 px-2 rounded-lg border border-transparent text-slate-300 hover:text-white transition" onclick="switchTab('audio', this)">
+          🎙️ Audio
         </button>
       </nav>
 
-      <!-- TAB 1: TEXT & WEB INGESTION -->
-      <div id="panel-text" class="tab-panel flex flex-col gap-3">
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-2.5 flex items-center gap-2">
-          <i data-lucide="link" class="w-3.5 h-3.5 text-indigo-400 ml-1"></i>
-          <input type="url" id="urlInput" placeholder="Paste article URL to scrape..." class="flex-1 bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 font-mono">
-          <button type="button" onclick="scrapeUrl()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs px-3 py-1.5 rounded-lg border border-slate-700 transition">Fetch</button>
+      <!-- TAB 1: INTERACTIVE EDITORIAL SUGGESTIONS (Competitive Upgrade) -->
+      <div id="panel-flow" class="tab-panel flex flex-col gap-3">
+        <div class="flex justify-between items-center text-xs text-slate-400">
+          <span class="font-bold uppercase tracking-wider text-[11px] text-slate-300">Document Editor</span>
+          <span id="editorStats">0 words | Grade Level: --</span>
         </div>
-
-        <div class="border border-dashed border-slate-800 hover:border-indigo-500 rounded-xl p-3 text-center cursor-pointer transition bg-slate-900/40" onclick="document.getElementById('textFileInput').click()">
-          <input type="file" id="textFileInput" class="hidden" accept=".txt,.md,.rtf" onchange="loadDocFile(this)">
-          <p class="text-xs text-slate-300"><span class="text-indigo-400 font-semibold">Upload text file</span> (.txt, .md, .rtf) or paste content below</p>
-        </div>
-
         <textarea
-          id="textInput"
-          rows="8"
-          placeholder="Paste text here to evaluate sentence variance, burstiness (σ), and vocabulary dispersion..."
-          class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 leading-relaxed"
-          oninput="updateCount()"
+          id="flowInput"
+          rows="9"
+          placeholder="Type or paste your text here to inspect clarity, robotic clichés, wordiness, and sentence run-ons..."
+          class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 leading-relaxed"
+          oninput="runSuggestionsAnalysis()"
         ></textarea>
-        <div class="flex justify-between items-center text-[11px] text-slate-400">
-          <span id="charCount">0 characters | 0 words</span>
-          <button type="button" onclick="analyzeText()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-2 rounded-lg text-xs transition">
-            Analyze Text
+        
+        <div class="flex justify-between items-center">
+          <div class="flex gap-2">
+            <button type="button" onclick="loadSampleText()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">
+              Load Sample Text
+            </button>
+            <button type="button" onclick="applyAllSuggestions()" class="text-xs bg-emerald-700 hover:bg-emerald-600 text-white font-bold px-3 py-1.5 rounded-lg transition">
+              Accept All Cleanups
+            </button>
+          </div>
+          <button type="button" id="copyEditorBtn" onclick="copyEditorText()" class="text-xs bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-1.5 rounded-lg transition">
+            Copy Text
           </button>
+        </div>
+
+        <!-- Inline Visual Review Container -->
+        <div class="mt-2 bg-slate-900/60 border border-slate-800 rounded-xl p-3.5">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Highlighted Issues Preview</span>
+            <div class="flex items-center gap-3 text-[10px]">
+              <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-rose-500"></span> AI Cliché</span>
+              <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-500"></span> Wordiness</span>
+              <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-indigo-400"></span> Long Sentence</span>
+            </div>
+          </div>
+          <div id="highlightedView" class="text-xs font-mono text-slate-300 leading-relaxed p-2 rounded bg-slate-950/50 min-h-[70px]">
+            Suggestions will highlight in real time as you write.
+          </div>
         </div>
       </div>
 
-      <!-- TAB 2: FACT CHECKING -->
+      <!-- TAB 2: TEXT FORENSICS -->
+      <div id="panel-text" class="tab-panel hidden flex flex-col gap-3">
+        <textarea
+          id="textInput"
+          rows="8"
+          placeholder="Paste text here to evaluate sentence variance, token richness, and statistical cadence..."
+          class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500"
+        ></textarea>
+        <button type="button" onclick="analyzeText()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-2 rounded-lg text-xs self-end transition">
+          Run Forensics
+        </button>
+      </div>
+
+      <!-- TAB 3: FACT CHECK -->
       <div id="panel-fact" class="tab-panel hidden flex flex-col gap-3">
-        <div class="bg-amber-950/20 border border-amber-800/40 rounded-xl p-3 text-xs text-amber-200 flex items-start gap-2">
-          <i data-lucide="check-check" class="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5"></i>
-          <span>Extracts factual assertions and queries encyclopedic registries to cross-reference dates, historical facts, and public claims.</span>
-        </div>
         <textarea
           id="factInput"
           rows="6"
-          placeholder="Paste statements to verify (e.g. 'The Eiffel Tower was completed in 1889 in Paris, France')..."
-          class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-500 leading-relaxed"
+          placeholder="Paste statements to cross-reference (e.g. 'The Eiffel Tower was completed in 1889 in Paris')..."
+          class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-500"
         ></textarea>
         <button type="button" onclick="analyzeFact()" class="bg-amber-600 hover:bg-amber-500 text-white font-bold px-4 py-2 rounded-lg text-xs self-end transition">
-          Cross-Reference Claims Live
+          Cross-Reference Live
         </button>
         <div id="factResults" class="flex flex-col gap-2 mt-1"></div>
       </div>
 
-      <!-- TAB 3: IMAGE & C2PA -->
+      <!-- TAB 4: IMAGE & C2PA -->
       <div id="panel-image" class="tab-panel hidden flex flex-col gap-3">
         <div class="border-2 border-dashed border-slate-800 hover:border-indigo-500 rounded-xl p-6 text-center bg-slate-900/50 cursor-pointer" onclick="document.getElementById('imageFileInput').click()">
           <input type="file" id="imageFileInput" class="hidden" accept="image/*" onchange="previewImage(this)">
-          <i data-lucide="image-plus" class="w-8 h-8 text-indigo-400 mx-auto mb-2"></i>
-          <p class="text-xs font-bold text-slate-200">Click to select an image (.jpg, .png, .webp)</p>
-          <p class="text-[11px] text-slate-500 mt-1">Scans C2PA provenance manifests, SynthID/Imagen markers, and EXIF tags</p>
+          <p class="text-xs font-bold text-slate-200">Click to choose an image</p>
+          <p class="text-[11px] text-slate-500 mt-1">Checks EXIF and C2PA provenance signatures</p>
         </div>
         <img id="imagePreview" class="hidden max-h-56 rounded-lg object-contain mx-auto border border-slate-800" alt="Preview" />
-        <div id="imageActions" class="hidden flex justify-between items-center">
-          <button type="button" onclick="stripExif()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs px-3 py-1.5 rounded-lg border border-slate-700 transition">
-            Strip Metadata
-          </button>
-          <button type="button" onclick="analyzeImage()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-2 rounded-lg text-xs transition">
-            Scan Provenance Headers
-          </button>
-        </div>
-      </div>
-
-      <!-- TAB 4: VIDEO FORENSICS -->
-      <div id="panel-video" class="tab-panel hidden flex flex-col gap-3">
-        <div class="border-2 border-dashed border-slate-800 hover:border-purple-500 rounded-xl p-6 text-center bg-slate-900/50 cursor-pointer" onclick="document.getElementById('videoFileInput').click()">
-          <input type="file" id="videoFileInput" class="hidden" accept="video/mp4, video/webm" onchange="previewVideo(this)">
-          <i data-lucide="video" class="w-8 h-8 text-purple-400 mx-auto mb-2"></i>
-          <p class="text-xs font-bold text-slate-200">Click to upload a video (.mp4, .webm)</p>
-          <p class="text-[11px] text-slate-500 mt-1">Examines inter-frame jitter, temporal luminance, and pixel drift</p>
-        </div>
-        <video id="videoPreview" controls class="hidden max-h-56 rounded-lg mx-auto border border-slate-800 bg-black w-full"></video>
-        <button id="videoBtn" type="button" onclick="analyzeVideo()" class="hidden bg-purple-600 hover:bg-purple-500 text-white font-bold px-4 py-2 rounded-lg text-xs self-end transition">
-          Run Temporal Frame Forensics
+        <button id="imageBtn" type="button" onclick="analyzeImage()" class="hidden bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-2 rounded-lg text-xs self-end transition">
+          Scan Image Signatures
         </button>
       </div>
 
-      <!-- TAB 5: AUDIO CADENCE -->
+      <!-- TAB 5: VIDEO CADENCE -->
+      <div id="panel-video" class="tab-panel hidden flex flex-col gap-3">
+        <div class="border-2 border-dashed border-slate-800 hover:border-indigo-500 rounded-xl p-6 text-center bg-slate-900/50 cursor-pointer" onclick="document.getElementById('videoFileInput').click()">
+          <input type="file" id="videoFileInput" class="hidden" accept="video/mp4, video/webm" onchange="previewVideo(this)">
+          <p class="text-xs font-bold text-slate-200">Click to choose a video</p>
+          <p class="text-[11px] text-slate-500 mt-1">Examines temporal frame consistency and pixel smoothness</p>
+        </div>
+        <video id="videoPreview" controls class="hidden max-h-56 w-full rounded-lg border border-slate-800 bg-black"></video>
+        <button id="videoBtn" type="button" onclick="analyzeVideo()" class="hidden bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-2 rounded-lg text-xs self-end transition">
+          Run Temporal Forensics
+        </button>
+      </div>
+
+      <!-- TAB 6: AUDIO CADENCE -->
       <div id="panel-audio" class="tab-panel hidden flex flex-col gap-3">
-        <div class="border-2 border-dashed border-slate-800 hover:border-rose-500 rounded-xl p-6 text-center bg-slate-900/50 cursor-pointer" onclick="document.getElementById('audioFileInput').click()">
+        <div class="border-2 border-dashed border-slate-800 hover:border-indigo-500 rounded-xl p-6 text-center bg-slate-900/50 cursor-pointer" onclick="document.getElementById('audioFileInput').click()">
           <input type="file" id="audioFileInput" class="hidden" accept="audio/*" onchange="previewAudio(this)">
-          <i data-lucide="mic" class="w-8 h-8 text-rose-400 mx-auto mb-2"></i>
-          <p class="text-xs font-bold text-slate-200">Click to upload an audio file (.wav, .mp3, .ogg)</p>
-          <p class="text-[11px] text-slate-500 mt-1">Calculates RMS spectral energy and silence pause distributions</p>
+          <p class="text-xs font-bold text-slate-200">Click to choose an audio file</p>
+          <p class="text-[11px] text-slate-500 mt-1">Evaluates cadence and speech pause ratios</p>
         </div>
         <audio id="audioPreview" controls class="hidden w-full mt-2"></audio>
-        <button id="audioBtn" type="button" onclick="analyzeAudio()" class="hidden bg-rose-600 hover:bg-rose-500 text-white font-bold px-4 py-2 rounded-lg text-xs self-end transition">
+        <button id="audioBtn" type="button" onclick="analyzeAudio()" class="hidden bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-2 rounded-lg text-xs self-end transition">
           Analyze Audio Cadence
         </button>
       </div>
 
-      <!-- TAB 6: FLOW & DIFF POLISH -->
-      <div id="panel-flow" class="tab-panel hidden flex flex-col gap-3">
-        <textarea
-          id="flowInput"
-          rows="5"
-          placeholder="Paste draft writing here to refine vocabulary and restructure repetitive pacing..."
-          class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500 leading-relaxed"
-        ></textarea>
-        <button type="button" onclick="polishFlow()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-2 rounded-lg text-xs self-end transition">
-          Polish Flow & Compare
-        </button>
-        <div id="flowDiffContainer" class="hidden grid grid-cols-1 md:grid-cols-2 gap-3 text-xs font-mono mt-1">
-          <div class="p-3 bg-rose-950/20 border border-rose-900/40 rounded-xl">
-            <p class="text-[10px] font-bold text-rose-400 mb-1">ORIGINAL</p>
-            <div id="flowDiffOriginal" class="text-rose-200 whitespace-pre-wrap"></div>
-          </div>
-          <div class="p-3 bg-emerald-950/20 border border-emerald-900/40 rounded-xl">
-            <p class="text-[10px] font-bold text-emerald-400 mb-1">POLISHED CADENCE</p>
-            <div id="flowDiffEnhanced" class="text-emerald-200 whitespace-pre-wrap"></div>
-          </div>
-        </div>
-      </div>
-
     </section>
 
-    <!-- Right Report Panel (5 Columns) -->
+    <!-- Right Report & Action Cards Panel (5 Cols) -->
     <section class="lg:col-span-5 flex flex-col gap-4">
-      <div id="reportContainer" class="flex flex-col gap-4">
-        
-        <!-- Score Gauge -->
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4">
-          <div class="flex items-center justify-between mb-2">
-            <span id="scoreLabel" class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Detection Gauge</span>
-            <span id="verdictBadge" class="text-[10px] px-2 py-0.5 rounded font-bold bg-slate-800 text-slate-400 border border-slate-700">Ready</span>
-          </div>
-          <div class="flex items-baseline gap-2">
-            <span id="scoreVal" class="text-4xl font-extrabold text-white">0%</span>
-            <span id="scoreSub" class="text-xs text-slate-400">Likelihood of AI Synthesis</span>
-          </div>
-          <div class="w-full bg-slate-800 rounded-full h-2 mt-3 overflow-hidden">
-            <div id="scoreBar" class="bg-indigo-500 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+      
+      <!-- Real-Time Editorial Suggestions List -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex-1 flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Suggested Improvements</span>
+          <span id="suggestionCount" class="text-[10px] px-2 py-0.5 rounded font-bold bg-indigo-950 text-indigo-300 border border-indigo-800">
+            0 Detected
+          </span>
+        </div>
+        <div id="suggestionCards" class="flex flex-col gap-2.5 overflow-y-auto max-h-[380px] pr-1">
+          <div class="text-xs text-slate-500 italic p-3 text-center border border-slate-800/80 rounded-lg">
+            No suggestions yet. Paste your draft or click "Load Sample Text" to test recommendations.
           </div>
         </div>
-
-        <!-- Metric Readouts -->
-        <div class="grid grid-cols-2 gap-2 text-center text-xs">
-          <div class="bg-slate-900 border border-slate-800 p-2.5 rounded-xl">
-            <p class="text-[10px] text-slate-400 uppercase font-bold">Lexical TTR</p>
-            <p id="ttrVal" class="text-base font-bold text-slate-200 mt-0.5">--</p>
-          </div>
-          <div class="bg-slate-900 border border-slate-800 p-2.5 rounded-xl">
-            <p class="text-[10px] text-slate-400 uppercase font-bold">Burstiness (σ)</p>
-            <p id="burstVal" class="text-base font-bold text-slate-200 mt-0.5">--</p>
-          </div>
-        </div>
-
-        <!-- Telemetry Diagnostics -->
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex-1 flex flex-col">
-          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Diagnostic Output</span>
-          <div id="diagText" class="text-xs font-mono text-slate-300 space-y-1.5 leading-relaxed">
-            Select any tab on the left to begin inspecting content.
-          </div>
-        </div>
-
       </div>
+
+      <!-- Forensics & Readability Gauges -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-4">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Document Health</span>
+          <span id="verdictBadge" class="text-[10px] px-2 py-0.5 rounded font-bold bg-slate-800 text-slate-400 border border-slate-700">Ready</span>
+        </div>
+        <div class="grid grid-cols-3 gap-2 text-center text-xs mt-3">
+          <div class="bg-slate-950/60 border border-slate-800/80 p-2 rounded-lg">
+            <p class="text-[9px] text-slate-400 uppercase font-bold">Readability</p>
+            <p id="fleschScore" class="text-sm font-bold text-slate-200 mt-0.5">--</p>
+          </div>
+          <div class="bg-slate-950/60 border border-slate-800/80 p-2 rounded-lg">
+            <p class="text-[9px] text-slate-400 uppercase font-bold">Burstiness (σ)</p>
+            <p id="burstScore" class="text-sm font-bold text-slate-200 mt-0.5">--</p>
+          </div>
+          <div class="bg-slate-950/60 border border-slate-800/80 p-2 rounded-lg">
+            <p class="text-[9px] text-slate-400 uppercase font-bold">Lexical TTR</p>
+            <p id="ttrScore" class="text-sm font-bold text-slate-200 mt-0.5">--</p>
+          </div>
+        </div>
+      </div>
+
     </section>
   </main>
 
   <script>
-    if (window.lucide) lucide.createIcons();
-
-    // 1. Tab Switching
+    // Tab Switching
     function switchTab(name, btn) {
       document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
-      const active = document.getElementById('panel-' + name);
-      if (active) active.classList.remove('hidden');
+      const activePanel = document.getElementById('panel-' + name);
+      if (activePanel) activePanel.classList.remove('hidden');
 
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       if (btn) btn.classList.add('active');
-
-      const sub = document.getElementById('scoreSub');
-      const label = document.getElementById('scoreLabel');
-      if (name === 'fact') {
-        label.textContent = 'Fact Reliability Gauge';
-        sub.textContent = 'Corroboration Confidence';
-      } else {
-        label.textContent = 'Detection Gauge';
-        sub.textContent = 'Likelihood of AI Synthesis';
-      }
-      if (window.lucide) lucide.createIcons();
     }
 
-    // 2. Verdict Gauge Updater
-    function setVerdict(score, verdictText, isPositive, details) {
-      document.getElementById('scoreVal').textContent = score + '%';
-      document.getElementById('scoreBar').style.width = score + '%';
+    // Rules Catalog for Suggestions
+    const RULES = [
+      { type: 'cliche', pattern: /\bIn conclusion,?\b/gi, replacement: 'Ultimately,', label: 'AI Cliché', reason: 'Overused transition formula.' },
+      { type: 'cliche', pattern: /\bDelve into\b/gi, replacement: 'Explore', label: 'AI Cliché', reason: 'High-probability synthetic transition.' },
+      { type: 'cliche', pattern: /\bA testament to\b/gi, replacement: 'Proof of', label: 'AI Cliché', reason: 'Overused decorative phrasing.' },
+      { type: 'cliche', pattern: /\bTapestry of\b/gi, replacement: 'Combination of', label: 'AI Cliché', reason: 'Robotic metaphor.' },
+      { type: 'cliche', pattern: /\bIt is important to note that\b/gi, replacement: 'Notably,', label: 'AI Fluff', reason: 'Verbose filler phrase.' },
+      { type: 'wordy', pattern: /\bdue to the fact that\b/gi, replacement: 'because', label: 'Wordy', reason: 'Simplify for directness.' },
+      { type: 'wordy', pattern: /\bin order to\b/gi, replacement: 'to', label: 'Wordy', reason: 'Redundant filler token.' },
+      { type: 'wordy', pattern: /\bat this point in time\b/gi, replacement: 'currently', label: 'Wordy', reason: 'More concise alternative.' },
+      { type: 'wordy', pattern: /\butilize\b/gi, replacement: 'use', label: 'Clarity', reason: 'Plain language is clearer.' }
+    ];
+
+    let activeSuggestions = [];
+
+    // Real-Time Suggestion Analyzer
+    function runSuggestionsAnalysis() {
+      const text = document.getElementById('flowInput').value;
+      const cardsContainer = document.getElementById('suggestionCards');
+      const badge = document.getElementById('suggestionCount');
+      const highlightedView = document.getElementById('highlightedView');
       
-      const badge = document.getElementById('verdictBadge');
-      badge.textContent = verdictText;
-      badge.className = isPositive 
-        ? 'text-[10px] px-2 py-0.5 rounded font-bold bg-emerald-950 text-emerald-300 border border-emerald-800'
-        : 'text-[10px] px-2 py-0.5 rounded font-bold bg-rose-950 text-rose-300 border border-rose-800';
+      activeSuggestions = [];
+      cardsContainer.innerHTML = '';
 
-      document.getElementById('diagText').innerHTML = details;
-    }
-
-    // 3. Text Analysis & Web Scraper
-    function updateCount() {
-      const val = document.getElementById('textInput').value;
-      const chars = val.length;
-      const words = val.trim() ? val.trim().split(/\s+/).length : 0;
-      document.getElementById('charCount').textContent = `${chars} characters | ${words} words`;
-    }
-
-    function loadDocFile(input) {
-      const file = input.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = e => {
-        document.getElementById('textInput').value = e.target.result;
-        updateCount();
-      };
-      reader.readAsText(file);
-    }
-
-    async function scrapeUrl() {
-      const url = document.getElementById('urlInput').value.trim();
-      if (!url) return alert("Please enter a URL first.");
-      try {
-        const res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
-        const data = await res.json();
-        const doc = new DOMParser().parseFromString(data.contents, 'text/html');
-        const paras = Array.from(doc.querySelectorAll('p')).map(p => p.textContent.trim()).filter(t => t.length > 20);
-        if (paras.length === 0) throw new Error("No readable text found.");
-        document.getElementById('textInput').value = paras.join('\n\n');
-        updateCount();
-      } catch (err) {
-        alert("Scraping failed: " + err.message);
+      if (!text.trim()) {
+        cardsContainer.innerHTML = `<div class="text-xs text-slate-500 italic p-3 text-center border border-slate-800/80 rounded-lg">Type or paste text above to see editorial suggestions.</div>`;
+        badge.textContent = '0 Detected';
+        highlightedView.innerHTML = 'Suggestions will highlight in real time as you write.';
+        updateMetrics(text);
+        return;
       }
-    }
 
-    function analyzeText() {
-      const text = document.getElementById('textInput').value.trim();
-      if (!text) return alert("Please paste text first.");
-
-      const sentences = text.match(/[^.!?]+[.!?]+|\S+/g) || [text];
-      const tokens = text.toLowerCase().match(/\b[a-z0-9']+\b/g) || [];
-      if (!tokens.length) return;
-
-      const ttr = (new Set(tokens).size / tokens.length).toFixed(3);
-      const lengths = sentences.map(s => (s.match(/\b[a-z0-9']+\b/gi) || []).length);
-      const mean = lengths.reduce((a, b) => a + b, 0) / lengths.length;
-      const variance = lengths.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / lengths.length;
-      const sigma = Math.sqrt(variance).toFixed(2);
-
-      document.getElementById('ttrVal').textContent = ttr;
-      document.getElementById('burstVal').textContent = sigma;
-
-      let prob = 50;
-      if (sigma < 3.5) prob += 25;
-      if (sigma > 6.5) prob -= 25;
-      if (ttr < 0.5) prob += 15;
-      prob = Math.min(Math.max(prob, 8), 92);
-
-      const isHuman = prob < 50;
-      setVerdict(
-        prob,
-        isHuman ? "Likely Organic" : "Likely AI-Generated",
-        isHuman,
-        `<div>• Corpus: ${sentences.length} sentences, ${tokens.length} words</div>
-         <div>• Lexical Richness (TTR): ${ttr}</div>
-         <div>• Sentence Burstiness (σ): ${sigma}</div>`
-      );
-    }
-
-    // 4. Live Fact Check
-    async function analyzeFact() {
-      const text = document.getElementById('factInput').value.trim();
-      if (!text) return alert("Please enter claims to verify.");
-
-      const resultsDiv = document.getElementById('factResults');
-      resultsDiv.innerHTML = '<span class="text-xs text-slate-400">Querying live encyclopedic sources...</span>';
-
-      const sentences = text.match(/[^.!?]+[.!?]+|\S+/g) || [text];
-      const claims = sentences.map(s => s.trim()).filter(s => s.length > 15).slice(0, 3);
-      let verifiedCount = 0;
-      let outputHtml = '';
-
-      for (const claim of claims) {
-        const keywords = claim.replace(/[^\w\s]/gi, '').split(/\s+/).filter(w => w.length > 3).slice(0, 3).join(' ') || claim;
-        try {
-          const res = await fetch(`https://en.wikipedia.org/w/api.php?action=opensearch&search=${encodeURIComponent(keywords)}&limit=1&format=json&origin=*`);
-          const data = await res.json();
-          const snippet = data[2] && data[2][0] ? data[2][0] : null;
-          const link = data[3] && data[3][0] ? data[3][0] : null;
-
-          if (snippet && link) {
-            verifiedCount++;
-            outputHtml += `
-              <div class="p-2.5 bg-slate-900 border border-slate-800 rounded-lg text-xs space-y-1">
-                <span class="text-emerald-400 font-bold">✓ Corroborated</span>
-                <p class="text-slate-300">"${claim}"</p>
-                <a href="${link}" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:underline block text-[11px]">Primary Source ↗</a>
-              </div>`;
-          } else {
-            outputHtml += `
-              <div class="p-2.5 bg-slate-900 border border-slate-800 rounded-lg text-xs space-y-1">
-                <span class="text-amber-400 font-bold">? Unverified</span>
-                <p class="text-slate-400">"${claim}"</p>
-              </div>`;
-          }
-        } catch (e) {
-          outputHtml += `<div class="text-xs text-rose-400">Lookup failed for "${claim}"</div>`;
+      // Check Rule Catalog
+      RULES.forEach((rule, idx) => {
+        let match;
+        const regex = new RegExp(rule.pattern.source, 'gi');
+        while ((match = regex.exec(text)) !== null) {
+          activeSuggestions.push({
+            id: `rule-${idx}-${match.index}`,
+            type: rule.type,
+            matchedText: match[0],
+            replacement: rule.replacement,
+            label: rule.label,
+            reason: rule.reason,
+            index: match.index
+          });
         }
-      }
-
-      resultsDiv.innerHTML = outputHtml;
-      const score = Math.round((verifiedCount / (claims.length || 1)) * 100);
-      setVerdict(
-        score,
-        score > 50 ? "Corroborated" : "Unverified Claims",
-        score > 50,
-        `<div>• Verified: ${verifiedCount} of ${claims.length} claims</div>`
-      );
-    }
-
-    // 5. Image & Provenance
-    let selectedImage = null;
-    function previewImage(input) {
-      const file = input.files[0];
-      if (!file) return;
-      selectedImage = file;
-      const img = document.getElementById('imagePreview');
-      img.src = URL.createObjectURL(file);
-      img.classList.remove('hidden');
-      document.getElementById('imageActions').classList.remove('hidden');
-    }
-
-    async function analyzeImage() {
-      if (!selectedImage) return;
-      const buffer = await selectedImage.arrayBuffer();
-      const bytes = new Uint8Array(buffer);
-      let str = '';
-      for (let i = 0; i < Math.min(bytes.length, 75000); i++) {
-        str += String.fromCharCode(bytes[i]);
-      }
-
-      const isAi = /Google|Imagen|SynthID|c2pa|dall-e|midjourney|stablediffusion/i.test(str);
-      const score = isAi ? 95 : 25;
-
-      setVerdict(
-        score,
-        isAi ? "Synthetic Marker Detected" : "Clean Header",
-        !isAi,
-        `<div>• File: ${selectedImage.name}</div>
-         <div>• Result: ${isAi ? "Generative provenance / C2PA watermark detected" : "No generative headers detected"}</div>`
-      );
-    }
-
-    function stripExif() {
-      const img = document.getElementById('imagePreview');
-      if (!img.src) return;
-      const canvas = document.createElement('canvas');
-      canvas.width = img.naturalWidth || 400;
-      canvas.height = img.naturalHeight || 300;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0);
-
-      canvas.toBlob(blob => {
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `sanitized_${selectedImage ? selectedImage.name : 'image.png'}`;
-        a.click();
-      }, 'image/png');
-    }
-
-    // 6. Video Forensics
-    let selectedVideo = null;
-    function previewVideo(input) {
-      const file = input.files[0];
-      if (!file) return;
-      selectedVideo = file;
-      const v = document.getElementById('videoPreview');
-      v.src = URL.createObjectURL(file);
-      v.classList.remove('hidden');
-      document.getElementById('videoBtn').classList.remove('hidden');
-    }
-
-    async function analyzeVideo() {
-      const v = document.getElementById('videoPreview');
-      if (!v) return;
-
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      canvas.width = 160;
-      canvas.height = 90;
-
-      const sample = t => new Promise(resolve => {
-        v.currentTime = t;
-        v.onseeked = () => {
-          ctx.drawImage(v, 0, 0, canvas.width, canvas.height);
-          resolve(ctx.getImageData(0, 0, canvas.width, canvas.height).data);
-        };
       });
 
-      try {
-        const frame1 = await sample(0.3);
-        const frame2 = await sample(Math.min(1.2, v.duration || 1));
-        let diff = 0;
-        for (let i = 0; i < frame1.length; i += 4) {
-          diff += Math.abs(frame1[i] - frame2[i]);
+      // Long sentence run-on rule (Hemingway style)
+      const sentences = text.match(/[^.!?]+[.!?]+|\S+/g) || [];
+      sentences.forEach((s, sIdx) => {
+        const words = (s.trim().match(/\b[a-z0-9']+\b/gi) || []).length;
+        if (words > 32) {
+          activeSuggestions.push({
+            id: `long-${sIdx}`,
+            type: 'long',
+            matchedText: s.trim().slice(0, 35) + '...',
+            replacement: 'Split into 2 sentences',
+            label: 'Sentence Run-on',
+            reason: `Contains ${words} words. Splitting improves flow.`,
+            isManual: true
+          });
         }
-        const delta = (diff / (frame1.length / 4)).toFixed(2);
-        const isStatic = delta < 3.5;
+      });
 
-        setVerdict(
-          isStatic ? 78 : 28,
-          isStatic ? "Unusual Frame Regularity" : "Natural Motion",
-          !isStatic,
-          `<div>• Temporal Luminance Delta: ${delta}</div>
-           <div>• Duration: ${v.duration ? v.duration.toFixed(1) + 's' : 'Dynamic'}</div>`
-        );
-      } catch (e) {
-        alert("Video sampling error: " + e.message);
+      // Render Suggestion Cards
+      badge.textContent = `${activeSuggestions.length} Detected`;
+      if (activeSuggestions.length === 0) {
+        cardsContainer.innerHTML = `
+          <div class="text-xs text-emerald-400 p-3 bg-emerald-950/20 border border-emerald-900 rounded-lg">
+            ✓ Clean draft! No repetitive AI transitions or wordy filler detected.
+          </div>`;
+      } else {
+        activeSuggestions.forEach(s => {
+          const card = document.createElement('div');
+          card.className = "p-3 bg-slate-950 border border-slate-800 rounded-lg text-xs flex flex-col gap-1.5 hover:border-slate-700 transition";
+          card.innerHTML = `
+            <div class="flex items-center justify-between">
+              <span class="text-[9px] font-bold px-1.5 py-0.5 rounded ${s.type === 'cliche' ? 'bg-rose-950 text-rose-300 border border-rose-800' : 'bg-amber-950 text-amber-300 border border-amber-800'}">${s.label}</span>
+              <span class="text-[10px] text-slate-400">${s.reason}</span>
+            </div>
+            <div class="flex items-center gap-1.5 mt-1 font-mono">
+              <span class="line-through text-rose-400">${s.matchedText}</span>
+              <span class="text-slate-500">→</span>
+              <span class="text-emerald-400 font-bold">${s.replacement}</span>
+            </div>
+            ${!s.isManual ? `
+            <button type="button" onclick="applySingleSuggestion('${s.matchedText}', '${s.replacement}')" class="mt-1 self-end text-[10px] bg-slate-800 hover:bg-slate-700 text-slate-200 px-2.5 py-1 rounded border border-slate-700 transition">
+              Apply Fix
+            </button>` : ''}
+          `;
+          cardsContainer.appendChild(card);
+        });
+      }
+
+      // Render Highlighted View
+      let markup = text;
+      RULES.forEach(r => {
+        markup = markup.replace(r.pattern, match => `<span class="${r.type === 'cliche' ? 'highlight-cliche' : 'highlight-wordy'}">${match}</span>`);
+      });
+      highlightedView.innerHTML = markup;
+
+      updateMetrics(text);
+    }
+
+    // Apply a single replacement
+    function applySingleSuggestion(original, replacement) {
+      const textarea = document.getElementById('flowInput');
+      const regex = new RegExp(original, 'i');
+      textarea.value = textarea.value.replace(regex, replacement);
+      runSuggestionsAnalysis();
+    }
+
+    // Apply all automatic cleanups at once
+    function applyAllSuggestions() {
+      const textarea = document.getElementById('flowInput');
+      let updated = textarea.value;
+      RULES.forEach(rule => {
+        updated = updated.replace(rule.pattern, rule.replacement);
+      });
+      textarea.value = updated;
+      runSuggestionsAnalysis();
+    }
+
+    // Readability and Cadence Calculations
+    function updateMetrics(text) {
+      const words = (text.trim().match(/\b[a-z0-9']+\b/gi) || []).length;
+      const sentences = (text.match(/[^.!?]+[.!?]+|\S+/g) || []).length || 1;
+      const syllables = countSyllables(text);
+
+      // Flesch Reading Ease
+      let flesch = 0;
+      if (words > 0) {
+        flesch = Math.round(206.835 - 1.015 * (words / sentences) - 84.6 * (syllables / words));
+        flesch = Math.max(0, Math.min(100, flesch));
+      }
+
+      // Calculate Grade Level
+      let grade = "--";
+      if (words > 5) {
+        if (flesch >= 80) grade = "6th Grade (Easy)";
+        else if (flesch >= 60) grade = "8th-9th Grade (Standard)";
+        else if (flesch >= 45) grade = "College Level";
+        else grade = "Academic / Dense";
+      }
+
+      document.getElementById('editorStats').textContent = `${words} words \vert{}${grade}`;
+      document.getElementById('fleschScore').textContent = words > 0 ? `${flesch}/100` : '--';
+
+      // Type-Token Ratio & Burstiness
+      const tokens = text.toLowerCase().match(/\b[a-z0-9']+\b/g) || [];
+      const ttr = tokens.length ? (new Set(tokens).size / tokens.length).toFixed(2) : '--';
+      
+      const lengths = (text.match(/[^.!?]+[.!?]+|\S+/g) || []).map(s => (s.match(/\b[a-z0-9']+\b/gi) || []).length);
+      const mean = lengths.length ? lengths.reduce((a, b) => a + b, 0) / lengths.length : 0;
+      const variance = lengths.length ? lengths.reduce((acc, len) => acc + Math.pow(len - mean, 2), 0) / lengths.length : 0;
+      const sigma = lengths.length ? Math.sqrt(variance).toFixed(1) : '--';
+
+      document.getElementById('ttrScore').textContent = ttr;
+      document.getElementById('burstScore').textContent = sigma;
+
+      const verdict = document.getElementById('verdictBadge');
+      if (activeSuggestions.length > 3) {
+        verdict.textContent = "Needs Polish";
+        verdict.className = "text-[10px] px-2 py-0.5 rounded font-bold bg-amber-950 text-amber-300 border border-amber-800";
+      } else if (words > 0) {
+        verdict.textContent = "Polished & Clear";
+        verdict.className = "text-[10px] px-2 py-0.5 rounded font-bold bg-emerald-950 text-emerald-300 border border-emerald-800";
+      } else {
+        verdict.textContent = "Ready";
+        verdict.className = "text-[10px] px-2 py-0.5 rounded font-bold bg-slate-800 text-slate-400 border border-slate-700";
       }
     }
 
-    // 7. Audio Cadence
-    let selectedAudio = null;
-    function previewAudio(input) {
-      const file = input.files[0];
-      if (!file) return;
-      selectedAudio = file;
-      const a = document.getElementById('audioPreview');
-      a.src = URL.createObjectURL(file);
-      a.classList.remove('hidden');
-      document.getElementById('audioBtn').classList.remove('hidden');
+    function countSyllables(str) {
+      const words = str.toLowerCase().match(/\b[a-z]+\b/g) || [];
+      return words.reduce((total, word) => {
+        const matches = word.replace(/(?:[^laeiouy]|ed|es|e)$/, '').match(/[aeiouy]{1,2}/g);
+        return total + (matches ? matches.length : 1);
+      }, 0);
     }
 
-    async function analyzeAudio() {
-      if (!selectedAudio) return;
+    // Demo Sample Text
+    function loadSampleText() {
+      const sample = `In order to understand modern engineering, it is important to note that we must delve into the intricate history of bridge building. A testament to this reality is the Golden Gate Bridge, which stands as a vibrant tapestry of human innovation and resilience, due to the fact that workers labored under harsh conditions for years at this point in time to complete the construction on schedule. In conclusion, we can utilize these techniques to build better structures.`;
+      document.getElementById('flowInput').value = sample;
+      runSuggestionsAnalysis();
+    }
+
+    async function copyEditorText() {
+      const txt = document.getElementById('flowInput').value;
+      if (!txt) return;
+      await navigator.clipboard.writeText(txt);
+      const btn = document.getElementById('copyEditorBtn');
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = 'Copy Text', 1800);
+    }
+
+    // TAB: Fact Checking
+    async function analyzeFact() {
+      const text = document.getElementById('factInput').value.trim();
+      if (!text) return alert("Please enter a claim to verify.");
+
+      const resultsDiv = document.getElementById('factResults');
+      resultsDiv.innerHTML = '<span class="text-xs text-slate-400">Querying encyclopedia registry...</span>';
+
+      const keywords = text.replace(/[^\w\s]/gi, '').split(/\s+/).filter(w => w.length > 3).slice(0, 3).join(' ') || text;
       try {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const buf = await ctx.decodeAudioData(await selectedAudio.arrayBuffer());
-        const data = buf.getChannelData(0);
-
-        let sum = 0, sil = 0;
-        for (let i = 0; i < data.length; i += 100) {
-          sum += data[i] * data[i];
-          if (Math.abs(data[i]) < 0.01) sil++;
-        }
-        const rms = Math.sqrt(sum / (data.length / 100)).toFixed(3);
-        const pauseRatio = ((sil / (data.length / 100)) * 100).toFixed(1);
-
-        const isSynthetic = pauseRatio < 6.0 && rms > 0.12;
-        setVerdict(
-          isSynthetic ? 78 : 24,
-          isSynthetic ? "Synthetic Cadence Flagged" : "Natural Speech Cadence",
-          !isSynthetic,
-          `<div>• Spectral Energy (RMS): ${rms}</div>
-           <div>• Pause Ratio: ${pauseRatio}%</div>`
-        );
-      } catch (e) {
-        alert("Audio parsing error: " + e.message);
-      }
-    }
-
-    // 8. Flow & Diff
-    function polishFlow() {
-      const val = document.getElementById('flowInput').value;
-      if (!val.trim()) return alert("Please enter text to polish.");
-
-      const polished = val
-        .replace(/\bIn conclusion,?\b/gi, 'Ultimately,')
-        .replace(/\bFurthermore,?\b/gi, 'Also,')
-        .replace(/\bMoreover,?\b/gi, 'In addition,')
-        .replace(/\bDelve into\b/gi, 'Explore')
-        .replace(/\bTestament to\b/gi, 'Sign of')
-        .replace(/\bTapestry of\b/gi, 'Mix of');
-
-      document.getElementById('flowDiffOriginal').textContent = val;
-      document.getElementById('flowDiffEnhanced').textContent = polished;
-      document.getElementById('flowDiffContainer').classList.remove('hidden');
-
-      setVerdict(18, "Polished", true, `<div>• Formulaic transitions restructured.</div><div>• Cadence diff generated.</div>`);
-    }
-
-    // 9. PDF Export & Reset
-    function exportReportPdf() {
-      const el = document.getElementById('reportContainer');
-      if (typeof html2pdf !== 'undefined') {
-        html2pdf().set({
-          margin: 10,
-          filename: `veritas_report_${Date.now()}.pdf`,
-          html2canvas: { scale: 2, backgroundColor: '#020617' },
-          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        }).from(el).save();
-      }
-    }
-
-    function resetAll() {
-      document.querySelectorAll('textarea').forEach(t => t.value = '');
-      document.querySelectorAll('input[type="text"], input[type="url"]').forEach(i => i.value = '');
-      document.getElementById('factResults').innerHTML = '';
-      document.getElementById('imagePreview').classList.add('hidden');
-      document.getElementById('imageActions').classList.add('hidden');
-      document.getElementById('videoPreview').classList.add('hidden');
-      document.getElementById('videoBtn').classList.add('hidden');
-      document.getElementById('audioPreview').classList.add('hidden');
-      document.getElementById('audioBtn').classList.add('hidden');
-      document.getElementById('flowDiffContainer').classList.add('hidden');
-      document.getElementById('scoreVal').textContent = '0%';
-      document.getElementById('scoreBar').style.width = '0%';
-      document.getElementById('ttrVal').textContent = '--';
-      document.getElementById('burstVal').textContent = '--';
-      document.getElementById('verdictBadge').textContent = 'Ready';
-      document.getElementById('verdictBadge').className = 'text-[10px] px-2 py-0.5 rounded font-bold bg-slate-800 text-slate-400 border border-slate-700';
-      document.getElementById('diagText').textContent = 'Select any tab on the left to begin inspecting content.';
-    }
-  </script>
-</body>
-</html>
+        const res = await fetch(`
