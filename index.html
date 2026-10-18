@@ -3,15 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VeritasAI Studio - Content Authenticity & Editorial Polish</title>
-  <!-- Google Fonts: Inter -->
+  <title>VeritasAI Studio - Multimodal Forensics & Editorial Suite</title>
+  
+  <!-- Modern Typography: Plus Jakarta Sans & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <!-- Tailwind CSS CDN -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS & Lucide Icons -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Lucide Icons CDN -->
   <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- html2pdf.js for Branded PDF Export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
   <script>
     tailwind.config = {
       theme: {
@@ -22,150 +26,10 @@
           },
           colors: {
             brand: {
-              50: '#eef2ff',
-              100: '#e0e7ff',
+              400: '#818cf8',
               500: '#6366f1',
-              600: '#4f46e5',
-              700: '#4338ca',
-            }
-          }
-        }
-      }
-    }
-  </script>
-</head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans antialiased selection:bg-brand-500 selection:text-white">
-
-  <!-- Top Navigation Bar -->
-  <header class="border-b border-slate-800/80 bg-slate-900/70 backdrop-blur-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="bg-gradient-to-tr from-brand-600 to-indigo-400 p-2.5 rounded-xl shadow-lg shadow-brand-500/20 text-white flex items-center justify-center">
-          <i data-lucide="sparkles" class="w-5 h-5"></i>
-        </div>
-        <div>
-          <div class="flex items-center gap-2">
-            <h1 class="font-extrabold text-base sm:text-lg tracking-tight text-white">Veritas<span class="text-indigo-400">AI</span></h1>
-            <span class="px-2 py-0.5 text-[10px] font-bold rounded-full bg-slate-800 text-indigo-300 border border-slate-700">Studio</span>
-          </div>
-          <p class="text-[11px] text-slate-400">Content Authenticity & Editorial Polish</p>
-        </div>
-      </div>
-      <div class="flex items-center gap-2">
-        <button id="quickClearBtn" class="px-3 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-xs font-semibold text-slate-300 border border-slate-700/60 transition flex items-center gap-1.5">
-          <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Reset
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Main Studio Workspace -->
-  <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 py-6 w-full grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
-    
-    <!-- Left Interaction Column (7 Cols) -->
-    <section class="lg:col-span-7 flex flex-col gap-5">
-      
-      <!-- Modality Tabs -->
-      <div class="flex bg-slate-900/80 p-1.5 rounded-2xl border border-slate-800 gap-1 overflow-x-auto">
-        <button id="tabTextBtn" class="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs font-bold transition bg-brand-600 text-white shadow-sm">
-          <i data-lucide="file-text" class="w-4 h-4"></i> Text & Docs
-        </button>
-        <button id="tabImageBtn" class="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs font-semibold text-slate-400 hover:text-slate-200 transition">
-          <i data-lucide="image" class="w-4 h-4"></i> Image / C2PA
-        </button>
-        <button id="tabVideoBtn" class="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs font-semibold text-slate-400 hover:text-slate-200 transition">
-          <i data-lucide="film" class="w-4 h-4"></i> Video
-        </button>
-        <button id="tabHumanizeBtn" class="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs font-semibold text-slate-400 hover:text-slate-200 transition">
-          <i data-lucide="wand-2" class="w-4 h-4 text-emerald-400"></i> Flow & Polish
-        </button>
-      </div>
-
-      <!-- VIEW 1: TEXT & DOCUMENTS -->
-      <div id="viewText" class="flex flex-col gap-4">
-        <!-- Document Upload Card -->
-        <div id="docDropzone" class="border border-dashed border-slate-700/80 hover:border-brand-500 rounded-2xl p-4 text-center cursor-pointer transition bg-slate-900/30 hover:bg-slate-900/70 group">
-          <input type="file" id="docFileInput" class="hidden" accept=".txt,.md,.rtf">
-          <div class="flex items-center justify-center gap-3">
-            <div class="w-9 h-9 rounded-xl bg-slate-800 flex items-center justify-center text-slate-300 group-hover:text-brand-400 group-hover:scale-105 transition">
-              <i data-lucide="upload-cloud" class="w-5 h-5"></i>
-            </div>
-            <div class="text-left">
-              <p class="text-xs font-bold text-slate-200 group-hover:text-brand-300">Tap to upload a document</p>
-              <p class="text-[11px] text-slate-500">Supports .txt, .md, .rtf or paste below</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Input Area -->
-        <div class="flex flex-col gap-2">
-          <div class="flex justify-between items-center text-xs text-slate-400 px-1">
-            <span class="font-bold tracking-wider uppercase text-[10px] text-slate-500">Text Workspace</span>
-            <span id="charCount" class="font-mono text-[11px] text-slate-400">0 characters | 0 words</span>
-          </div>
-          <textarea
-            id="textInput"
-            rows="9"
-            placeholder="Paste your content here to check sentence cadence, lexical diversity, and AI likelihood..."
-            class="w-full bg-slate-900/90 border border-slate-800 rounded-2xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500/50 focus:border-brand-500 leading-relaxed transition resize-y"
-          ></textarea>
-        </div>
-
-        <button id="analyzeTextBtn" class="flex items-center justify-center gap-2 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold py-3 px-5 rounded-xl shadow-lg shadow-brand-600/20 transition active:scale-[0.99] text-xs sm:text-sm">
-          <i data-lucide="scan-line" class="w-4 h-4"></i> Analyze Authenticity
-        </button>
-      </div>
-
-      <!-- VIEW 2: IMAGE & C2PA -->
-      <div id="viewImage" class="hidden flex flex-col gap-4">
-        <div id="imageDropzone" class="border-2 border-dashed border-slate-700/80 hover:border-brand-500 rounded-2xl p-7 text-center cursor-pointer transition bg-slate-900/30 hover:bg-slate-900/70 group">
-          <input type="file" id="imageFileInput" class="hidden" accept="image/png, image/jpeg, image/webp">
-          <div class="flex flex-col items-center justify-center gap-2.5">
-            <div class="w-12 h-12 rounded-2xl bg-indigo-950/60 border border-indigo-800/40 flex items-center justify-center text-indigo-400 group-hover:scale-110 transition">
-              <i data-lucide="image-plus" class="w-6 h-6"></i>
-            </div>
-            <div>
-              <p class="text-xs font-bold text-slate-200 group-hover:text-brand-300">Choose or drop an image</p>
-              <p class="text-[11px] text-slate-500 mt-0.5">PNG, JPG, or WEBP formats supported</p>
-            </div>
-          </div>
-        </div>
-
-        <div id="imagePreviewContainer" class="hidden border border-slate-800 rounded-2xl bg-slate-900/80 p-3.5 flex flex-col items-center">
-          <img id="imagePreview" class="max-h-56 rounded-xl object-contain shadow-md mb-2" alt="Uploaded Preview" />
-          <span id="imageMeta" class="text-[11px] font-mono text-slate-400"></span>
-        </div>
-
-        <button id="analyzeImageBtn" class="hidden flex items-center justify-center gap-2 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold py-3 px-5 rounded-xl shadow-lg shadow-brand-600/20 transition text-xs sm:text-sm">
-          <i data-lucide="shield-search" class="w-4 h-4"></i> Inspect Image Credentials
-        </button>
-      </div>
-
-      <!-- VIEW 3: VIDEO INSPECTION -->
-      <div id="viewVideo" class="hidden flex flex-col gap-4">
-        <div id="videoDropzone" class="border-2 border-dashed border-slate-700/80 hover:border-brand-500 rounded-2xl p-7 text-center cursor-pointer transition bg-slate-900/30 hover:bg-slate-900/70 group">
-          <input type="file" id="videoFileInput" class="hidden" accept="video/mp4, video/webm">
-          <div class="flex flex-col items-center justify-center gap-2.5">
-            <div class="w-12 h-12 rounded-2xl bg-indigo-950/60 border border-indigo-800/40 flex items-center justify-center text-indigo-400 group-hover:scale-110 transition">
-              <i data-lucide="film" class="w-6 h-6"></i>
-            </div>
-            <div>
-              <p class="text-xs font-bold text-slate-200 group-hover:text-brand-300">Choose or drop a video file</p>
-              <p class="text-[11px] text-slate-500 mt-0.5">MP4 or WEBM (evaluates inter-frame consistency)</p>
-            </div>
-          </div>
-        </div>
-
-        <video id="videoPreview" class="hidden max-h-56 rounded-2xl border border-slate-800 bg-black w-full" controls></video>
-
-        <button id="analyzeVideoBtn" class="hidden flex items-center justify-center gap-2 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold py-3 px-5 rounded-xl shadow-lg shadow-brand-600/20 transition text-xs sm:text-sm">
-          <i data-lucide="activity" class="w-4 h-4"></i> Run Frame Forensics
-        </button>
-      </div>
-
-      <!-- VIEW 4: FLOW & POLISH ASSISTANT -->
-      <div id="viewHumanize" class="hidden flex flex-col gap-4">
-        <div class="bg-gradient-to-r from-indigo-950/40 to-slate-900 border border-indigo-800/40 rounded-2xl p-4 flex items-start gap-3">
+              600
+ex items-start gap-3">
           <div class="p-2 rounded-xl bg-indigo-900/50 text-indigo-300">
             <i data-lucide="sparkle" class="w-4 h-4"></i>
           </div>
