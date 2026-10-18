@@ -74,11 +74,11 @@
       </div>
 
       <div class="flex items-center gap-2">
-        <button type="button" id="exportPdfBtn" class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-xs font-semibold text-slate-300 border border-slate-700/80 transition flex items-center gap-1.5 active:scale-95 shadow-sm">
+        <button type="button" id="exportPdfBtn" onclick="exportReportPdf()" class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-xs font-semibold text-slate-300 border border-slate-700/80 transition flex items-center gap-1.5 active:scale-95 shadow-sm">
           <i data-lucide="file-down" class="w-3.5 h-3.5 text-indigo-400"></i>
           <span class="hidden sm:inline">Export PDF</span>
         </button>
-        <button type="button" id="quickResetBtn" class="px-3 py-1.5 rounded-xl bg-slate-900/60 hover:bg-slate-800 text-xs font-semibold text-slate-400 border border-slate-800 transition flex items-center gap-1.5 active:scale-95">
+        <button type="button" id="quickResetBtn" onclick="resetStudioWorkspace()" class="px-3 py-1.5 rounded-xl bg-slate-900/60 hover:bg-slate-800 text-xs font-semibold text-slate-400 border border-slate-800 transition flex items-center gap-1.5 active:scale-95">
           <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
           <span>Reset</span>
         </button>
@@ -95,7 +95,7 @@
       <!-- GRAPHIC CLICKABLE TABS -->
       <div id="tabContainer" class="grid grid-cols-2 sm:grid-cols-5 gap-2 p-1.5 bg-slate-900/80 border border-slate-800/90 rounded-2xl shadow-inner backdrop-blur-md">
         
-        <button type="button" data-tab="text" class="tab-button active-tab flex items-center gap-2 p-2 rounded-xl transition duration-150 text-left border border-slate-800 bg-slate-950/40 text-slate-300 hover:text-white cursor-pointer">
+        <button type="button" id="tabBtn_text" onclick="switchTab('text')" class="tab-button active-tab flex items-center gap-2 p-2 rounded-xl transition duration-150 text-left border border-slate-800 bg-slate-950/40 text-slate-300 hover:text-white cursor-pointer">
           <div class="w-7 h-7 rounded-lg bg-slate-800/80 flex items-center justify-center flex-shrink-0 text-indigo-400">
             <i data-lucide="file-text" class="w-4 h-4"></i>
           </div>
@@ -105,7 +105,7 @@
           </div>
         </button>
 
-        <button type="button" data-tab="fact" class="tab-button flex items-center gap-2 p-2 rounded-xl transition duration-150 text-left border border-slate-800 bg-slate-950/40 text-slate-300 hover:text-white cursor-pointer">
+        <button type="button" id="tabBtn_fact" onclick="switchTab('fact')" class="tab-button flex items-center gap-2 p-2 rounded-xl transition duration-150 text-left border border-slate-800 bg-slate-950/40 text-slate-300 hover:text-white cursor-pointer">
           <div class="w-7 h-7 rounded-lg bg-slate-800/80 flex items-center justify-center flex-shrink-0 text-amber-400">
             <i data-lucide="check-check" class="w-4 h-4"></i>
           </div>
@@ -115,7 +115,7 @@
           </div>
         </button>
 
-        <button type="button" data-tab="image" class="tab-button flex items-center gap-2 p-2 rounded-xl transition duration-150 text-left border border-slate-800 bg-slate-950/40 text-slate-300 hover:text-white cursor-pointer">
+        <button type="button" id="tabBtn_image" onclick="switchTab('image')" class="tab-button flex items-center gap-2 p-2 rounded-xl transition duration-150 text-left border border-slate-800 bg-slate-950/40 text-slate-300 hover:text-white cursor-pointer">
           <div class="w-7 h-7 rounded-lg bg-slate-800/80 flex items-center justify-center flex-shrink-0 text-brand-400">
             <i data-lucide="image" class="w-4 h-4"></i>
           </div>
@@ -125,7 +125,7 @@
           </div>
         </button>
 
-        <button type="button" data-tab="audio" class="tab-button flex items-center gap-2 p-2 rounded-xl transition duration-150 text-left border border-slate-800 bg-slate-950/40 text-slate-300 hover:text-white cursor-pointer">
+        <button type="button" id="tabBtn_audio" onclick="switchTab('audio')" class="tab-button flex items-center gap-2 p-2 rounded-xl transition duration-150 text-left border border-slate-800 bg-slate-950/40 text-slate-300 hover:text-white cursor-pointer">
           <div class="w-7 h-7 rounded-lg bg-slate-800/80 flex items-center justify-center flex-shrink-0 text-rose-400">
             <i data-lucide="mic" class="w-4 h-4"></i>
           </div>
@@ -135,7 +135,7 @@
           </div>
         </button>
 
-        <button type="button" data-tab="humanize" class="tab-button flex items-center gap-2 p-2 rounded-xl transition duration-150 text-left border border-slate-800 bg-slate-950/40 text-slate-300 hover:text-white cursor-pointer">
+        <button type="button" id="tabBtn_humanize" onclick="switchTab('humanize')" class="tab-button flex items-center gap-2 p-2 rounded-xl transition duration-150 text-left border border-slate-800 bg-slate-950/40 text-slate-300 hover:text-white cursor-pointer">
           <div class="w-7 h-7 rounded-lg bg-slate-800/80 flex items-center justify-center flex-shrink-0 text-emerald-400">
             <i data-lucide="pen-tool" class="w-4 h-4"></i>
           </div>
@@ -160,13 +160,13 @@
             placeholder="Paste public article URL..." 
             class="flex-1 w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-brand-500 font-mono"
           />
-          <button type="button" id="fetchUrlBtn" class="w-full sm:w-auto px-4 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-200 border border-slate-700 transition flex items-center justify-center gap-1.5">
+          <button type="button" id="fetchUrlBtn" onclick="fetchWebUrl()" class="w-full sm:w-auto px-4 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-200 border border-slate-700 transition flex items-center justify-center gap-1.5">
             <i data-lucide="download" class="w-3.5 h-3.5"></i> Fetch
           </button>
         </div>
 
-        <div id="docDropzone" class="border border-dashed border-slate-700/80 hover:border-brand-500 rounded-2xl p-4 text-center cursor-pointer transition bg-slate-900/30 hover:bg-slate-900/70 group">
-          <input type="file" id="docFileInput" class="hidden" accept=".txt,.md,.rtf">
+        <div id="docDropzone" onclick="triggerDocUpload()" class="border border-dashed border-slate-700/80 hover:border-brand-500 rounded-2xl p-4 text-center cursor-pointer transition bg-slate-900/30 hover:bg-slate-900/70 group">
+          <input type="file" id="docFileInput" onchange="handleDocFileSelect(event)" class="hidden" accept=".txt,.md,.rtf">
           <div class="flex items-center justify-center gap-3">
             <div class="w-8 h-8 rounded-xl bg-slate-800 flex items-center justify-center text-slate-300 group-hover:text-brand-400 transition">
               <i data-lucide="upload-cloud" class="w-4 h-4"></i>
@@ -186,12 +186,13 @@
           <textarea
             id="textInput"
             rows="8"
+            oninput="updateTextCounters()"
             placeholder="Paste text here to evaluate readability, burstiness (σ), and vocabulary dispersion..."
             class="w-full bg-slate-900/80 border border-slate-800 rounded-2xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500/50 leading-relaxed resize-y"
           ></textarea>
         </div>
 
-        <button type="button" id="analyzeTextBtn" class="flex items-center justify-center gap-2 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold py-3 px-5 rounded-xl shadow-lg shadow-brand-600/20 transition active:scale-[0.99] text-xs sm:text-sm">
+        <button type="button" id="analyzeTextBtn" onclick="runTextAnalysis()" class="flex items-center justify-center gap-2 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold py-3 px-5 rounded-xl shadow-lg shadow-brand-600/20 transition active:scale-[0.99] text-xs sm:text-sm">
           <i data-lucide="scan-line" class="w-4 h-4"></i> Run Veritas Inspection
         </button>
       </div>
@@ -218,12 +219,13 @@
           <textarea
             id="factInput"
             rows="7"
+            oninput="updateFactCounters()"
             placeholder="Paste text or claims (e.g., 'The Eiffel Tower was completed in 1889 in Paris, France...')"
             class="w-full bg-slate-900/80 border border-slate-800 rounded-2xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 leading-relaxed resize-y"
           ></textarea>
         </div>
 
-        <button type="button" id="analyzeFactBtn" class="flex items-center justify-center gap-2 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white font-bold py-3 px-5 rounded-xl shadow-lg shadow-amber-600/20 transition active:scale-[0.99] text-xs sm:text-sm">
+        <button type="button" id="analyzeFactBtn" onclick="runFactCheckAnalysis()" class="flex items-center justify-center gap-2 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white font-bold py-3 px-5 rounded-xl shadow-lg shadow-amber-600/20 transition active:scale-[0.99] text-xs sm:text-sm">
           <i data-lucide="search-check" class="w-4 h-4"></i> Cross-Reference Claims Live
         </button>
 
@@ -235,8 +237,8 @@
 
       <!-- TAB VIEW 3: IMAGE & EXIF METADATA -->
       <div id="viewImage" class="tab-content hidden flex flex-col gap-4">
-        <div id="imageDropzone" class="border-2 border-dashed border-slate-700/80 hover:border-brand-500 rounded-2xl p-7 text-center cursor-pointer transition bg-slate-900/30 hover:bg-slate-900/70 group">
-          <input type="file" id="imageFileInput" class="hidden" accept="image/png, image/jpeg, image/webp">
+        <div id="imageDropzone" onclick="triggerImageUpload()" class="border-2 border-dashed border-slate-700/80 hover:border-brand-500 rounded-2xl p-7 text-center cursor-pointer transition bg-slate-900/30 hover:bg-slate-900/70 group">
+          <input type="file" id="imageFileInput" onchange="handleImageFileSelect(event)" class="hidden" accept="image/png, image/jpeg, image/webp">
           <div class="flex flex-col items-center justify-center gap-2">
             <div class="w-12 h-12 rounded-2xl bg-indigo-950/60 border border-indigo-800/40 flex items-center justify-center text-indigo-400 group-hover:scale-110 transition">
               <i data-lucide="image-plus" class="w-6 h-6"></i>
@@ -253,7 +255,7 @@
           <span id="imageMeta" class="text-[11px] font-mono text-slate-400"></span>
           
           <div class="flex items-center gap-2 mt-3">
-            <button type="button" id="stripExifBtn" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 border border-slate-700 flex items-center gap-1.5 transition">
+            <button type="button" id="stripExifBtn" onclick="stripImageMetadata()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 border border-slate-700 flex items-center gap-1.5 transition">
               <i data-lucide="eraser" class="w-3.5 h-3.5 text-amber-400"></i> Strip Tracking Metadata
             </button>
             <a id="downloadCleanLink" class="hidden px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-xs text-white font-medium flex items-center gap-1.5 transition">
@@ -262,15 +264,15 @@
           </div>
         </div>
 
-        <button type="button" id="analyzeImageBtn" class="hidden flex items-center justify-center gap-2 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold py-3 px-5 rounded-xl shadow-lg transition text-xs sm:text-sm">
+        <button type="button" id="analyzeImageBtn" onclick="runImageAnalysis()" class="hidden flex items-center justify-center gap-2 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold py-3 px-5 rounded-xl shadow-lg transition text-xs sm:text-sm">
           <i data-lucide="shield-search" class="w-4 h-4"></i> Inspect Image Authenticity
         </button>
       </div>
 
       <!-- TAB VIEW 4: AUDIO CADENCE -->
       <div id="viewAudio" class="tab-content hidden flex flex-col gap-4">
-        <div id="audioDropzone" class="border-2 border-dashed border-slate-700/80 hover:border-brand-500 rounded-2xl p-7 text-center cursor-pointer transition bg-slate-900/30 hover:bg-slate-900/70 group">
-          <input type="file" id="audioFileInput" class="hidden" accept="audio/mp3, audio/wav, audio/ogg, audio/mpeg">
+        <div id="audioDropzone" onclick="triggerAudioUpload()" class="border-2 border-dashed border-slate-700/80 hover:border-brand-500 rounded-2xl p-7 text-center cursor-pointer transition bg-slate-900/30 hover:bg-slate-900/70 group">
+          <input type="file" id="audioFileInput" onchange="handleAudioFileSelect(event)" class="hidden" accept="audio/mp3, audio/wav, audio/ogg, audio/mpeg">
           <div class="flex flex-col items-center justify-center gap-2">
             <div class="w-12 h-12 rounded-2xl bg-indigo-950/60 border border-indigo-800/40 flex items-center justify-center text-indigo-400 group-hover:scale-110 transition">
               <i data-lucide="mic" class="w-6 h-6"></i>
@@ -287,7 +289,7 @@
           <span id="audioMeta" class="text-[11px] font-mono text-slate-400 text-center"></span>
         </div>
 
-        <button type="button" id="analyzeAudioBtn" class="hidden flex items-center justify-center gap-2 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold py-3 px-5 rounded-xl shadow-lg transition text-xs sm:text-sm">
+        <button type="button" id="analyzeAudioBtn" onclick="runAudioAnalysis()" class="hidden flex items-center justify-center gap-2 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold py-3 px-5 rounded-xl shadow-lg transition text-xs sm:text-sm">
           <i data-lucide="activity" class="w-4 h-4"></i> Run Audio Cadence Forensics
         </button>
       </div>
@@ -301,14 +303,14 @@
           class="w-full bg-slate-900/90 border border-slate-800 rounded-2xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 leading-relaxed resize-y"
         ></textarea>
 
-        <button type="button" id="polishTextBtn" class="flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-5 rounded-xl shadow-lg shadow-emerald-600/20 transition active:scale-[0.99] text-xs sm:text-sm">
+        <button type="button" id="polishTextBtn" onclick="runFlowPolish()" class="flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-5 rounded-xl shadow-lg shadow-emerald-600/20 transition active:scale-[0.99] text-xs sm:text-sm">
           <i data-lucide="wand-2" class="w-4 h-4"></i> Enhance Flow & Generate Diff
         </button>
 
         <div class="flex flex-col gap-2 mt-2">
           <div class="flex justify-between items-center px-1">
             <label class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Polished Result</label>
-            <button type="button" id="copyPolishedBtn" class="text-[11px] font-semibold text-emerald-400 hover:text-emerald-300 flex items-center gap-1 transition">
+            <button type="button" id="copyPolishedBtn" onclick="copyPolishedText()" class="text-[11px] font-semibold text-emerald-400 hover:text-emerald-300 flex items-center gap-1 transition">
               <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy Text
             </button>
           </div>
@@ -408,667 +410,747 @@
     </section>
   </main>
 
-  <!-- Bulletproof Script Execution -->
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    var currentActiveTab = 'text';
+    var selectedImageFile = null;
+    var selectedAudioFile = null;
+
+    function initStudio() {
       if (window.lucide) {
         lucide.createIcons();
       }
+    }
+    document.addEventListener('DOMContentLoaded', initStudio);
 
-      // --- 1. RESILIENT TAB CONTROLLER ---
-      let currentActiveTab = 'text';
-      const tabButtons = document.querySelectorAll('.tab-button');
-      const tabContents = {
-        text: document.getElementById('viewText'),
-        fact: document.getElementById('viewFact'),
-        image: document.getElementById('viewImage'),
-        audio: document.getElementById('viewAudio'),
-        humanize: document.getElementById('viewHumanize')
-      };
+    // --- TAB SWITCHER ---
+    function switchTab(tabId) {
+      var tabNames = ['text', 'fact', 'image', 'audio', 'humanize'];
+      for (var i = 0; i < tabNames.length; i++) {
+        var name = tabNames[i];
+        var viewId = 'view' + name.charAt(0).toUpperCase() + name.slice(1);
+        var viewElem = document.getElementById(viewId);
+        var btnElem = document.getElementById('tabBtn_' + name);
 
-      tabButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const target = btn.getAttribute('data-tab');
-          if (!target || !tabContents[target]) return;
-
-          // Toggle Active Button Styles
-          tabButtons.forEach(b => b.classList.remove('active-tab'));
-          btn.classList.add('active-tab');
-
-          // Toggle View Visibility
-          Object.keys(tabContents).forEach(key => {
-            const panel = tabContents[key];
-            if (panel) {
-              if (key === target) {
-                panel.classList.remove('hidden');
-              } else {
-                panel.classList.add('hidden');
-              }
-            }
-          });
-
-          currentActiveTab = target;
-          const gaugeTitle = document.getElementById('gaugeTitle');
-          const gaugeSubtitle = document.getElementById('gaugeSubtitle');
-
-          if (gaugeTitle && gaugeSubtitle) {
-            if (target === 'fact') {
-              gaugeTitle.textContent = 'Fact Reliability Gauge';
-              gaugeSubtitle.textContent = 'Confidence in Corroborated Evidence';
-            } else {
-              gaugeTitle.textContent = 'Detection Gauge';
-              gaugeSubtitle.textContent = 'Likelihood of AI Synthesis';
-            }
+        if (viewElem) {
+          if (name === tabId) {
+            viewElem.classList.remove('hidden');
+          } else {
+            viewElem.classList.add('hidden');
           }
-
-          resetVerdict();
-        });
-      });
-
-      // --- 2. VERDICT & STATUS ENGINE ---
-      const aiScore = document.getElementById('aiScore');
-      const aiScoreBar = document.getElementById('aiScoreBar');
-      const verdictBadge = document.getElementById('verdictBadge');
-      const telemetryStatus = document.getElementById('telemetryStatus');
-      const diagnosticsOutput = document.getElementById('diagnosticsOutput');
-      const readabilityScore = document.getElementById('readabilityScore');
-      const gradeLevelSub = document.getElementById('gradeLevelSub');
-      const metricBurstiness = document.getElementById('metricBurstiness');
-      const metricTTR = document.getElementById('metricTTR');
-      const clicheAlertBox = document.getElementById('clicheAlertBox');
-      const clicheBadges = document.getElementById('clicheBadges');
-
-      let currentAuditReport = null;
-
-      function resetVerdict() {
-        if (aiScore) aiScore.textContent = '0%';
-        if (aiScoreBar) {
-          [suspicious link removed].width = '0%';
-          aiScoreBar.className = 'bg-brand-500 h-1.5 rounded-full transition-all duration-700';
         }
-        if (verdictBadge) {
-          verdictBadge.textContent = 'Ready';
-          verdictBadge.className = 'text-[11px] px-3 py-1 rounded-full font-bold bg-slate-800 text-slate-400 border border-slate-700/80 shadow-sm';
+        if (btnElem) {
+          if (name === tabId) {
+            btnElem.classList.add('active-tab');
+          } else {
+            btnElem.classList.remove('active-tab');
+          }
         }
-        if (telemetryStatus) telemetryStatus.textContent = 'IDLE';
-        if (readabilityScore) readabilityScore.textContent = '--';
-        if (gradeLevelSub) gradeLevelSub.textContent = 'Flesch-Kincaid';
-        if (metricBurstiness) metricBurstiness.textContent = '--';
-        if (metricTTR) metricTTR.textContent = '--';
-        if (clicheAlertBox) clicheAlertBox.classList.add('hidden');
-        if (clicheBadges) clicheBadges.innerHTML = '';
-        if (diagnosticsOutput) diagnosticsOutput.innerHTML = 'Select an ingestion modality and upload content to run deep-scan telemetry.';
       }
 
-      function applyVerdict(prob, detailsHtml, auditData = null) {
-        if (aiScore) aiScore.textContent = `${prob}%`;
-        if (aiScoreBar) [suspicious link removed].width = `${prob}%`;
-        if (telemetryStatus) telemetryStatus.textContent = 'COMPLETED';
+      currentActiveTab = tabId;
+      var gTitle = document.getElementById('gaugeTitle');
+      var gSub = document.getElementById('gaugeSubtitle');
 
-        let verdictText = 'Organic / Human';
-        if (currentActiveTab === 'fact') {
-          if (prob > 70) {
-            verdictText = 'High Reliability / Verified';
-            if (verdictBadge) verdictBadge.className = 'text-[11px] px-3 py-1 rounded-full font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-800 shadow-sm';
-            if (aiScoreBar) aiScoreBar.className = 'bg-emerald-500 h-1.5 rounded-full transition-all duration-700';
-          } else if (prob > 40) {
-            verdictText = 'Partially Corroborated';
-            if (verdictBadge) verdictBadge.className = 'text-[11px] px-3 py-1 rounded-full font-bold bg-amber-950/80 text-amber-300 border border-amber-800 shadow-sm';
-            if (aiScoreBar) aiScoreBar.className = 'bg-amber-500 h-1.5 rounded-full transition-all duration-700';
-          } else {
-            verdictText = 'Unverified / Disputed';
-            if (verdictBadge) verdictBadge.className = 'text-[11px] px-3 py-1 rounded-full font-bold bg-rose-950/80 text-rose-300 border border-rose-800 shadow-sm';
-            if (aiScoreBar) aiScoreBar.className = 'bg-rose-500 h-1.5 rounded-full transition-all duration-700';
-          }
+      if (gTitle && gSub) {
+        if (tabId === 'fact') {
+          gTitle.textContent = 'Fact Reliability Gauge';
+          gSub.textContent = 'Confidence in Corroborated Evidence';
         } else {
-          if (prob > 65) {
-            verdictText = 'Likely Synthetic (AI)';
-            if (verdictBadge) verdictBadge.className = 'text-[11px] px-3 py-1 rounded-full font-bold bg-rose-950/80 text-rose-300 border border-rose-800 shadow-sm';
-            if (aiScoreBar) aiScoreBar.className = 'bg-rose-500 h-1.5 rounded-full transition-all duration-700';
-          } else if (prob > 35) {
-            verdictText = 'Mixed / Inconclusive';
-            if (verdictBadge) verdictBadge.className = 'text-[11px] px-3 py-1 rounded-full font-bold bg-amber-950/80 text-amber-300 border border-amber-800 shadow-sm';
-            if (aiScoreBar) aiScoreBar.className = 'bg-amber-500 h-1.5 rounded-full transition-all duration-700';
-          } else {
-            if (verdictBadge) verdictBadge.className = 'text-[11px] px-3 py-1 rounded-full font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-800 shadow-sm';
-            if (aiScoreBar) aiScoreBar.className = 'bg-emerald-500 h-1.5 rounded-full transition-all duration-700';
-          }
+          gTitle.textContent = 'Detection Gauge';
+          gSub.textContent = 'Likelihood of AI Synthesis';
         }
-
-        if (verdictBadge) verdictBadge.textContent = verdictText;
-        if (diagnosticsOutput) diagnosticsOutput.innerHTML = detailsHtml;
-
-        currentAuditReport = {
-          timestamp: new Date().toISOString(),
-          score: `${prob}%`,
-          verdict: verdictText,
-          telemetry: auditData || {}
-        };
-
-        if (window.lucide) lucide.createIcons();
       }
 
-      // --- 3. TEXT FORENSICS ---
-      const textInput = document.getElementById('textInput');
-      const charCount = document.getElementById('charCount');
-      const docDropzone = document.getElementById('docDropzone');
-      const docFileInput = document.getElementById('docFileInput');
-      const analyzeTextBtn = document.getElementById('analyzeTextBtn');
+      resetVerdict();
+    }
 
-      if (docDropzone && docFileInput) {
-        docDropzone.addEventListener('click', () => [suspicious link removed]());
-        docFileInput.addEventListener('change', (e) => {
-          const file = [suspicious link removed].files;
-          if (!file) return;
-          const reader = new FileReader();
-          reader.onload = (evt) => {
-            if (textInput) {
-              textInput.value = [suspicious link removed].result;
-              updateCounters();
-            }
-          };
-          reader.readAsText(file);
-        });
+    function resetVerdict() {
+      var aiScore = document.getElementById('aiScore');
+      var aiScoreBar = document.getElementById('aiScoreBar');
+      var verdictBadge = document.getElementById('verdictBadge');
+      var telemetryStatus = document.getElementById('telemetryStatus');
+      var readabilityScore = document.getElementById('readabilityScore');
+      var gradeLevelSub = document.getElementById('gradeLevelSub');
+      var metricBurstiness = document.getElementById('metricBurstiness');
+      var metricTTR = document.getElementById('metricTTR');
+      var clicheAlertBox = document.getElementById('clicheAlertBox');
+      var clicheBadges = document.getElementById('clicheBadges');
+      var diagnosticsOutput = document.getElementById('diagnosticsOutput');
+
+      if (aiScore) aiScore.textContent = '0%';
+      if (aiScoreBar) {
+        [suspicious link removed].setProperty('width', '0%');
+        aiScoreBar.className = 'bg-brand-500 h-1.5 rounded-full transition-all duration-700';
+      }
+      if (verdictBadge) {
+        verdictBadge.textContent = 'Ready';
+        verdictBadge.className = 'text-[11px] px-3 py-1 rounded-full font-bold bg-slate-800 text-slate-400 border border-slate-700/80 shadow-sm';
+      }
+      if (telemetryStatus) telemetryStatus.textContent = 'IDLE';
+      if (readabilityScore) readabilityScore.textContent = '--';
+      if (gradeLevelSub) gradeLevelSub.textContent = 'Flesch-Kincaid';
+      if (metricBurstiness) metricBurstiness.textContent = '--';
+      if (metricTTR) metricTTR.textContent = '--';
+      if (clicheAlertBox) clicheAlertBox.classList.add('hidden');
+      if (clicheBadges) clicheBadges.innerHTML = '';
+      if (diagnosticsOutput) diagnosticsOutput.innerHTML = 'Select an ingestion modality and upload content to run deep-scan telemetry.';
+    }
+
+    function applyVerdict(prob, detailsHtml) {
+      var aiScore = document.getElementById('aiScore');
+      var aiScoreBar = document.getElementById('aiScoreBar');
+      var verdictBadge = document.getElementById('verdictBadge');
+      var telemetryStatus = document.getElementById('telemetryStatus');
+      var diagnosticsOutput = document.getElementById('diagnosticsOutput');
+
+      if (aiScore) aiScore.textContent = prob + '%';
+      if (aiScoreBar) [suspicious link removed].setProperty('width', prob + '%');
+      if (telemetryStatus) telemetryStatus.textContent = 'COMPLETED';
+
+      var verdictText = 'Organic / Human';
+      if (currentActiveTab === 'fact') {
+        if (prob > 70) {
+          verdictText = 'High Reliability / Verified';
+          if (verdictBadge) verdictBadge.className = 'text-[11px] px-3 py-1 rounded-full font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-800 shadow-sm';
+          if (aiScoreBar) aiScoreBar.className = 'bg-emerald-500 h-1.5 rounded-full transition-all duration-700';
+        } else if (prob > 40) {
+          verdictText = 'Partially Corroborated';
+          if (verdictBadge) verdictBadge.className = 'text-[11px] px-3 py-1 rounded-full font-bold bg-amber-950/80 text-amber-300 border border-amber-800 shadow-sm';
+          if (aiScoreBar) aiScoreBar.className = 'bg-amber-500 h-1.5 rounded-full transition-all duration-700';
+        } else {
+          verdictText = 'Unverified / Disputed';
+          if (verdictBadge) verdictBadge.className = 'text-[11px] px-3 py-1 rounded-full font-bold bg-rose-950/80 text-rose-300 border border-rose-800 shadow-sm';
+          if (aiScoreBar) aiScoreBar.className = 'bg-rose-500 h-1.5 rounded-full transition-all duration-700';
+        }
+      } else {
+        if (prob > 65) {
+          verdictText = 'Likely Synthetic (AI)';
+          if (verdictBadge) verdictBadge.className = 'text-[11px] px-3 py-1 rounded-full font-bold bg-rose-950/80 text-rose-300 border border-rose-800 shadow-sm';
+          if (aiScoreBar) aiScoreBar.className = 'bg-rose-500 h-1.5 rounded-full transition-all duration-700';
+        } else if (prob > 35) {
+          verdictText = 'Mixed / Inconclusive';
+          if (verdictBadge) verdictBadge.className = 'text-[11px] px-3 py-1 rounded-full font-bold bg-amber-950/80 text-amber-300 border border-amber-800 shadow-sm';
+          if (aiScoreBar) aiScoreBar.className = 'bg-amber-500 h-1.5 rounded-full transition-all duration-700';
+        } else {
+          if (verdictBadge) verdictBadge.className = 'text-[11px] px-3 py-1 rounded-full font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-800 shadow-sm';
+          if (aiScoreBar) aiScoreBar.className = 'bg-emerald-500 h-1.5 rounded-full transition-all duration-700';
+        }
       }
 
-      function updateCounters() {
-        if (!textInput || !charCount) return;
-        const chars = textInput.value.length;
-        const words = textInput.value.trim() ? textInput.value.trim().split(/\s+/).length : 0;
-        charCount.textContent = `${chars} chars | ${words} words`;
-      }
-      if (textInput) textInput.addEventListener('input', updateCounters);
+      if (verdictBadge) verdictBadge.textContent = verdictText;
+      if (diagnosticsOutput) diagnosticsOutput.innerHTML = detailsHtml;
+      if (window.lucide) lucide.createIcons();
+    }
 
-      const aiCliches = [
+    // --- TEXT ANALYSIS ---
+    function triggerDocUpload() {
+      var input = document.getElementById('docFileInput');
+      if (input) [suspicious link removed]();
+    }
+
+    function handleDocFileSelect(event) {
+      var files = event['target']['files'];
+      if (!files || !files) return;
+      var reader = new FileReader();
+      reader.onload = function(evt) {
+        var textInput = document.getElementById('textInput');
+        if (textInput) {
+          textInput.value = [suspicious link removed].result;
+          updateTextCounters();
+        }
+      };
+      reader.readAsText(files);
+    }
+
+    function updateTextCounters() {
+      var textInput = document.getElementById('textInput');
+      var charCount = document.getElementById('charCount');
+      if (!textInput || !charCount) return;
+      var chars = textInput.value.length;
+      var words = textInput.value.trim() ? textInput.value.trim().split(/\s+/).length : 0;
+      charCount.textContent = chars + ' chars | ' + words + ' words';
+    }
+
+    function updateFactCounters() {
+      var factInput = document.getElementById('factInput');
+      var factCharCount = document.getElementById('factCharCount');
+      if (!factInput || !factCharCount) return;
+      var words = factInput.value.trim() ? factInput.value.trim().split(/\s+/).length : 0;
+      factCharCount.textContent = words + ' words';
+    }
+
+    function countSyllables(word) {
+      var cleaned = word.toLowerCase().replace(/[^a-z]/g, '');
+      if (cleaned.length <= 3) return 1;
+      var matches = cleaned.match(/[aeiouy]{1,2}/g);
+      return matches ? matches.length : 1;
+    }
+
+    function runTextAnalysis() {
+      var textInput = document.getElementById('textInput');
+      if (!textInput) return;
+      var text = textInput.value.trim();
+      if (!text) return;
+
+      var sentences = text.match(/[^.!?]+[.!?]+|\S+/g) || [text];
+      var tokens = text.toLowerCase().match(/\b[a-z0-9']+\b/g) || [];
+      if (tokens.length === 0) return;
+
+      var uniqueTokens = new Set(tokens);
+      var ttr = (uniqueTokens.size / tokens.length).toFixed(3);
+
+      var sentenceLengths = [];
+      for (var i = 0; i < sentences.length; i++) {
+        var wCount = (sentences[i].trim().match(/\b[a-z0-9']+\b/gi) || []).length;
+        sentenceLengths.push(wCount);
+      }
+
+      var totalLen = 0;
+      for (var i = 0; i < sentenceLengths.length; i++) {
+        totalLen += sentenceLengths[i];
+      }
+      var meanLength = totalLen / sentenceLengths.length;
+
+      var varianceSum = 0;
+      for (var i = 0; i < sentenceLengths.length; i++) {
+        varianceSum += Math.pow(sentenceLengths[i] - meanLength, 2);
+      }
+      var burstinessSigma = Math.sqrt(varianceSum / sentenceLengths.length).toFixed(2);
+
+      var totalSyllables = 0;
+      for (var i = 0; i < tokens.length; i++) {
+        totalSyllables += countSyllables(tokens[i]);
+      }
+
+      var readScore = Math.max(0, Math.min(100, Math.round(206.835 - 1.015 * (tokens.length / sentences.length) - 84.6 * (totalSyllables / tokens.length))));
+      var grade = 'College';
+      if (readScore >= 90) grade = '5th Grade';
+      else if (readScore >= 80) grade = '6th Grade';
+      else if (readScore >= 70) grade = '7th Grade';
+      else if (readScore >= 60) grade = '8th-9th Grade';
+      else if (readScore >= 50) grade = '10th-12th Grade';
+
+      var aiCliches = [
         'delve', 'moreover', 'testament', 'beacon', 'tapestry', 'revolutionize',
         'furthermore', 'paramount', 'unwavering', 'foster', 'underscore',
         'in conclusion', 'it is important to note', 'harness the power'
       ];
-
-      function countSyllables(word) {
-        const cleaned = word.toLowerCase().replace(/[^a-z]/g, '');
-        if (cleaned.length <= 3) return 1;
-        const matches = cleaned.match(/[aeiouy]{1,2}/g);
-        return matches ? matches.length : 1;
+      var lowerText = text.toLowerCase();
+      var detectedCliches = [];
+      for (var i = 0; i < aiCliches.length; i++) {
+        if (lowerText.indexOf(aiCliches[i]) !== -1) {
+          detectedCliches.push(aiCliches[i]);
+        }
       }
 
-      if (analyzeTextBtn) {
-        analyzeTextBtn.addEventListener('click', () => {
-          if (!textInput) return;
-          const text = textInput.value.trim();
-          if (!text) return;
+      var aiProb = 50;
+      if (burstinessSigma < 3.5) aiProb += 25;
+      else if (burstinessSigma > 7.0) aiProb -= 25;
+      if (ttr < 0.5) aiProb += 15;
+      else if (ttr > 0.75) aiProb -= 20;
+      if (detectedCliches.length > 2) aiProb += 15;
+      aiProb = Math.min(Math.max(aiProb, 5), 96);
 
-          const sentences = text.match(/[^.!?]+[.!?]+|\S+/g) || [text];
-          const tokens = text.toLowerCase().match(/\b[a-z0-9']+\b/g) || [];
-          if (tokens.length === 0) return;
+      var metricTTR = document.getElementById('metricTTR');
+      var metricBurstiness = document.getElementById('metricBurstiness');
+      var readabilityScore = document.getElementById('readabilityScore');
+      var gradeLevelSub = document.getElementById('gradeLevelSub');
+      var clicheAlertBox = document.getElementById('clicheAlertBox');
+      var clicheBadges = document.getElementById('clicheBadges');
 
-          const uniqueTokens = new Set(tokens);
-          const ttr = (uniqueTokens.size / tokens.length).toFixed(3);
+      if (metricTTR) metricTTR.textContent = ttr;
+      if (metricBurstiness) metricBurstiness.textContent = burstinessSigma;
+      if (readabilityScore) readabilityScore.textContent = readScore + '/100';
+      if (gradeLevelSub) gradeLevelSub.textContent = grade;
 
-          const sentenceLengths = [suspicious link removed](s => (s.trim().match(/\b[a-z0-9']+\b/gi) || []).length);
-          const meanLength = sentenceLengths.reduce((a, b) => a + b, 0) / sentenceLengths.length;
-          const variance = sentenceLengths.reduce((acc, len) => acc + Math.pow(len - meanLength, 2), 0) / sentenceLengths.length;
-          const burstinessSigma = Math.sqrt(variance).toFixed(2);
-
-          const totalSyllables = tokens.reduce((acc, w) => acc + countSyllables(w), 0);
-          const readScore = Math.max(0, Math.min(100, Math.round(206.835 - 1.015 * (tokens.length / sentences.length) - 84.6 * (totalSyllables / tokens.length))));
-          
-          let grade = 'College';
-          if (readScore >= 90) grade = '5th Grade';
-          else if (readScore >= 80) grade = '6th Grade';
-          else if (readScore >= 70) grade = '7th Grade';
-          else if (readScore >= 60) grade = '8th-9th Grade';
-          else if (readScore >= 50) grade = '10th-12th Grade';
-
-          const lowerText = text.toLowerCase();
-          const detectedCliches = aiCliches.filter(c => lowerText.includes(c));
-
-          let aiProb = 50;
-          if (burstinessSigma < 3.5) aiProb += 25;
-          else if (burstinessSigma > 7.0) aiProb -= 25;
-          if (ttr < 0.5) aiProb += 15;
-          else if (ttr > 0.75) aiProb -= 20;
-          if (detectedCliches.length > 2) aiProb += 15;
-          aiProb = Math.min(Math.max(aiProb, 5), 96);
-
-          if (metricTTR) metricTTR.textContent = ttr;
-          if (metricBurstiness) metricBurstiness.textContent = burstinessSigma;
-          if (readabilityScore) readabilityScore.textContent = `${readScore}/100`;
-          if (gradeLevelSub) gradeLevelSub.textContent = grade;
-
-          if (detectedCliches.length > 0 && clicheAlertBox && clicheBadges) {
-            clicheAlertBox.classList.remove('hidden');
-            clicheBadges.innerHTML = [suspicious link removed](c => 
-              `<span class="px-2 py-0.5 rounded-md bg-amber-900/50 text-amber-200 border border-amber-800/80 text-[10px] font-mono">"${c}"</span>`
-            ).join('');
-          } else if (clicheAlertBox) {
-            clicheAlertBox.classList.add('hidden');
-          }
-
-          const heatmapSpans = [suspicious link removed](s => {
-            const words = (s.trim().match(/\b[a-z0-9']+\b/gi) || []).length;
-            const diff = Math.abs(words - meanLength);
-            let color = 'bg-emerald-950/50 text-emerald-300 border-emerald-800/60';
-            if (diff < 2 && words > 5) color = 'bg-rose-950/50 text-rose-300 border-rose-800/60';
-            else if (diff < 4) color = 'bg-amber-950/50 text-amber-300 border-amber-800/60';
-            return `<span class="inline-block p-1 m-0.5 rounded border ${color}">${s.trim()} </span>`;
-          }).join('');
-
-          applyVerdict(aiProb, `
-            <div class="space-y-2">
-              <div class="p-2.5 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1">
-                <div>• <strong>Readability:</strong> ${readScore}/100 (${grade})</div>
-                <div>• <strong>Lexical TTR:</strong> ${ttr} | <strong>Burstiness:</strong> ${burstinessSigma}</div>
-                <div>• <strong>Corpus:</strong> ${sentences.length} sentences, ${tokens.length} words</div>
-              </div>
-              <div class="mt-2 text-[11px] font-semibold text-slate-400">Cadence Heatmap:</div>
-              <div class="p-2.5 rounded-xl bg-slate-950 border border-slate-800/80 leading-relaxed">${heatmapSpans}</div>
-            </div>
-          `, { ttr, burstinessSigma, readScore, grade });
-        });
+      if (detectedCliches.length > 0 && clicheAlertBox && clicheBadges) {
+        clicheAlertBox.classList.remove('hidden');
+        var badgeHtml = '';
+        for (var i = 0; i < detectedCliches.length; i++) {
+          badgeHtml += '<span class="px-2 py-0.5 rounded-md bg-amber-900/50 text-amber-200 border border-amber-800/80 text-[10px] font-mono">"' + detectedCliches[i] + '"</span> ';
+        }
+        clicheBadges.innerHTML = badgeHtml;
+      } else if (clicheAlertBox) {
+        clicheAlertBox.classList.add('hidden');
       }
 
-      // --- 4. FACT CHECK ENGINE ---
-      const factInput = document.getElementById('factInput');
-      const factCharCount = document.getElementById('factCharCount');
-      const analyzeFactBtn = document.getElementById('analyzeFactBtn');
-      const factClaimsFeed = document.getElementById('factClaimsFeed');
-      const claimsList = document.getElementById('claimsList');
-
-      if (factInput && factCharCount) {
-        factInput.addEventListener('input', () => {
-          const words = factInput.value.trim() ? factInput.value.trim().split(/\s+/).length : 0;
-          factCharCount.textContent = `${words} words`;
-        });
+      var heatmapSpans = '';
+      for (var i = 0; i < sentences.length; i++) {
+        var sText = sentences[i].trim();
+        var wordsCount = (sText.match(/\b[a-z0-9']+\b/gi) || []).length;
+        var diff = Math.abs(wordsCount - meanLength);
+        var color = 'bg-emerald-950/50 text-emerald-300 border-emerald-800/60';
+        if (diff < 2 && wordsCount > 5) {
+          color = 'bg-rose-950/50 text-rose-300 border-rose-800/60';
+        } else if (diff < 4) {
+          color = 'bg-amber-950/50 text-amber-300 border-amber-800/60';
+        }
+        heatmapSpans += '<span class="inline-block p-1 m-0.5 rounded border ' + color + '">' + sText + ' </span>';
       }
+
+      var detailsHtml = '<div class="space-y-2">' +
+        '<div class="p-2.5 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1">' +
+          '<div>• <strong>Readability:</strong> ' + readScore + '/100 (' + grade + ')</div>' +
+          '<div>• <strong>Lexical TTR:</strong> ' + ttr + ' | <strong>Burstiness:</strong> ' + burstinessSigma + '</div>' +
+          '<div>• <strong>Corpus:</strong> ' + sentences.length + ' sentences, ' + tokens.length + ' words</div>' +
+        '</div>' +
+        '<div class="mt-2 text-[11px] font-semibold text-slate-400">Cadence Heatmap:</div>' +
+        '<div class="p-2.5 rounded-xl bg-slate-950 border border-slate-800/80 leading-relaxed">' + heatmapSpans + '</div>' +
+      '</div>';
+
+      applyVerdict(aiProb, detailsHtml);
+    }
+
+    // --- FACT CHECK ---
+    async function runFactCheckAnalysis() {
+      var factInput = document.getElementById('factInput');
+      var analyzeFactBtn = document.getElementById('analyzeFactBtn');
+      var factClaimsFeed = document.getElementById('factClaimsFeed');
+      var claimsList = document.getElementById('claimsList');
+
+      if (!factInput) return;
+      var text = factInput.value.trim();
+      if (!text) return;
 
       if (analyzeFactBtn) {
-        analyzeFactBtn.addEventListener('click', async () => {
-          if (!factInput) return;
-          const text = factInput.value.trim();
-          if (!text) return;
+        analyzeFactBtn.disabled = true;
+        analyzeFactBtn.innerHTML = '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Checking Knowledge Base...';
+        if (window.lucide) lucide.createIcons();
+      }
 
-          analyzeFactBtn.disabled = true;
-          analyzeFactBtn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Checking Knowledge Base...`;
-          if (window.lucide) lucide.createIcons();
+      var rawSentences = text.match(/[^.!?]+[.!?]+|\S+/g) || [text];
+      var candidateClaims = [];
+      for (var i = 0; i < rawSentences.length; i++) {
+        var s = rawSentences[i].trim();
+        if (s.length > 20) candidateClaims.push(s);
+        if (candidateClaims.length >= 4) break;
+      }
 
-          const rawSentences = text.match(/[^.!?]+[.!?]+|\S+/g) || [text];
-          const candidateClaims = [suspicious link removed](s => s.trim()).filter(s => s.length > 20).slice(0, 4);
-
-          if (candidateClaims.length === 0) {
-            alert("Please paste at least one complete factual sentence.");
-            analyzeFactBtn.disabled = false;
-            analyzeFactBtn.innerHTML = `<i data-lucide="search-check" class="w-4 h-4"></i> Cross-Reference Claims Live`;
-            if (window.lucide) lucide.createIcons();
-            return;
-          }
-
-          if (factClaimsFeed) factClaimsFeed.classList.remove('hidden');
-          if (claimsList) claimsList.innerHTML = `<div class="text-xs text-slate-400 p-2">Querying live encyclopedic sources...</div>`;
-
-          let verifiedCount = 0;
-          const results = [];
-
-          for (const claim of candidateClaims) {
-            const keywords = claim.replace(/[^\w\s]/gi, '').split(/\s+/).filter(w => w.length > 3 && (w === w.toUpperCase() || /\d/.test(w))).slice(0, 3).join(' ') || claim.split(/\s+/).slice(0, 3).join(' ');
-
-            try {
-              const endpoint = `https://en.wikipedia.org/w/api.php?action=opensearch&search=${encodeURIComponent(keywords)}&limit=1&namespace=0&format=json&origin=*`;
-              const res = await fetch(endpoint);
-              const data = await res.json();
-
-              const title = data[3] && data[3] ? data[3] : null;
-              const snippet = data[4] && data[4] ? data[4] : null;
-              const sourceUrl = data[5] && data[5] ? data[5] : null;
-
-              if (title && snippet) {
-                verifiedCount++;
-                results.push({
-                  claim,
-                  status: 'Verified Evidence',
-                  badgeColor: 'bg-emerald-950/80 border-emerald-800 text-emerald-300',
-                  snippet,
-                  url: sourceUrl
-                });
-              } else {
-                results.push({
-                  claim,
-                  status: 'Unverified / Disputed',
-                  badgeColor: 'bg-amber-950/80 border-amber-800 text-amber-300',
-                  snippet: 'No corroborating public reference match was found for the key terms.',
-                  url: null
-                });
-              }
-            } catch (err) {
-              results.push({
-                claim,
-                status: 'Lookup Skipped',
-                badgeColor: 'bg-slate-800 border-slate-700 text-slate-400',
-                snippet: 'Connection timeout while querying data registry.',
-                url: null
-              });
-            }
-          }
-
-          if (claimsList) {
-            claimsList.innerHTML = [suspicious link removed](r => `
-              <div class="p-3 bg-slate-900/90 border border-slate-800 rounded-xl flex flex-col gap-1.5 shadow-sm">
-                <div class="flex items-center justify-between">
-                  <span class="text-[10px] font-bold px-2 py-0.5 rounded-full border ${r.badgeColor}">${r.status}</span>
-                  ${r.url ? `<a href="\${r.url}" target="_blank" class="text-[10px] text-indigo-400 hover:text-indigo-300 flex items-center gap-1 font-semibold">View Source <i data-lucide="external-link" class="w-3 h-3"></i></a>` : ''}
-                </div>
-                <p class="text-xs text-slate-200 font-medium mt-1">"${r.claim}"</p>
-                <div class="text-[11px] text-slate-400 border-l-2 border-slate-700 pl-2 mt-1">
-                  <span class="text-slate-500 font-semibold uppercase text-[9px] block">Evidence Context:</span>
-                  ${r.snippet}
-                </div>
-              </div>
-            `).join('');
-          }
-
-          const reliabilityScore = Math.round((verifiedCount / candidateClaims.length) * 100);
-
-          applyVerdict(reliabilityScore, `
-            <div class="p-2.5 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1.5">
-              <div>• <strong>Claims Processed:</strong> ${candidateClaims.length}</div>
-              <div>• <strong>Corroborated:</strong> <span class="text-emerald-400 font-bold">${verifiedCount}</span></div>
-              <div>• <strong>Unverified / Pending Proof:</strong> <span class="text-amber-400 font-bold">${candidateClaims.length - verifiedCount}</span></div>
-            </div>
-          `);
-
+      if (candidateClaims.length === 0) {
+        alert("Please paste at least one complete factual sentence.");
+        if (analyzeFactBtn) {
           analyzeFactBtn.disabled = false;
-          analyzeFactBtn.innerHTML = `<i data-lucide="search-check" class="w-4 h-4"></i> Cross-Reference Claims Live`;
+          analyzeFactBtn.innerHTML = '<i data-lucide="search-check" class="w-4 h-4"></i> Cross-Reference Claims Live';
           if (window.lucide) lucide.createIcons();
-        });
+        }
+        return;
       }
 
-      // --- 5. URL SCRAPER ---
-      const urlInput = document.getElementById('urlInput');
-      const fetchUrlBtn = document.getElementById('fetchUrlBtn');
-      if (fetchUrlBtn && urlInput) {
-        fetchUrlBtn.addEventListener('click', async () => {
-          const url = urlInput.value.trim();
-          if (!url) return;
-          fetchUrlBtn.disabled = true;
-          fetchUrlBtn.innerHTML = `<i data-lucide="loader" class="w-3.5 h-3.5 animate-spin"></i> Fetching...`;
+      if (factClaimsFeed) factClaimsFeed.classList.remove('hidden');
+      if (claimsList) claimsList.innerHTML = '<div class="text-xs text-slate-400 p-2">Querying live encyclopedic sources...</div>';
+
+      var verifiedCount = 0;
+      var results = [];
+
+      for (var i = 0; i < candidateClaims.length; i++) {
+        var claim = candidateClaims[i];
+        var cleanWords = claim.replace(/[^\w\s]/gi, '').split(/\s+/);
+        var keyWords = [];
+        for (var k = 0; k < cleanWords.length; k++) {
+          var w = cleanWords[k];
+          if (w.length > 3 && (w.charAt(0) === w.charAt(0).toUpperCase() || /\d/.test(w))) {
+            keyWords.push(w);
+          }
+          if (keyWords.length >= 3) break;
+        }
+        var searchStr = keyWords.length > 0 ? keyWords.join(' ') : cleanWords.slice(0, 3).join(' ');
+
+        try {
+          var endpoint = '[suspicious link removed]' + encodeURIComponent(searchStr) + '&limit=1&namespace=0&format=json&origin=*';
+          var res = await fetch(endpoint);
+          var data = await res.json();
+
+          var title = (data && data[1] && data[1]) ? data[1] : null;
+          var snippet = (data && data[2] && data[2]) ? data[2] : null;
+          var sourceUrl = (data && data[3] && data[3]) ? data[3] : null;
+
+          if (title && snippet) {
+            verifiedCount++;
+            results.push({
+              claim: claim,
+              status: 'Verified Evidence',
+              badgeColor: 'bg-emerald-950/80 border-emerald-800 text-emerald-300',
+              snippet: snippet,
+              url: sourceUrl
+            });
+          } else {
+            results.push({
+              claim: claim,
+              status: 'Unverified / Disputed',
+              badgeColor: 'bg-amber-950/80 border-amber-800 text-amber-300',
+              snippet: 'No corroborating public reference match was found for the key terms.',
+              url: null
+            });
+          }
+        } catch (err) {
+          results.push({
+            claim: claim,
+            status: 'Lookup Skipped',
+            badgeColor: 'bg-slate-800 border-slate-700 text-slate-400',
+            snippet: 'Connection timeout while querying data registry.',
+            url: null
+          });
+        }
+      }
+
+      if (claimsList) {
+        var listHtml = '';
+        for (var i = 0; i < results.length; i++) {
+          var r = results[i];
+          listHtml += '<div class="p-3 bg-slate-900/90 border border-slate-800 rounded-xl flex flex-col gap-1.5 shadow-sm">' +
+            '<div class="flex items-center justify-between">' +
+              '<span class="text-[10px] font-bold px-2 py-0.5 rounded-full border ' + r.badgeColor + '">' + r.status + '</span>' +
+              (r.url ? '<a href="' + r.url + '" target="_blank" class="text-[10px] text-indigo-400 hover:text-indigo-300 flex items-center gap-1 font-semibold">View Source <i data-lucide="external-link" class="w-3 h-3"></i></a>' : '') +
+            '</div>' +
+            '<p class="text-xs text-slate-200 font-medium mt-1">"' + r.claim + '"</p>' +
+            '<div class="text-[11px] text-slate-400 border-l-2 border-slate-700 pl-2 mt-1">' +
+              '<span class="text-slate-500 font-semibold uppercase text-[9px] block">Evidence Context:</span>' +
+              r.snippet +
+            '</div>' +
+          '</div>';
+        }
+        claimsList.innerHTML = listHtml;
+      }
+
+      var reliabilityScore = Math.round((verifiedCount / candidateClaims.length) * 100);
+
+      applyVerdict(reliabilityScore,
+        '<div class="p-2.5 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1.5">' +
+          '<div>• <strong>Claims Processed:</strong> ' + candidateClaims.length + '</div>' +
+          '<div>• <strong>Corroborated:</strong> <span class="text-emerald-400 font-bold">' + verifiedCount + '</span></div>' +
+          '<div>• <strong>Unverified / Pending Proof:</strong> <span class="text-amber-400 font-bold">' + (candidateClaims.length - verifiedCount) + '</span></div>' +
+        '</div>'
+      );
+
+      if (analyzeFactBtn) {
+        analyzeFactBtn.disabled = false;
+        analyzeFactBtn.innerHTML = '<i data-lucide="search-check" class="w-4 h-4"></i> Cross-Reference Claims Live';
+        if (window.lucide) lucide.createIcons();
+      }
+    }
+
+    // --- URL SCRAPER ---
+    async function fetchWebUrl() {
+      var urlInput = document.getElementById('urlInput');
+      var fetchUrlBtn = document.getElementById('fetchUrlBtn');
+      if (!urlInput || !fetchUrlBtn) return;
+      var url = urlInput.value.trim();
+      if (!url) return;
+
+      fetchUrlBtn.disabled = true;
+      fetchUrlBtn.innerHTML = '<i data-lucide="loader" class="w-3.5 h-3.5 animate-spin"></i> Fetching...';
+      if (window.lucide) lucide.createIcons();
+
+      try {
+        var proxyUrl = '[suspicious link removed]' + encodeURIComponent(url);
+        var res = await fetch(proxyUrl);
+        var data = await res.json();
+        var parser = new DOMParser();
+        var doc = parser.parseFromString(data['contents'], 'text/html');
+        var pList = doc.querySelectorAll('p');
+        var paragraphs = [];
+
+        for (var i = 0; i < pList.length; i++) {
+          var pText = pList[i].textContent.trim();
+          if (pText.length > 20) paragraphs.push(pText);
+        }
+
+        if (paragraphs.length === 0) throw new Error("No paragraph body content found.");
+
+        var textInput = document.getElementById('textInput');
+        var factInput = document.getElementById('factInput');
+        if (textInput) textInput.value = paragraphs.join('\n\n');
+        if (factInput) factInput.value = paragraphs.join('\n\n');
+        updateTextCounters();
+        fetchUrlBtn.innerHTML = '<i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> Loaded!';
+      } catch (err) {
+        alert("Could not load URL: " + err.message);
+        fetchUrlBtn.innerHTML = '<i data-lucide="alert-triangle" class="w-3.5 h-3.5 text-rose-400"></i> Retry';
+      } finally {
+        fetchUrlBtn.disabled = false;
+        if (window.lucide) lucide.createIcons();
+      }
+    }
+
+    // --- IMAGE ENGINE ---
+    function triggerImageUpload() {
+      var elem = document.getElementById('imageFileInput');
+      if (elem) [suspicious link removed]();
+    }
+
+    function handleImageFileSelect(event) {
+      var files = event['target']['files'];
+      if (!files || !files) return;
+      selectedImageFile = files;
+
+      var reader = new FileReader();
+      reader.onload = function(evt) {
+        var imgPreview = document.getElementById('imagePreview');
+        var previewContainer = document.getElementById('imagePreviewContainer');
+        var analyzeBtn = document.getElementById('analyzeImageBtn');
+        var downloadLink = document.getElementById('downloadCleanLink');
+        var imageMeta = document.getElementById('imageMeta');
+
+        if (imgPreview) imgPreview.src = [suspicious link removed].result;
+        if (previewContainer) previewContainer.classList.remove('hidden');
+        if (analyzeBtn) analyzeBtn.classList.remove('hidden');
+        if (downloadLink) downloadLink.classList.add('hidden');
+        if (imageMeta) imageMeta.textContent = [suspicious link removed] + ' • ' + (selectedImageFile.size / 1024).toFixed(1) + ' KB';
+      };
+      reader.readAsDataURL(selectedImageFile);
+    }
+
+    async function runImageAnalysis() {
+      if (!selectedImageFile) return;
+      var arrayBuffer = await selectedImageFile.arrayBuffer();
+      var bytes = new Uint8Array(arrayBuffer);
+      var binaryStr = '';
+      var limit = Math.min(bytes.length, 120000);
+      for (var i = 0; i < limit; i++) {
+        binaryStr += String.fromCharCode(bytes[i]);
+      }
+
+      var markers = [
+        { name: 'Google / Imagen / SynthID', pattern: /Google|Imagen|SynthID/i },
+        { name: 'C2PA Digital Provenance', pattern: /c2pa|trainedAlgorithmicMedia/i },
+        { name: 'DALL-E / OpenAI Generator', pattern: /dall-e|openai/i },
+        { name: 'Midjourney Prompt Metadata', pattern: /midjourney/i },
+        { name: 'Stable Diffusion Tag', pattern: /stable diffusion|stablediffusion/i },
+        { name: 'Adobe Firefly Provenance', pattern: /firefly/i }
+      ];
+
+      var detected = [];
+      for (var i = 0; i < markers.length; i++) {
+        if (markers[i].pattern.test(binaryStr)) {
+          detected.push(markers[i].name);
+        }
+      }
+
+      var hasExif = /Exif/i.test(binaryStr);
+      var score = detected.length > 0 ? 98 : 32;
+
+      var signatureHtml = '';
+      if (detected.length > 0) {
+        signatureHtml = '<div class="text-rose-400 font-bold mb-1 flex items-center gap-1.5"><i data-lucide="alert-triangle" class="w-4 h-4"></i> AI Provenance Detected:</div>';
+        for (var i = 0; i < detected.length; i++) {
+          signatureHtml += '<div class="text-rose-300">• ' + detected[i] + '</div>';
+        }
+      } else {
+        signatureHtml = '<div class="text-slate-300">✓ No synthetic C2PA tags detected.</div>';
+      }
+
+      applyVerdict(score,
+        '<div class="p-2.5 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1.5">' +
+          signatureHtml +
+          '<div class="mt-2 text-slate-400 text-[11px]">• <strong>EXIF Header Present:</strong> ' + (hasExif ? 'Yes' : 'Clean / Stripped') + '</div>' +
+        '</div>'
+      );
+    }
+
+    function stripImageMetadata() {
+      var imagePreview = document.getElementById('imagePreview');
+      var downloadCleanLink = document.getElementById('downloadCleanLink');
+      if (!imagePreview || !imagePreview.src) return;
+
+      var canvas = document.createElement('canvas');
+      canvas.width = imagePreview.naturalWidth;
+      canvas.height = imagePreview.naturalHeight;
+      var ctx = canvas.getContext('2d');
+      ctx.drawImage(imagePreview, 0, 0);
+
+      canvas.toBlob(function(blob) {
+        var cleanUrl = URL.createObjectURL(blob);
+        if (downloadCleanLink) {
+          downloadCleanLink.href = cleanUrl;
+          var fName = selectedImageFile ? [suspicious link removed] : 'image.png';
+          downloadCleanLink.setAttribute('download', 'sanitized_' + fName);
+          downloadCleanLink.classList.remove('hidden');
+        }
+        alert("EXIF stripped! Click 'Download Clean' to save the sanitized file.");
+      }, 'image/png');
+    }
+
+    // --- AUDIO ENGINE ---
+    function triggerAudioUpload() {
+      var elem = document.getElementById('audioFileInput');
+      if (elem) [suspicious link removed]();
+    }
+
+    function handleAudioFileSelect(event) {
+      var files = event['target']['files'];
+      if (!files || !files) return;
+      selectedAudioFile = files;
+
+      var audioPreview = document.getElementById('audioPreview');
+      var playerContainer = document.getElementById('audioPlayerContainer');
+      var analyzeBtn = document.getElementById('analyzeAudioBtn');
+      var audioMeta = document.getElementById('audioMeta');
+
+      if (audioPreview) audioPreview.src = URL.createObjectURL(selectedAudioFile);
+      if (playerContainer) playerContainer.classList.remove('hidden');
+      if (analyzeBtn) analyzeBtn.classList.remove('hidden');
+      if (audioMeta) audioMeta.textContent = [suspicious link removed] + ' • ' + (selectedAudioFile.size / (1024 * 1024)).toFixed(2) + ' MB';
+    }
+
+    async function runAudioAnalysis() {
+      if (!selectedAudioFile) return;
+      var telemetryStatus = document.getElementById('telemetryStatus');
+      if (telemetryStatus) telemetryStatus.textContent = "SAMPLING CADENCE";
+
+      var AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      var audioCtx = new AudioContextClass();
+      var arrayBuffer = await selectedAudioFile.arrayBuffer();
+
+      try {
+        var audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+        var channelData = audioBuffer.getChannelData(0);
+
+        var sumSquares = 0;
+        var silenceCount = 0;
+        var step = 100;
+        var sampleCount = Math.floor(channelData.length / step);
+
+        for (var i = 0; i < channelData.length; i += step) {
+          var val = channelData[i];
+          sumSquares += val * val;
+          if (Math.abs(val) < 0.01) silenceCount++;
+        }
+
+        var rms = Math.sqrt(sumSquares / sampleCount).toFixed(3);
+        var pauseRatio = ((silenceCount / sampleCount) * 100).toFixed(1);
+
+        var audioScore = 30;
+        if (pauseRatio < 8.0) audioScore += 40;
+        if (rms > 0.15 && pauseRatio < 12) audioScore += 20;
+        audioScore = Math.min(Math.max(audioScore, 10), 94);
+
+        applyVerdict(audioScore,
+          '<div class="p-2.5 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1.5">' +
+            '<div>• <strong>Spectral Energy (RMS):</strong> <span class="text-indigo-300 font-bold">' + rms + '</span></div>' +
+            '<div>• <strong>Pause / Silence Ratio:</strong> <span class="text-indigo-300 font-bold">' + pauseRatio + '%</span></div>' +
+            '<div>• <strong>Sample Rate:</strong> ' + audioBuffer.sampleRate + ' Hz</div>' +
+          '</div>'
+        );
+      } catch (err) {
+        alert("Could not decode audio: " + err.message);
+      }
+    }
+
+    // --- FLOW & POLISH ---
+    function runFlowPolish() {
+      var humanizeInput = document.getElementById('humanizeInput');
+      var humanizeOutput = document.getElementById('humanizeOutput');
+      var diffOriginal = document.getElementById('diffOriginal');
+      var diffEnhanced = document.getElementById('diffEnhanced');
+      var diffContainer = document.getElementById('diffContainer');
+      var diagnosticsOutput = document.getElementById('diagnosticsOutput');
+
+      if (!humanizeInput) return;
+      var raw = humanizeInput.value.trim();
+      if (!raw) return;
+
+      var polished = raw
+        .replace(/\bIn conclusion,?\b/gi, 'Ultimately,')
+        .replace(/\bFurthermore,?\b/gi, 'Also,')
+        .replace(/\bMoreover,?\b/gi, 'In addition,')
+        .replace(/\bIt is important to note that\b/gi, 'Notably,')
+        .replace(/\bDelve into\b/gi, 'Explore')
+        .replace(/\bTestament to\b/gi, 'Sign of')
+        .replace(/\bBeacon of\b/gi, 'Center for')
+        .replace(/\bTapestry of\b/gi, 'Mix of')
+        .replace(/\bRevolutionize\b/gi, 'Transform')
+        .replace(/\bHarness the power of\b/gi, 'Use');
+
+      var sentences = polished.match(/[^.!?]+[.!?]+|\S+/g) || [polished];
+      var restructuredList = [];
+
+      for (var idx = 0; idx < sentences.length; idx++) {
+        var trimmed = sentences[idx].trim();
+        if (idx % 2 === 0 && trimmed.indexOf(', and ') !== -1) {
+          trimmed = trimmed.replace(', and ', '. ');
+        }
+        restructuredList.push(trimmed);
+      }
+      var restructured = restructuredList.join(' ');
+
+      if (humanizeOutput) humanizeOutput.value = restructured;
+      if (diffOriginal) diffOriginal.textContent = raw;
+      if (diffEnhanced) diffEnhanced.textContent = restructured;
+      if (diffContainer) diffContainer.classList.remove('hidden');
+
+      if (diagnosticsOutput) {
+        diagnosticsOutput.innerHTML =
+          '<div class="p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-800/60 space-y-1 text-emerald-300">' +
+            '<div class="font-bold flex items-center gap-1.5"><i data-lucide="check-circle" class="w-4 h-4"></i> Flow & Cadence Polished</div>' +
+            '<div class="text-[11px] text-slate-300">• Replaced formulaic transition phrasing.</div>' +
+            '<div class="text-[11px] text-slate-300">• Check the side-by-side diff comparison below.</div>' +
+          '</div>';
+      }
+      if (window.lucide) lucide.createIcons();
+    }
+
+    async function copyPolishedText() {
+      var humanizeOutput = document.getElementById('humanizeOutput');
+      var copyPolishedBtn = document.getElementById('copyPolishedBtn');
+      if (!humanizeOutput || !humanizeOutput.value) return;
+
+      await navigator.clipboard.writeText(humanizeOutput.value);
+      if (copyPolishedBtn) {
+        copyPolishedBtn.innerHTML = '<i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> Copied!';
+        if (window.lucide) lucide.createIcons();
+        setTimeout(function() {
+          copyPolishedBtn.innerHTML = '<i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy Text';
           if (window.lucide) lucide.createIcons();
-
-          try {
-            const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
-            const res = await fetch(proxyUrl);
-            const data = await res.json();
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(data.contents, 'text/html');
-            const paragraphs = Array.from(doc.querySelectorAll('p')).map(p => p.textContent.trim()).filter(t => t.length > 20);
-
-            if (paragraphs.length === 0) throw new Error("No paragraph body content found.");
-
-            if (textInput) textInput.value = paragraphs.join('\n\n');
-            if (factInput) factInput.value = paragraphs.join('\n\n');
-            updateCounters();
-            fetchUrlBtn.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> Loaded!`;
-          } catch (err) {
-            alert("Could not load URL: " + err.message);
-            fetchUrlBtn.innerHTML = `<i data-lucide="alert-triangle" class="w-3.5 h-3.5 text-rose-400"></i> Retry`;
-          } finally {
-            fetchUrlBtn.disabled = false;
-            if (window.lucide) lucide.createIcons();
-          }
-        });
+        }, 2000);
       }
+    }
 
-      // --- 6. IMAGE & EXIF ENGINE ---
-      const imageDropzone = document.getElementById('imageDropzone');
-      const imageFileInput = document.getElementById('imageFileInput');
-      const imagePreviewContainer = document.getElementById('imagePreviewContainer');
-      const imagePreview = document.getElementById('imagePreview');
-      const imageMeta = document.getElementById('imageMeta');
-      const analyzeImageBtn = document.getElementById('analyzeImageBtn');
-      const stripExifBtn = document.getElementById('stripExifBtn');
-      const downloadCleanLink = document.getElementById('downloadCleanLink');
-      let selectedImageFile = null;
-
-      if (imageDropzone && imageFileInput) {
-        imageDropzone.addEventListener('click', () => [suspicious link removed]());
-        imageFileInput.addEventListener('change', (e) => {
-          const file = [suspicious link removed].files;
-          if (!file) return;
-          selectedImageFile = file;
-          const reader = new FileReader();
-          reader.onload = (evt) => {
-            if (imagePreview) imagePreview.src = [suspicious link removed].result;
-            if (imagePreviewContainer) imagePreviewContainer.classList.remove('hidden');
-            if (analyzeImageBtn) analyzeImageBtn.classList.remove('hidden');
-            if (downloadCleanLink) downloadCleanLink.classList.add('hidden');
-            if (imageMeta) imageMeta.textContent = `${[suspicious link removed]} • ${(file.size / 1024).toFixed(1)} KB`;
-          };
-          reader.readAsDataURL(file);
-        });
+    // --- RESET & PDF ---
+    function exportReportPdf() {
+      var reportElement = document.getElementById('reportContainer');
+      if (!reportElement || typeof html2pdf === 'undefined') {
+        alert("PDF library is loading or element missing.");
+        return;
       }
+      var opt = {
+        margin: 10,
+        filename: 'veritas_report_' + [suspicious link removed]() + '.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, backgroundColor: '#020617' },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+      html2pdf().set(opt).from(reportElement).save();
+    }
 
-      if (analyzeImageBtn) {
-        analyzeImageBtn.addEventListener('click', async () => {
-          if (!selectedImageFile) return;
-          const arrayBuffer = await selectedImageFile.arrayBuffer();
-          const bytes = new Uint8Array(arrayBuffer);
-          let binaryStr = '';
-          for (let i = 0; i < Math.min(bytes.length, 120000); i++) {
-            binaryStr += String.fromCharCode(bytes[i]);
-          }
+    function resetStudioWorkspace() {
+      var textInput = document.getElementById('textInput');
+      var factInput = document.getElementById('factInput');
+      var humanizeInput = document.getElementById('humanizeInput');
+      var humanizeOutput = document.getElementById('humanizeOutput');
+      var urlInput = document.getElementById('urlInput');
+      var diffContainer = document.getElementById('diffContainer');
+      var factClaimsFeed = document.getElementById('factClaimsFeed');
+      var imagePreviewContainer = document.getElementById('imagePreviewContainer');
+      var audioPlayerContainer = document.getElementById('audioPlayerContainer');
+      var analyzeImageBtn = document.getElementById('analyzeImageBtn');
+      var analyzeAudioBtn = document.getElementById('analyzeAudioBtn');
 
-          const markers = [
-            { name: 'Google / Imagen / SynthID', pattern: /Google|Imagen|SynthID/i },
-            { name: 'C2PA Digital Provenance', pattern: /c2pa|trainedAlgorithmicMedia/i },
-            { name: 'DALL-E / OpenAI Generator', pattern: /dall-e|openai/i },
-            { name: 'Midjourney Prompt Metadata', pattern: /midjourney/i },
-            { name: 'Stable Diffusion Tag', pattern: /stable diffusion|stablediffusion/i },
-            { name: 'Adobe Firefly Provenance', pattern: /firefly/i }
-          ];
+      if (textInput) textInput.value = '';
+      if (factInput) factInput.value = '';
+      if (humanizeInput) humanizeInput.value = '';
+      if (humanizeOutput) humanizeOutput.value = '';
+      if (urlInput) urlInput.value = '';
+      if (diffContainer) diffContainer.classList.add('hidden');
+      if (factClaimsFeed) factClaimsFeed.classList.add('hidden');
+      if (imagePreviewContainer) imagePreviewContainer.classList.add('hidden');
+      if (audioPlayerContainer) audioPlayerContainer.classList.add('hidden');
+      if (analyzeImageBtn) analyzeImageBtn.classList.add('hidden');
+      if (analyzeAudioBtn) analyzeAudioBtn.classList.add('hidden');
 
-          const detected = markers.filter(m => m.pattern.test(binaryStr)).map(m => [suspicious link removed]);
-          const hasExif = /Exif/i.test(binaryStr);
-          const score = detected.length > 0 ? 98 : 32;
-
-          let signatureHtml = detected.length > 0
-            ? `<div class="text-rose-400 font-bold mb-1 flex items-center gap-1.5"><i data-lucide="alert-triangle" class="w-4 h-4"></i> AI Provenance Detected:</div>` + detected.map(d => `<div class="text-rose-300">• ${d}</div>`).join('')
-            : `<div class="text-slate-300">✓ No synthetic C2PA tags detected.</div>`;
-
-          applyVerdict(score, `
-            <div class="p-2.5 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1.5">
-              ${signatureHtml}
-              <div class="mt-2 text-slate-400 text-[11px]">• <strong>EXIF Header Present:</strong> ${hasExif ? 'Yes' : 'Clean / Stripped'}</div>
-            </div>
-          `);
-        });
-      }
-
-      if (stripExifBtn && imagePreview && downloadCleanLink) {
-        stripExifBtn.addEventListener('click', () => {
-          if (!imagePreview.src) return;
-          const canvas = document.createElement('canvas');
-          canvas.width = imagePreview.naturalWidth;
-          canvas.height = imagePreview.naturalHeight;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(imagePreview, 0, 0);
-
-          canvas.toBlob((blob) => {
-            const cleanUrl = URL.createObjectURL(blob);
-            downloadCleanLink.href = cleanUrl;
-            [suspicious link removed] = `sanitized_${selectedImageFile ? [suspicious link removed] : 'image.png'}`;
-            downloadCleanLink.classList.remove('hidden');
-            alert("EXIF stripped! Click 'Download Clean' to save the sanitized file.");
-          }, 'image/png');
-        });
-      }
-
-      // --- 7. AUDIO CADENCE ENGINE ---
-      const audioDropzone = document.getElementById('audioDropzone');
-      const audioFileInput = document.getElementById('audioFileInput');
-      const audioPlayerContainer = document.getElementById('audioPlayerContainer');
-      const audioPreview = document.getElementById('audioPreview');
-      const audioMeta = document.getElementById('audioMeta');
-      const analyzeAudioBtn = document.getElementById('analyzeAudioBtn');
-      let selectedAudioFile = null;
-
-      if (audioDropzone && audioFileInput) {
-        audioDropzone.addEventListener('click', () => [suspicious link removed]());
-        audioFileInput.addEventListener('change', (e) => {
-          const file = [suspicious link removed].files;
-          if (!file) return;
-          selectedAudioFile = file;
-          if (audioPreview) audioPreview.src = URL.createObjectURL(file);
-          if (audioPlayerContainer) audioPlayerContainer.classList.remove('hidden');
-          if (analyzeAudioBtn) analyzeAudioBtn.classList.remove('hidden');
-          if (audioMeta) audioMeta.textContent = `${[suspicious link removed]} • ${(file.size / (1024 * 1024)).toFixed(2)} MB`;
-        });
-      }
-
-      if (analyzeAudioBtn) {
-        analyzeAudioBtn.addEventListener('click', async () => {
-          if (!selectedAudioFile) return;
-          if (telemetryStatus) telemetryStatus.textContent = "SAMPLING CADENCE";
-
-          const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-          const arrayBuffer = await selectedAudioFile.arrayBuffer();
-
-          try {
-            const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
-            const channelData = audioBuffer.getChannelData(0);
-
-            let sumSquares = 0;
-            let silenceCount = 0;
-            for (let i = 0; i < channelData.length; i += 100) {
-              const val = channelData[i];
-              sumSquares += val * val;
-              if (Math.abs(val) < 0.01) silenceCount++;
-            }
-            const rms = Math.sqrt(sumSquares / (channelData.length / 100)).toFixed(3);
-            const pauseRatio = ((silenceCount / (channelData.length / 100)) * 100).toFixed(1);
-
-            let audioScore = 30;
-            if (pauseRatio < 8.0) audioScore += 40;
-            if (rms > 0.15 && pauseRatio < 12) audioScore += 20;
-            audioScore = Math.min(Math.max(audioScore, 10), 94);
-
-            applyVerdict(audioScore, `
-              <div class="p-2.5 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1.5">
-                <div>• <strong>Spectral Energy (RMS):</strong> <span class="text-indigo-300 font-bold">${rms}</span></div>
-                <div>• <strong>Pause / Silence Ratio:</strong> <span class="text-indigo-300 font-bold">${pauseRatio}%</span></div>
-                <div>• <strong>Sample Rate:</strong> ${audioBuffer.sampleRate} Hz</div>
-              </div>
-            `);
-          } catch (err) {
-            alert("Could not decode audio: " + err.message);
-          }
-        });
-      }
-
-      // --- 8. FLOW & CADENCE POLISH ASSISTANT ---
-      const humanizeInput = document.getElementById('humanizeInput');
-      const humanizeOutput = document.getElementById('humanizeOutput');
-      const polishTextBtn = document.getElementById('polishTextBtn');
-      const copyPolishedBtn = document.getElementById('copyPolishedBtn');
-      const diffContainer = document.getElementById('diffContainer');
-      const diffOriginal = document.getElementById('diffOriginal');
-      const diffEnhanced = document.getElementById('diffEnhanced');
-
-      if (polishTextBtn) {
-        polishTextBtn.addEventListener('click', () => {
-          if (!humanizeInput) return;
-          const raw = humanizeInput.value.trim();
-          if (!raw) return;
-
-          let polished = raw
-            .replace(/\bIn conclusion,?\b/gi, 'Ultimately,')
-            .replace(/\bFurthermore,?\b/gi, 'Also,')
-            .replace(/\bMoreover,?\b/gi, 'In addition,')
-            .replace(/\bIt is important to note that\b/gi, 'Notably,')
-            .replace(/\bDelve into\b/gi, 'Explore')
-            .replace(/\bTestament to\b/gi, 'Sign of')
-            .replace(/\bBeacon of\b/gi, 'Center for')
-            .replace(/\bTapestry of\b/gi, 'Mix of')
-            .replace(/\bRevolutionize\b/gi, 'Transform')
-            .replace(/\bHarness the power of\b/gi, 'Use');
-
-          const sentences = polished.match(/[^.!?]+[.!?]+|\S+/g) || [polished];
-          const restructured = [suspicious link removed]((s, idx) => {
-            let trimmed = s.trim();
-            if (idx % 2 === 0 && trimmed.includes(', and ')) {
-              trimmed = trimmed.replace(', and ', '. ');
-            }
-            return trimmed;
-          }).join(' ');
-
-          if (humanizeOutput) humanizeOutput.value = restructured;
-          if (diffOriginal) diffOriginal.textContent = raw;
-          if (diffEnhanced) diffEnhanced.textContent = restructured;
-          if (diffContainer) diffContainer.classList.remove('hidden');
-
-          if (diagnosticsOutput) {
-            diagnosticsOutput.innerHTML = `
-              <div class="p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-800/60 space-y-1 text-emerald-300">
-                <div class="font-bold flex items-center gap-1.5"><i data-lucide="check-circle" class="w-4 h-4"></i> Flow & Cadence Polished</div>
-                <div class="text-[11px] text-slate-300">• Replaced formulaic transition phrasing.</div>
-                <div class="text-[11px] text-slate-300">• Check the side-by-side diff comparison below.</div>
-              </div>
-            `;
-          }
-          if (window.lucide) lucide.createIcons();
-        });
-      }
-
-      if (copyPolishedBtn && humanizeOutput) {
-        copyPolishedBtn.addEventListener('click', async () => {
-          if (!humanizeOutput.value) return;
-          await navigator.clipboard.writeText(humanizeOutput.value);
-          copyPolishedBtn.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> Copied!`;
-          if (window.lucide) lucide.createIcons();
-          setTimeout(() => {
-            copyPolishedBtn.innerHTML = `<i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy Text`;
-            if (window.lucide) lucide.createIcons();
-          }, 2000);
-        });
-      }
-
-      // --- 9. PDF EXPORT & RESET ---
-      const exportPdfBtn = document.getElementById('exportPdfBtn');
-      if (exportPdfBtn) {
-        exportPdfBtn.addEventListener('click', () => {
-          const reportElement = document.getElementById('reportContainer');
-          if (!reportElement || typeof html2pdf === 'undefined') {
-            alert("PDF library is loading or element missing.");
-            return;
-          }
-          const opt = {
-            margin: 10,
-            filename: `veritas_report_${Date.now()}.pdf`,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, backgroundColor: '#020617' },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-          };
-          html2pdf().set(opt).from(reportElement).save();
-        });
-      }
-
-      const quickResetBtn = document.getElementById('quickResetBtn');
-      if (quickResetBtn) {
-        quickResetBtn.addEventListener('click', () => {
-          if (textInput) textInput.value = '';
-          if (factInput) factInput.value = '';
-          if (humanizeInput) humanizeInput.value = '';
-          if (humanizeOutput) humanizeOutput.value = '';
-          if (urlInput) urlInput.value = '';
-          if (diffContainer) diffContainer.classList.add('hidden');
-          if (factClaimsFeed) factClaimsFeed.classList.add('hidden');
-          if (imagePreviewContainer) imagePreviewContainer.classList.add('hidden');
-          if (audioPlayerContainer) audioPlayerContainer.classList.add('hidden');
-          if (analyzeImageBtn) analyzeImageBtn.classList.add('hidden');
-          if (analyzeAudioBtn) analyzeAudioBtn.classList.add('hidden');
-          updateCounters();
-          resetVerdict();
-        });
-      }
-    });
+      updateTextCounters();
+      updateFactCounters();
+      resetVerdict();
+    }
   </script>
 </body>
 </html>
