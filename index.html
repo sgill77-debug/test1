@@ -3,173 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VeritasAI Studio</title>
+  <title>VeritasAI Studio - Multimodal Forensics & Editorial Suite</title>
+  
+  <!-- Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS & Lucide Icons -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    .tab-btn.active {
-      background: #4f46e5;
-      color: #ffffff;
-      border-color: #6366f1;
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- html2pdf for Branded Reports -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            brand: {
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+            }
+          }
+        }
+      }
     }
-  </style>
-</head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans">
+  </script>
 
-  <!-- Header -->
-  <header class="border-b border-slate-800 bg-slate-900/80 px-4 py-3 sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <span class="text-xl">🛡️</span>
-        <h1 class="font-extrabold text-lg tracking-tight">Veritas<span class="text-indigo-400">AI</span></h1>
-      </div>
-      <div class="flex items-center gap-2">
-        <a href="https://github.com/sgill77-debug/testing1" target="_blank" rel="noopener noreferrer" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">
-          GitHub Repo ↗
-        </a>
-        <button type="button" onclick="resetAll()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">
-          Reset
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Main Grid -->
-  <main class="max-w-6xl mx-auto w-full p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 flex-1">
-    
-    <!-- Left Workspace (7 Cols) -->
-    <section class="lg:col-span-7 flex flex-col gap-4">
-      
-      <!-- Nav Tabs -->
-      <nav class="grid grid-cols-3 sm:grid-cols-5 gap-1.5 bg-slate-900 p-1.5 rounded-xl border border-slate-800">
-        <button type="button" class="tab-btn active text-xs font-bold py-2 px-3 rounded-lg border border-transparent text-slate-300 hover:text-white transition" onclick="switchTab('text', this)">
-          📝 Text
-        </button>
-        <button type="button" class="tab-btn text-xs font-bold py-2 px-3 rounded-lg border border-transparent text-slate-300 hover:text-white transition" onclick="switchTab('fact', this)">
-          🔍 Fact Check
-        </button>
-        <button type="button" class="tab-btn text-xs font-bold py-2 px-3 rounded-lg border border-transparent text-slate-300 hover:text-white transition" onclick="switchTab('image', this)">
-          🖼️ Image
-        </button>
-        <button type="button" class="tab-btn text-xs font-bold py-2 px-3 rounded-lg border border-transparent text-slate-300 hover:text-white transition" onclick="switchTab('audio', this)">
-          🎙️ Audio
-        </button>
-        <button type="button" class="tab-btn text-xs font-bold py-2 px-3 rounded-lg border border-transparent text-slate-300 hover:text-white transition" onclick="switchTab('flow', this)">
-          ✨ Polish
-        </button>
-      </nav>
-
-      <!-- TAB 1: TEXT -->
-      <div id="panel-text" class="tab-panel flex flex-col gap-3">
-        <textarea
-          id="textInput"
-          rows="8"
-          placeholder="Paste text here to evaluate sentence variance, vocabulary richness, and AI probability..."
-          class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500"
-          oninput="updateCount()"
-        ></textarea>
-        <div class="flex justify-between items-center text-[11px] text-slate-400">
-          <span id="charCount">0 characters | 0 words</span>
-          <button type="button" onclick="analyzeText()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-2 rounded-lg text-xs transition">
-            Analyze Text
-          </button>
-        </div>
-      </div>
-
-      <!-- TAB 2: FACT CHECK -->
-      <div id="panel-fact" class="tab-panel hidden flex flex-col gap-3">
-        <textarea
-          id="factInput"
-          rows="6"
-          placeholder="Paste statements to cross-reference (e.g. 'The Eiffel Tower was completed in 1889 in Paris')..."
-          class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-500"
-        ></textarea>
-        <button type="button" onclick="analyzeFact()" class="bg-amber-600 hover:bg-amber-500 text-white font-bold px-4 py-2 rounded-lg text-xs self-end transition">
-          Cross-Reference Live
-        </button>
-        <div id="factResults" class="flex flex-col gap-2 mt-1"></div>
-      </div>
-
-      <!-- TAB 3: IMAGE -->
-      <div id="panel-image" class="tab-panel hidden flex flex-col gap-3">
-        <div class="border-2 border-dashed border-slate-800 hover:border-indigo-500 rounded-xl p-6 text-center bg-slate-900/50 cursor-pointer" onclick="document.getElementById('imageFileInput').click()">
-          <input type="file" id="imageFileInput" class="hidden" accept="image/*" onchange="previewImage(this)">
-          <p class="text-xs font-bold text-slate-200">Click to choose an image</p>
-          <p class="text-[11px] text-slate-500 mt-1">Checks EXIF and C2PA provenance signatures</p>
-        </div>
-        <img id="imagePreview" class="hidden max-h-56 rounded-lg object-contain mx-auto border border-slate-800" alt="Preview" />
-        <button id="imageBtn" type="button" onclick="analyzeImage()" class="hidden bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-2 rounded-lg text-xs self-end transition">
-          Scan Image Signatures
-        </button>
-      </div>
-
-      <!-- TAB 4: AUDIO -->
-      <div id="panel-audio" class="tab-panel hidden flex flex-col gap-3">
-        <div class="border-2 border-dashed border-slate-800 hover:border-indigo-500 rounded-xl p-6 text-center bg-slate-900/50 cursor-pointer" onclick="document.getElementById('audioFileInput').click()">
-          <input type="file" id="audioFileInput" class="hidden" accept="audio/*" onchange="previewAudio(this)">
-          <p class="text-xs font-bold text-slate-200">Click to choose an audio file</p>
-          <p class="text-[11px] text-slate-500 mt-1">Evaluates cadence and speech pause ratios</p>
-        </div>
-        <audio id="audioPreview" controls class="hidden w-full mt-2"></audio>
-        <button id="audioBtn" type="button" onclick="analyzeAudio()" class="hidden bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-2 rounded-lg text-xs self-end transition">
-          Analyze Audio Cadence
-        </button>
-      </div>
-
-      <!-- TAB 5:
-   <textarea
-            id="textInput"
-            rows="8"
-            placeholder="Paste text here to evaluate readability, burstiness (σ), and vocabulary dispersion..."
-            class="w-full bg-slate-900/80 border border-slate-800 rounded-2xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 leading-relaxed resize-y"
-          ></textarea>
-        </div>
-
-        <button type="button" id="analyzeTextBtn" class="flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-3 px-5 rounded-xl shadow-lg shadow-emerald-600/20 transition active:scale-[0.99] text-xs sm:text-sm">
-          <i data-lucide="scan-line" class="w-4 h-4"></i> Run Veritas Inspection
-        </button>
-      </div>
-
-      <!-- TAB VIEW 2: FACT CHECKER -->
-      <div id="viewFact" class="tab-panel hidden flex flex-col gap-4">
-        <div class="bg-gradient-to-r from-amber-950/30 to-slate-900 border border-amber-800/40 rounded-2xl p-4 flex items-start gap-3">
-          <div class="p-2 rounded-xl bg-amber-900/50 text-amber-300">
-            <i data-lucide="check-check" class="w-4 h-4"></i>
-          </div>
-          <div>
-            <h3 class="text-xs font-bold text-amber-200">Fact-Checking & Claim Verification</h3>
-            <p class="text-[11px] text-slate-400 mt-0.5 leading-relaxed">
-              Extracts factual assertions and queries live encyclopedic databases to verify dates, public figures, and historical events.
-            </p>
-          </div>
-        </div>
-
-        <div class="flex flex-col gap-2">
-          <div class="flex justify-between items-center text-xs text-slate-400 px-1">
-            <span class="font-bold tracking-wider uppercase text-[10px] text-slate-500">Statements to Verify</span>
-            <span id="factCharCount" class="font-mono text-[11px] text-slate-400">0 words</span>
-          </div>
-          <textarea
-            id="factInput"
-            rows="7"
-            placeholder="Paste text or claims (e.g., 'The Eiffel Tower was completed in 1889 in Paris, France...')"
-            class="w-full bg-slate-900/80 border border-slate-800 rounded-2xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 leading-relaxed resize-y"
-          ></textarea>
-        </div>
-
-        <button type="button" id="analyzeFactBtn" class="flex items-center justify-center gap-2 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white font-bold py-3 px-5 rounded-xl shadow-lg shadow-amber-600/20 transition active:scale-[0.99] text-xs sm:text-sm">
-          <i data-lucide="search-check" class="w-4 h-4"></i> Cross-Reference Claims Live
-        </button>
-
-        <div id="factClaimsFeed" class="hidden flex flex-col gap-2.5 mt-2">
-          <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider px-1">Claim Verification Breakdown</h4>
-          <div id="claimsList" class="flex flex-col gap-2"></div>
-        </div>
-      </div>
-
-      <!-- TAB VIEW 3: IMAGE & EXIF METADATA -->
-      <div id="viewImage" class="tab-panel hidden flex flex-col gap-4">
-        <div id="imageDropzone" class="border-2 border-dashed border-slate-700/80 hover:border-emerald-500 rounded-2xl p-7 text-center cursor-pointer transition bg-slate-900/30 hover:bg-slate-900/70 group">
-          <input type="file" id="imageFileInput" class="hidden" accept="image/png, image/jpeg, image/webp">
+  <style>
+    .bg-grid {
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    }
+    .active-tab-glow {
+      box-shadow: 0 4px 20px -2px rgba(99, 102, 241, 0.35);
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 4px;
+    }
+    .custom
+put type="file" id="imageFileInput" class="hidden" accept="image/png, image/jpeg, image/webp">
           <div class="flex flex-col items-center justify-center gap-2">
             <div class="w-12 h-12 rounded-2xl bg-emerald-950/60 border border-emerald-800/40 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition">
               <i data-lucide="image-plus" class="w-6 h-6"></i>
