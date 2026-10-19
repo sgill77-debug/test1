@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VeritasAI Studio - Forensic Intelligence & Editorial Suite</title>
+  <title>VeritasAI Studio - Multimodal Forensics & Polish</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,19 +32,19 @@
   </script>
 
   <style>
-    /* Radial dot-matrix cyber background */
+    /* Radial dot-matrix background */
     .bg-cyber {
       background-color: #050814;
       background-image: 
-        radial-gradient(circle at 50% 0%, rgba(124, 58, 237, 0.18) 0%, transparent 60%),
-        radial-gradient(circle at 100% 100%, rgba(14, 165, 233, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 50% 0%, rgba(124, 58, 237, 0.22) 0%, transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(14, 165, 233, 0.14) 0%, transparent 50%),
         radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
       background-size: 100% 100%, 100% 100%, 28px 28px;
     }
 
-    /* Glass card styling */
+    /* Glass card surfaces */
     .glass-card {
-      background: rgba(13, 18, 36, 0.72);
+      background: rgba(13, 18, 36, 0.75);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.08);
@@ -57,16 +57,60 @@
       border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    /* Glow highlights */
-    .glow-purple {
-      box-shadow: 0 0 25px -4px rgba(139, 92, 246, 0.35);
+    /* Tab Button Animation & States */
+    .tab-btn {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: translateZ(0);
+    }
+
+    .tab-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 100%);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .tab-btn:hover {
+      transform: translateY(-2px);
+      color: #ffffff;
+      border-color: rgba(167, 139, 250, 0.3);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .tab-btn:hover::before {
+      opacity: 1;
+    }
+
+    .tab-btn:active {
+      transform: translateY(0px) scale(0.98);
     }
 
     .tab-btn.active {
       background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
       color: #ffffff !important;
       border-color: rgba(255, 255, 255, 0.3) !important;
-      box-shadow: 0 0 15px rgba(124, 58, 237, 0.45);
+      box-shadow: 0 0 20px rgba(124, 58, 237, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      transform: translateY(-1px);
+    }
+
+    /* Tab panel fade & slide transitions */
+    .tab-panel {
+      animation: panelFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes panelFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .dropzone-hover {
@@ -121,26 +165,25 @@
       
       <!-- Tab Navigation Bar -->
       <nav class="grid grid-cols-2 sm:grid-cols-5 gap-1.5 glass-card p-1.5 rounded-2xl">
-        <button type="button" data-tab="text" class="tab-btn active text-xs font-bold py-2.5 px-2 rounded-xl border border-transparent text-slate-300 hover:text-white transition flex items-center justify-center gap-1.5">
+        <button type="button" data-tab="text" class="tab-btn active text-xs font-bold py-2.5 px-2 rounded-xl border border-transparent text-slate-300 flex items-center justify-center gap-1.5">
           <span>📝</span> Text & Docs
         </button>
-        <button type="button" data-tab="rewriter" class="tab-btn text-xs font-bold py-2.5 px-2 rounded-xl border border-transparent text-slate-300 hover:text-white transition flex items-center justify-center gap-1.5">
+        <button type="button" data-tab="rewriter" class="tab-btn text-xs font-bold py-2.5 px-2 rounded-xl border border-transparent text-slate-300 flex items-center justify-center gap-1.5">
           <span>✨</span> Rewriter
         </button>
-        <button type="button" data-tab="consistency" class="tab-btn text-xs font-bold py-2.5 px-2 rounded-xl border border-transparent text-slate-300 hover:text-white transition flex items-center justify-center gap-1.5">
+        <button type="button" data-tab="consistency" class="tab-btn text-xs font-bold py-2.5 px-2 rounded-xl border border-transparent text-slate-300 flex items-center justify-center gap-1.5">
           <span>⚖️</span> Consistency
         </button>
-        <button type="button" data-tab="image" class="tab-btn text-xs font-bold py-2.5 px-2 rounded-xl border border-transparent text-slate-300 hover:text-white transition flex items-center justify-center gap-1.5">
+        <button type="button" data-tab="image" class="tab-btn text-xs font-bold py-2.5 px-2 rounded-xl border border-transparent text-slate-300 flex items-center justify-center gap-1.5">
           <span>🖼️</span> Image
         </button>
-        <button type="button" data-tab="video" class="tab-btn text-xs font-bold py-2.5 px-2 rounded-xl border border-transparent text-slate-300 hover:text-white transition flex items-center justify-center gap-1.5">
+        <button type="button" data-tab="video" class="tab-btn text-xs font-bold py-2.5 px-2 rounded-xl border border-transparent text-slate-300 flex items-center justify-center gap-1.5">
           <span>🎬</span> Video
         </button>
       </nav>
 
       <!-- TAB 1: TEXT & FORENSICS -->
       <div id="tab-panel-text" class="tab-panel flex flex-col gap-3">
-        <!-- Text Dropzone -->
         <div id="docDropzone" class="border-2 border-dashed border-white/10 hover:border-brand-500 rounded-2xl p-5 text-center glass-card-subtle cursor-pointer transition group">
           <input type="file" id="docFileInput" class="hidden" accept=".txt,.md,.rtf,.json,.csv">
           <div class="flex flex-col items-center justify-center gap-1">
@@ -194,248 +237,4 @@
           <button type="button" id="applyAllRewritesBtn" class="text-xs bg-emerald-600/80 hover:bg-emerald-500 text-white font-bold px-3.5 py-2 rounded-xl transition active:scale-95 border border-emerald-500/40">
             Accept All Tightenings
           </button>
-          <button type="button" id="copyRewriterBtn" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold px-3.5 py-2 rounded-xl border border-white/10 transition active:scale-95">
-            Copy Result
-          </button>
-        </div>
-
-        <div id="rewriterCards" class="flex flex-col gap-2.5 mt-1 max-h-72 overflow-y-auto pr-1"></div>
-      </div>
-
-      <!-- TAB 3: CONSISTENCY AUDITOR -->
-      <div id="tab-panel-consistency" class="tab-panel hidden flex flex-col gap-3">
-        <div class="flex justify-between items-center text-xs text-slate-400 px-1">
-          <span class="font-bold uppercase tracking-wider text-[10px] text-brand-400">Document Consistency Audit</span>
-          <button type="button" id="runConsistencyBtn" class="text-xs bg-brand-600 hover:bg-brand-500 text-white font-bold px-3 py-1.5 rounded-xl transition active:scale-95">
-            Re-Audit
-          </button>
-        </div>
-        <textarea
-          id="consistencyInput"
-          rows="7"
-          placeholder="Paste entire report or manuscript here to catch US/UK dialect mixing (analyze vs. analyse), unexpanded abbreviations, and hyphen variance..."
-          class="w-full glass-card border border-white/10 rounded-2xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-brand-500 leading-relaxed resize-y"
-        ></textarea>
-        
-        <div id="consistencyReport" class="flex flex-col gap-2.5 mt-1 max-h-72 overflow-y-auto pr-1"></div>
-      </div>
-
-      <!-- TAB 4: IMAGE & C2PA -->
-      <div id="tab-panel-image" class="tab-panel hidden flex flex-col gap-3">
-        <div id="imageDropzone" class="border-2 border-dashed border-white/10 hover:border-brand-500 rounded-2xl p-7 text-center glass-card cursor-pointer transition group">
-          <input type="file" id="imageFileInput" class="hidden" accept="image/png, image/jpeg, image/webp">
-          <div class="flex flex-col items-center justify-center gap-2">
-            <div class="w-12 h-12 rounded-2xl bg-brand-950/60 border border-brand-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-              🖼️
-            </div>
-            <div>
-              <p class="text-xs font-bold text-slate-200 group-hover:text-brand-300">Choose or drop an image (.png, .jpg, .webp)</p>
-              <p class="text-[11px] text-slate-400 mt-0.5">Scans binary metadata for C2PA provenance, SynthID, and EXIF signatures</p>
-            </div>
-          </div>
-        </div>
-        
-        <div id="imagePreviewBox" class="hidden glass-card rounded-2xl p-3 flex flex-col items-center gap-2">
-          <img id="imagePreview" class="max-h-56 rounded-xl object-contain border border-white/10" alt="Preview" />
-          <span id="imageMeta" class="text-[11px] font-mono text-slate-400"></span>
-        </div>
-      </div>
-
-      <!-- TAB 5: VIDEO CADENCE -->
-      <div id="tab-panel-video" class="tab-panel hidden flex flex-col gap-3">
-        <div id="videoDropzone" class="border-2 border-dashed border-white/10 hover:border-brand-500 rounded-2xl p-7 text-center glass-card cursor-pointer transition group">
-          <input type="file" id="videoFileInput" class="hidden" accept="video/mp4, video/webm">
-          <div class="flex flex-col items-center justify-center gap-2">
-            <div class="w-12 h-12 rounded-2xl bg-brand-950/60 border border-brand-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-              🎬
-            </div>
-            <div>
-              <p class="text-xs font-bold text-slate-200 group-hover:text-brand-300">Drop a video or click to browse (.mp4, .webm)</p>
-              <p class="text-[11px] text-slate-400 mt-0.5">Examines inter-frame compression signatures and continuity variance</p>
-            </div>
-          </div>
-        </div>
-
-        <div id="videoPreviewBox" class="hidden glass-card rounded-2xl p-3 flex flex-col gap-2">
-          <video id="videoPreview" controls class="max-h-56 w-full rounded-xl border border-white/10 bg-black"></video>
-          <span id="videoMeta" class="text-[11px] font-mono text-slate-400 text-center"></span>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- Right Report Panel (5 Columns) -->
-    <section class="lg:col-span-5 flex flex-col gap-4">
-      
-      <!-- Primary Verdict Card -->
-      <div class="glass-card rounded-2xl p-5 glow-purple relative overflow-hidden">
-        <div class="flex items-center justify-between mb-3">
-          <div class="flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-brand-400 animate-pulse"></span>
-            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Detection Gauge</span>
-          </div>
-          <span id="verdictBadge" class="text-[10px] px-2.5 py-0.5 rounded-full font-bold bg-slate-800 text-slate-400 border border-white/10">Ready</span>
-        </div>
-        
-        <div class="flex items-baseline gap-2 mb-2">
-          <span id="scoreVal" class="text-5xl font-black text-white tracking-tight">0%</span>
-          <span class="text-xs text-slate-400">Likelihood of AI Synthesis</span>
-        </div>
-
-        <div class="w-full bg-slate-900/80 rounded-full h-2.5 p-0.5 border border-white/10 overflow-hidden">
-          <div id="scoreBar" class="bg-gradient-to-r from-brand-500 to-cyan-400 h-1.5 rounded-full transition-all duration-500" style="width: 0%"></div>
-        </div>
-      </div>
-
-      <!-- Quick Metrics Strip -->
-      <div class="grid grid-cols-3 gap-2.5 text-center text-xs">
-        <div class="glass-card-subtle rounded-xl p-3 border border-white/5">
-          <p class="text-[9px] text-slate-400 uppercase font-bold tracking-wider">Lexical TTR</p>
-          <p id="ttrVal" class="text-base font-bold text-slate-200 mt-1 font-mono">--</p>
-        </div>
-        <div class="glass-card-subtle rounded-xl p-3 border border-white/5">
-          <p class="text-[9px] text-slate-400 uppercase font-bold tracking-wider">Burstiness (σ)</p>
-          <p id="burstVal" class="text-base font-bold text-slate-200 mt-1 font-mono">--</p>
-        </div>
-        <div class="glass-card-subtle rounded-xl p-3 border border-white/5">
-          <p class="text-[9px] text-slate-400 uppercase font-bold tracking-wider">Readability</p>
-          <p id="readabilityVal" class="text-base font-bold text-slate-200 mt-1 font-mono">--</p>
-        </div>
-      </div>
-
-      <!-- Diagnostics Telemetry Card -->
-      <div class="glass-card rounded-2xl p-5 flex-1 flex flex-col">
-        <div class="flex items-center justify-between pb-3 mb-3 border-b border-white/10">
-          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-            <span>🔬</span> Forensic Telemetry
-          </span>
-          <span id="telemetryStatus" class="text-[10px] font-mono text-slate-500">IDLE</span>
-        </div>
-        <div id="diagText" class="text-xs font-mono text-slate-300 space-y-2 leading-relaxed max-h-[300px] overflow-y-auto pr-1">
-          Select any workspace tab on the left to begin inspecting your content.
-        </div>
-      </div>
-
-    </section>
-  </main>
-
-  <script>
-    // --- 1. BULLETPROOF TAB CONTROLLER (Event-Delegation based) ---
-    const tabButtons = document.querySelectorAll('.tab-btn');
-    const tabPanels = document.querySelectorAll('.tab-panel');
-
-    function selectTab(targetTab) {
-      tabButtons.forEach(btn => {
-        if (btn.getAttribute('data-tab') === targetTab) {
-          btn.classList.add('active');
-        } else {
-          btn.classList.remove('active');
-        }
-      });
-
-      tabPanels.forEach(panel => {
-        if (panel.id === `tab-panel-${targetTab}`) {
-          panel.classList.remove('hidden');
-        } else {
-          panel.classList.add('hidden');
-        }
-      });
-
-      // Synchronize content to other editors if empty
-      if (targetTab === 'rewriter' && !document.getElementById('rewriterInput').value.trim()) {
-        const sourceText = document.getElementById('textInput').value;
-        if (sourceText.trim()) {
-          document.getElementById('rewriterInput').value = sourceText;
-          runRewriterAnalysis();
-        }
-      }
-      if (targetTab === 'consistency' && !document.getElementById('consistencyInput').value.trim()) {
-        const sourceText = document.getElementById('textInput').value || document.getElementById('rewriterInput').value;
-        if (sourceText.trim()) {
-          document.getElementById('consistencyInput').value = sourceText;
-          runConsistencyAudit();
-        }
-      }
-    }
-
-    tabButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const target = btn.getAttribute('data-tab');
-        selectTab(target);
-      });
-    });
-
-    // --- 2. VERDICT & STATUS ENGINE ---
-    function setVerdict(score, verdictText, isOrganic, detailsHtml) {
-      document.getElementById('scoreVal').textContent = score + '%';
-      document.getElementById('scoreBar').style.width = score + '%';
-      document.getElementById('telemetryStatus').textContent = 'ACTIVE';
-
-      const badge = document.getElementById('verdictBadge');
-      badge.textContent = verdictText;
-      if (isOrganic) {
-        badge.className = 'text-[10px] px-2.5 py-0.5 rounded-full font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-800 shadow-sm';
-        document.getElementById('scoreBar').className = 'bg-gradient-to-r from-emerald-500 to-teal-400 h-1.5 rounded-full transition-all duration-500';
-      } else {
-        badge.className = 'text-[10px] px-2.5 py-0.5 rounded-full font-bold bg-rose-950/80 text-rose-300 border border-rose-800 shadow-sm';
-        document.getElementById('scoreBar').className = 'bg-gradient-to-r from-rose-500 to-amber-500 h-1.5 rounded-full transition-all duration-500';
-      }
-
-      document.getElementById('diagText').innerHTML = detailsHtml;
-    }
-
-    // --- 3. UNIVERSAL DRAG & DROP BINDINGS ---
-    function bindDropzone(zoneId, inputId, onFileSelected) {
-      const zone = document.getElementById(zoneId);
-      const input = document.getElementById(inputId);
-      if (!zone || !input) return;
-
-      zone.addEventListener('click', () => input.click());
-      zone.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        zone.classList.add('dropzone-hover');
-      });
-      zone.addEventListener('dragleave', () => zone.classList.remove('dropzone-hover'));
-      zone.addEventListener('drop', (e) => {
-        e.preventDefault();
-        zone.classList.remove('dropzone-hover');
-        if (e.dataTransfer && e.dataTransfer.files.length) {
-          onFileSelected(e.dataTransfer.files[0]);
-        }
-      });
-      input.addEventListener('change', () => {
-        if (input.files.length) {
-          onFileSelected(input.files[0]);
-        }
-      });
-    }
-
-    // --- 4. TEXT TAB & FORENSICS ---
-    bindDropzone('docDropzone', 'docFileInput', (file) => {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        document.getElementById('textInput').value = e.target.result;
-        processTextInput();
-      };
-      reader.readAsText(file);
-    });
-
-    function processTextInput() {
-      const text = document.getElementById('textInput').value;
-      const chars = text.length;
-      const words = text.trim() ? text.trim().split(/\s+/).length : 0;
-      document.getElementById('charCount').textContent = `${chars} chars | ${words} words`;
-
-      if (!text.trim()) return;
-
-      const sentences = text.match(/[^.!?]+[.!?]+|\S+/g) || [text];
-      const tokens = text.toLowerCase().match(/\b[a-z0-9']+\b/g) || [];
-      if (!tokens.length) return;
-
-      const ttr = (new Set(tokens).size / tokens.length).toFixed(3);
-      const lengths = sentences.map(s => (s.match(/\b[a-z0-9']+\b/gi) || []).length);
-      const mean = lengths.reduce((a, b) => a + b, 0) / lengths.length;
-      const variance = lengths.reduce((acc, len) => acc + Math.pow(len - mean, 2), 0) / lengths.length;
-      const sigma = Math.sqrt(variance).toFixed(2);
-
-      let syllables =
+          <button type="button" id="copyRewriterBtn" class="text-xs bg-slate-800 hover:bg-slate-700 text
