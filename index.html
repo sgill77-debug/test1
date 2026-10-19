@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VeritasAI Studio - Multimodal Forensics Suite</title>
+  <title>VeritasAI Studio - Multimodal Forensics & Intelligence Suite</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,32 +32,32 @@
   </script>
 
   <style>
-    /* Cyber Grid Canvas Background */
+    /* Technical Grid Canvas Background */
     .bg-grid-cyber {
       background-color: #030712;
       background-image: 
         linear-gradient(to right, rgba(99, 102, 241, 0.08) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(99, 102, 241, 0.08) 1px, transparent 1px),
-        radial-gradient(circle at 50% 0%, rgba(124, 58, 237, 0.22) 0%, transparent 75%);
+        radial-gradient(circle at 50% 0%, rgba(124, 58, 237, 0.18) 0%, transparent 70%);
       background-size: 32px 32px, 32px 32px, 100% 100%;
     }
 
-    /* Info Pop-Up Grid Surface */
+    /* Modal Popup Grid Background */
     .popup-grid {
-      background-color: rgba(11, 15, 30, 0.98);
+      background-color: rgba(10, 15, 30, 0.96);
       background-image: 
-        linear-gradient(to right, rgba(167, 139, 250, 0.12) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(167, 139, 250, 0.12) 1px, transparent 1px);
-      background-size: 24px 24px;
+        linear-gradient(to right, rgba(167, 139, 250, 0.1) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(167, 139, 250, 0.1) 1px, transparent 1px);
+      background-size: 20px 20px;
     }
 
-    /* Glass Cards */
+    /* Glass Surfaces */
     .glass-card {
-      background: rgba(13, 18, 36, 0.85);
+      background: rgba(13, 18, 36, 0.78);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
     }
 
     .glass-card-subtle {
@@ -66,31 +66,34 @@
       border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    /* Deterministic Tab Visibility */
+    /* Tab Panels Display */
     .tab-panel {
-      display: none;
+      display: none !important;
     }
-    .tab-panel.active {
-      display: flex;
-    }
-
-    /* Tab Button Active State */
-    .tab-btn.active {
-      background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
-      color: #ffffff !important;
-      border-color: rgba(255, 255, 255, 0.3) !important;
-      box-shadow: 0 0 16px rgba(124, 58, 237, 0.45);
-    }
-
-    /* Modal Display State */
-    #infoModal {
-      display: none;
-    }
-    #infoModal.modal-open {
+    .tab-panel.active-panel {
       display: flex !important;
     }
 
-    /* Drag & Drop Highlight */
+    /* Active Tab */
+    .tab-btn.active {
+      background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%) !important;
+      color: #ffffff !important;
+      border-color: rgba(255, 255, 255, 0.3) !important;
+      box-shadow: 0 0 14px rgba(124, 58, 237, 0.4) !important;
+    }
+
+    /* Info Bubble Hover */
+    .info-bubble {
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .info-bubble:hover {
+      transform: scale(1.15);
+      background-color: #8b5cf6 !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 8px rgba(139, 92, 246, 0.6);
+    }
+
+    /* Dropzone Highlight */
     .dropzone-hover {
       border-color: #a78bfa !important;
       background-color: rgba(139, 92, 246, 0.15) !important;
@@ -118,24 +121,24 @@
       </div>
 
       <div class="flex items-center gap-2.5">
-        <a href="https://github.com/sgill77-debug/testing1" target="_blank" rel="noopener noreferrer" class="text-xs bg-slate-900/80 hover:bg-slate-800 text-slate-300 px-3 py-1.5 rounded-xl border border-white/10 transition flex items-center gap-1.5 shadow-sm">
+        <a href="https://github.com/sgill77-debug/testing1" target="_blank" rel="noopener noreferrer" class="text-xs bg-slate-900/80 hover:bg-slate-800 text-slate-300 px-3 py-1.5 rounded-xl border border-white/10 transition flex items-center gap-1.5">
           <span>GitHub</span>
           <span class="text-[10px] text-slate-400">↗</span>
         </a>
-        <button type="button" id="globalResetBtn" class="text-xs bg-slate-900/80 hover:bg-rose-950/40 text-slate-400 hover:text-rose-300 px-3 py-1.5 rounded-xl border border-white/10 hover:border-rose-800/50 transition shadow-sm">
+        <button type="button" id="globalResetBtn" class="text-xs bg-slate-900/80 hover:bg-rose-950/40 text-slate-400 hover:text-rose-300 px-3 py-1.5 rounded-xl border border-white/10 hover:border-rose-800/50 transition">
           Reset All
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Main Grid Workspace -->
+  <!-- Main Grid Container -->
   <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 py-6 w-full grid grid-cols-1 lg:grid-cols-12 gap-6">
     
     <!-- Left Workspace (7 Columns) -->
     <section class="lg:col-span-7 flex flex-col gap-4">
       
-      <!-- Primary Tab Bar with Integrated Info Badges -->
+      <!-- Primary Tabs with Info Buttons -->
       <nav class="grid grid-cols-2 sm:grid-cols-5 gap-1.5 glass-card p-1.5 rounded-2xl relative">
         
         <!-- Tab 1: Text -->
@@ -143,28 +146,28 @@
           <button type="button" data-tab="text" class="tab-btn active w-full text-xs font-bold py-2.5 pl-2 pr-7 rounded-xl border border-transparent text-slate-300 hover:text-white transition flex items-center justify-center gap-1">
             <span>📝</span> Text
           </button>
-          <button type="button" data-info="text" title="About Text Tab" class="info-btn absolute right-1.5 w-5 h-5 rounded-full bg-white/10 hover:bg-brand-500 text-slate-300 hover:text-white flex items-center justify-center text-xs font-mono transition">
-            i
+          <button type="button" data-info="text" title="About Text Forensics" class="info-bubble absolute right-2 text-[11px] font-mono w-4 h-4 rounded-full bg-white/10 text-slate-300 flex items-center justify-center z-10">
+            ⓘ
           </button>
         </div>
 
         <!-- Tab 2: Rewriter -->
         <div class="relative flex items-center">
           <button type="button" data-tab="rewriter" class="tab-btn w-full text-xs font-bold py-2.5 pl-2 pr-7 rounded-xl border border-transparent text-slate-300 hover:text-white transition flex items-center justify-center gap-1">
-            <span>✨</span> Rewrite
+            <span>✨</span> Rewriter
           </button>
-          <button type="button" data-info="rewriter" title="About Rewriter Tab" class="info-btn absolute right-1.5 w-5 h-5 rounded-full bg-white/10 hover:bg-brand-500 text-slate-300 hover:text-white flex items-center justify-center text-xs font-mono transition">
-            i
+          <button type="button" data-info="rewriter" title="About Rewriter" class="info-bubble absolute right-2 text-[11px] font-mono w-4 h-4 rounded-full bg-white/10 text-slate-300 flex items-center justify-center z-10">
+            ⓘ
           </button>
         </div>
 
         <!-- Tab 3: Consistency -->
         <div class="relative flex items-center">
           <button type="button" data-tab="consistency" class="tab-btn w-full text-xs font-bold py-2.5 pl-2 pr-7 rounded-xl border border-transparent text-slate-300 hover:text-white transition flex items-center justify-center gap-1">
-            <span>⚖️</span> Audit
+            <span>⚖️</span> Consistency
           </button>
-          <button type="button" data-info="consistency" title="About Consistency Tab" class="info-btn absolute right-1.5 w-5 h-5 rounded-full bg-white/10 hover:bg-brand-500 text-slate-300 hover:text-white flex items-center justify-center text-xs font-mono transition">
-            i
+          <button type="button" data-info="consistency" title="About Consistency Auditor" class="info-bubble absolute right-2 text-[11px] font-mono w-4 h-4 rounded-full bg-white/10 text-slate-300 flex items-center justify-center z-10">
+            ⓘ
           </button>
         </div>
 
@@ -173,8 +176,8 @@
           <button type="button" data-tab="image" class="tab-btn w-full text-xs font-bold py-2.5 pl-2 pr-7 rounded-xl border border-transparent text-slate-300 hover:text-white transition flex items-center justify-center gap-1">
             <span>🖼️</span> Image
           </button>
-          <button type="button" data-info="image" title="About Image Tab" class="info-btn absolute right-1.5 w-5 h-5 rounded-full bg-white/10 hover:bg-brand-500 text-slate-300 hover:text-white flex items-center justify-center text-xs font-mono transition">
-            i
+          <button type="button" data-info="image" title="About Image Forensics" class="info-bubble absolute right-2 text-[11px] font-mono w-4 h-4 rounded-full bg-white/10 text-slate-300 flex items-center justify-center z-10">
+            ⓘ
           </button>
         </div>
 
@@ -183,20 +186,20 @@
           <button type="button" data-tab="video" class="tab-btn w-full text-xs font-bold py-2.5 pl-2 pr-7 rounded-xl border border-transparent text-slate-300 hover:text-white transition flex items-center justify-center gap-1">
             <span>🎬</span> Video
           </button>
-          <button type="button" data-info="video" title="About Video Tab" class="info-btn absolute right-1.5 w-5 h-5 rounded-full bg-white/10 hover:bg-brand-500 text-slate-300 hover:text-white flex items-center justify-center text-xs font-mono transition">
-            i
+          <button type="button" data-info="video" title="About Video Forensics" class="info-bubble absolute right-2 text-[11px] font-mono w-4 h-4 rounded-full bg-white/10 text-slate-300 flex items-center justify-center z-10">
+            ⓘ
           </button>
         </div>
       </nav>
 
-      <!-- TAB PANEL 1: TEXT & FORENSICS -->
-      <div id="tab-panel-text" class="tab-panel active flex-col gap-3">
+      <!-- TAB PANEL 1: TEXT -->
+      <div id="panel-text" class="tab-panel active-panel flex-col gap-3">
         <div id="docDropzone" class="border-2 border-dashed border-white/10 hover:border-brand-500 rounded-2xl p-5 text-center glass-card-subtle cursor-pointer transition">
           <input type="file" id="docFileInput" class="hidden" accept=".txt,.md,.rtf,.json,.csv">
           <div class="flex flex-col items-center justify-center gap-1">
             <span class="text-xl">📂</span>
             <p class="text-xs font-bold text-slate-200">Drop text files (.txt, .md, .rtf) or click to browse</p>
-            <p class="text-[11px] text-slate-400">Lexical richness, burstiness variance, and readability audit</p>
+            <p class="text-[11px] text-slate-400">Statistical burstiness, lexical density, and reading comfort scores</p>
           </div>
         </div>
 
@@ -208,7 +211,7 @@
         <textarea
           id="textInput"
           rows="8"
-          placeholder="Paste draft or manuscript here to inspect sentence cadence and AI synthesis markers..."
+          placeholder="Paste draft or manuscript here to analyze sentence variance (σ), Type-Token Ratio, and synthetic probability..."
           class="w-full glass-card border border-white/10 rounded-2xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-brand-500 leading-relaxed resize-y"
         ></textarea>
         
@@ -228,7 +231,7 @@
       </div>
 
       <!-- TAB PANEL 2: REWRITER -->
-      <div id="tab-panel-rewriter" class="tab-panel flex-col gap-3">
+      <div id="panel-rewriter" class="tab-panel flex-col gap-3">
         <div class="flex justify-between items-center text-xs text-slate-400 px-1">
           <span class="font-bold uppercase tracking-wider text-[10px] text-brand-400">Editorial Rewriter</span>
           <span id="rewriterStats" class="font-mono">0 words</span>
@@ -236,12 +239,12 @@
         <textarea
           id="rewriterInput"
           rows="7"
-          placeholder="Paste draft here. Detected formulas receive 3 alternate cadence options..."
+          placeholder="Paste draft text here. Detected synthetic formulas receive 3 alternate cadence options..."
           class="w-full glass-card border border-white/10 rounded-2xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-brand-500 leading-relaxed resize-y"
         ></textarea>
         
         <div class="flex justify-between items-center gap-2">
-          <button type="button" id="applyAllRewritesBtn" class="text-xs bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-3.5 py-2 rounded-xl transition border border-emerald-500/40">
+          <button type="button" id="applyAllRewritesBtn" class="text-xs bg-emerald-600/80 hover:bg-emerald-500 text-white font-bold px-3.5 py-2 rounded-xl transition border border-emerald-500/40">
             Accept All Tightenings
           </button>
           <button type="button" id="copyRewriterBtn" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold px-3.5 py-2 rounded-xl border border-white/10 transition">
@@ -252,10 +255,10 @@
         <div id="rewriterCards" class="flex flex-col gap-2.5 mt-1 max-h-72 overflow-y-auto pr-1"></div>
       </div>
 
-      <!-- TAB PANEL 3: CONSISTENCY AUDITOR -->
-      <div id="tab-panel-consistency" class="tab-panel flex-col gap-3">
+      <!-- TAB PANEL 3: CONSISTENCY -->
+      <div id="panel-consistency" class="tab-panel flex-col gap-3">
         <div class="flex justify-between items-center text-xs text-slate-400 px-1">
-          <span class="font-bold uppercase tracking-wider text-[10px] text-brand-400">Document Consistency Audit</span>
+          <span class="font-bold uppercase tracking-wider text-[10px] text-brand-400">Consistency Audit</span>
           <button type="button" id="runConsistencyBtn" class="text-xs bg-brand-600 hover:bg-brand-500 text-white font-bold px-3 py-1.5 rounded-xl transition">
             Re-Audit
           </button>
@@ -263,15 +266,15 @@
         <textarea
           id="consistencyInput"
           rows="7"
-          placeholder="Paste manuscript to audit dialect collisions (analyze vs analyse) and undefined acronyms..."
+          placeholder="Paste entire document here to audit US/UK dialect mixing (analyze vs. analyse) and unexpanded abbreviations..."
           class="w-full glass-card border border-white/10 rounded-2xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-brand-500 leading-relaxed resize-y"
         ></textarea>
         
         <div id="consistencyReport" class="flex flex-col gap-2.5 mt-1 max-h-72 overflow-y-auto pr-1"></div>
       </div>
 
-      <!-- TAB PANEL 4: IMAGE & C2PA -->
-      <div id="tab-panel-image" class="tab-panel flex-col gap-3">
+      <!-- TAB PANEL 4: IMAGE -->
+      <div id="panel-image" class="tab-panel flex-col gap-3">
         <div id="imageDropzone" class="border-2 border-dashed border-white/10 hover:border-brand-500 rounded-2xl p-7 text-center glass-card cursor-pointer transition">
           <input type="file" id="imageFileInput" class="hidden" accept="image/png, image/jpeg, image/webp">
           <div class="flex flex-col items-center justify-center gap-2">
@@ -291,8 +294,8 @@
         </div>
       </div>
 
-      <!-- TAB PANEL 5: VIDEO CADENCE -->
-      <div id="tab-panel-video" class="tab-panel flex-col gap-3">
+      <!-- TAB PANEL 5: VIDEO -->
+      <div id="panel-video" class="tab-panel flex-col gap-3">
         <div id="videoDropzone" class="border-2 border-dashed border-white/10 hover:border-brand-500 rounded-2xl p-7 text-center glass-card cursor-pointer transition">
           <input type="file" id="videoFileInput" class="hidden" accept="video/mp4, video/webm">
           <div class="flex flex-col items-center justify-center gap-2">
@@ -300,43 +303,4 @@
               🎬
             </div>
             <div>
-              <p class="text-xs font-bold text-slate-200">Drop a video or click to browse (.mp4, .webm)</p>
-              <p class="text-[11px] text-slate-400 mt-0.5">Examines inter-frame cadence and continuity variance</p>
-            </div>
-          </div>
-        </div>
-
-        <div id="videoPreviewBox" class="hidden glass-card rounded-2xl p-3 flex flex-col gap-2">
-          <video id="videoPreview" controls class="max-h-56 w-full rounded-xl border border-white/10 bg-black"></video>
-          <span id="videoMeta" class="text-[11px] font-mono text-slate-400 text-center"></span>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- Right Report Panel (5 Columns) -->
-    <section class="lg:col-span-5 flex flex-col gap-4">
-      
-      <div class="glass-card rounded-2xl p-5 relative overflow-hidden">
-        <div class="flex items-center justify-between mb-3">
-          <div class="flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-brand-400 animate-pulse"></span>
-            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Detection Gauge</span>
-          </div>
-          <span id="verdictBadge" class="text-[10px] px-2.5 py-0.5 rounded-full font-bold bg-slate-800 text-slate-400 border border-white/10">Ready</span>
-        </div>
-        
-        <div class="flex items-baseline gap-2 mb-2">
-          <span id="scoreVal" class="text-5xl font-black text-white tracking-tight">0%</span>
-          <span class="text-xs text-slate-400">Likelihood of AI Synthesis</span>
-        </div>
-
-        <div class="w-full bg-slate-900/80 rounded-full h-2.5 p-0.5 border border-white/10 overflow-hidden">
-          <div id="scoreBar" class="bg-gradient-to-r from-brand-500 to-cyan-400 h-1.5 rounded-full transition-all duration-500" style="width: 0%"></div>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-3 gap-2.5 text-center text-xs">
-        <div class="glass-card-subtle rounded-xl p-3 border border-white/5">
-          <p class="text-[9px] text-slate-400 uppercase font-bold tracking-wider">Lexical TTR</p>
-          <p id="ttrVal" class="text-base font-bold text-slate-200 mt-
+              <p class="text-xs font-bold text-
