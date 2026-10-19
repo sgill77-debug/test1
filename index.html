@@ -32,26 +32,26 @@
   </script>
 
   <style>
-    /* Technical Orthogonal Grid Background */
+    /* Technical Grid Canvas Background */
     .bg-grid-cyber {
       background-color: #030712;
       background-image: 
-        linear-gradient(to right, rgba(99, 102, 241, 0.07) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(99, 102, 241, 0.07) 1px, transparent 1px),
+        linear-gradient(to right, rgba(99, 102, 241, 0.08) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(99, 102, 241, 0.08) 1px, transparent 1px),
         radial-gradient(circle at 50% 0%, rgba(124, 58, 237, 0.18) 0%, transparent 70%);
       background-size: 32px 32px, 32px 32px, 100% 100%;
     }
 
-    /* Modal / Pop-up Grid */
+    /* Modal Popup Grid Background */
     .popup-grid {
-      background-color: rgba(10, 15, 30, 0.95);
+      background-color: rgba(10, 15, 30, 0.96);
       background-image: 
-        linear-gradient(to right, rgba(167, 139, 250, 0.09) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(167, 139, 250, 0.09) 1px, transparent 1px);
+        linear-gradient(to right, rgba(167, 139, 250, 0.1) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(167, 139, 250, 0.1) 1px, transparent 1px);
       background-size: 20px 20px;
     }
 
-    /* Glass card surfaces */
+    /* Glass Surfaces */
     .glass-card {
       background: rgba(13, 18, 36, 0.78);
       backdrop-filter: blur(14px);
@@ -66,29 +66,37 @@
       border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    /* Tab active state */
+    /* Tab Panels Explicit Display */
+    .tab-panel {
+      display: none;
+    }
+    .tab-panel.active-panel {
+      display: flex;
+    }
+
+    /* Active Tab */
     .tab-btn.active {
       background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
       color: #ffffff !important;
       border-color: rgba(255, 255, 255, 0.3) !important;
-      box-shadow: 0 0 16px rgba(124, 58, 237, 0.45);
+      box-shadow: 0 0 14px rgba(124, 58, 237, 0.4);
     }
 
-    /* Info button styling */
-    .info-btn {
-      transition: all 0.2s ease;
+    /* Info Button Hover */
+    .info-bubble {
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .info-btn:hover {
-      transform: scale(1.15);
-      background: rgba(255, 255, 255, 0.2);
-      color: #ffffff;
+    .info-bubble:hover {
+      transform: scale(1.18);
+      background-color: #8b5cf6 !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 8px rgba(139, 92, 246, 0.6);
     }
 
-    /* Dropzone drag indicator */
+    /* Dropzone Highlight */
     .dropzone-hover {
       border-color: #a78bfa !important;
       background-color: rgba(139, 92, 246, 0.15) !important;
-      box-shadow: 0 0 20px rgba(139, 92, 246, 0.25) inset;
     }
   </style>
 </head>
@@ -112,13 +120,12 @@
         </div>
       </div>
 
-      <!-- Action Links -->
       <div class="flex items-center gap-2.5">
-        <a href="https://github.com/sgill77-debug/testing1" target="_blank" rel="noopener noreferrer" class="text-xs bg-slate-900/80 hover:bg-slate-800 text-slate-300 px-3 py-1.5 rounded-xl border border-white/10 transition flex items-center gap-1.5 active:scale-95 shadow-sm">
+        <a href="https://github.com/sgill77-debug/testing1" target="_blank" rel="noopener noreferrer" class="text-xs bg-slate-900/80 hover:bg-slate-800 text-slate-300 px-3 py-1.5 rounded-xl border border-white/10 transition flex items-center gap-1.5">
           <span>GitHub</span>
           <span class="text-[10px] text-slate-400">↗</span>
         </a>
-        <button type="button" id="globalResetBtn" class="text-xs bg-slate-900/80 hover:bg-rose-950/40 text-slate-400 hover:text-rose-300 px-3 py-1.5 rounded-xl border border-white/10 hover:border-rose-800/50 transition active:scale-95 shadow-sm">
+        <button type="button" id="globalResetBtn" class="text-xs bg-slate-900/80 hover:bg-rose-950/40 text-slate-400 hover:text-rose-300 px-3 py-1.5 rounded-xl border border-white/10 hover:border-rose-800/50 transition">
           Reset All
         </button>
       </div>
@@ -126,7 +133,7 @@
   </header>
 
   <!-- Main Grid Container -->
-  <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 py-6 w-full grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
+  <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 py-6 w-full grid grid-cols-1 lg:grid-cols-12 gap-6">
     
     <!-- Left Workspace (7 Columns) -->
     <section class="lg:col-span-7 flex flex-col gap-4">
@@ -136,63 +143,63 @@
         
         <!-- Tab 1: Text -->
         <div class="relative flex items-center">
-          <button type="button" data-tab="text" class="tab-btn active w-full text-xs font-bold py-2.5 pl-2 pr-7 rounded-xl border border-transparent text-slate-300 hover:text-white transition flex items-center justify-center gap-1.5">
-            <span>📝</span> Text & Docs
+          <button type="button" data-tab="text" class="tab-btn active w-full text-xs font-bold py-2.5 pl-2 pr-7 rounded-xl border border-transparent text-slate-300 hover:text-white transition flex items-center justify-center gap-1">
+            <span>📝</span> Text
           </button>
-          <button type="button" onclick="openTabInfo('text', event)" title="About this tab" class="info-btn absolute right-2 text-[11px] font-mono w-4 h-4 rounded-full bg-white/10 hover:bg-brand-500 text-slate-300 hover:text-white flex items-center justify-center z-10">
+          <button type="button" data-info="text" title="About Text Forensics" class="info-bubble absolute right-2 text-[11px] font-mono w-4 h-4 rounded-full bg-white/10 text-slate-300 flex items-center justify-center z-10">
             ⓘ
           </button>
         </div>
 
         <!-- Tab 2: Rewriter -->
         <div class="relative flex items-center">
-          <button type="button" data-tab="rewriter" class="tab-btn w-full text-xs font-bold py-2.5 pl-2 pr-7 rounded-xl border border-transparent text-slate-300 hover:text-white transition flex items-center justify-center gap-1.5">
+          <button type="button" data-tab="rewriter" class="tab-btn w-full text-xs font-bold py-2.5 pl-2 pr-7 rounded-xl border border-transparent text-slate-300 hover:text-white transition flex items-center justify-center gap-1">
             <span>✨</span> Rewriter
           </button>
-          <button type="button" onclick="openTabInfo('rewriter', event)" title="About this tab" class="info-btn absolute right-2 text-[11px] font-mono w-4 h-4 rounded-full bg-white/10 hover:bg-brand-500 text-slate-300 hover:text-white flex items-center justify-center z-10">
+          <button type="button" data-info="rewriter" title="About Rewriter" class="info-bubble absolute right-2 text-[11px] font-mono w-4 h-4 rounded-full bg-white/10 text-slate-300 flex items-center justify-center z-10">
             ⓘ
           </button>
         </div>
 
         <!-- Tab 3: Consistency -->
         <div class="relative flex items-center">
-          <button type="button" data-tab="consistency" class="tab-btn w-full text-xs font-bold py-2.5 pl-2 pr-7 rounded-xl border border-transparent text-slate-300 hover:text-white transition flex items-center justify-center gap-1.5">
+          <button type="button" data-tab="consistency" class="tab-btn w-full text-xs font-bold py-2.5 pl-2 pr-7 rounded-xl border border-transparent text-slate-300 hover:text-white transition flex items-center justify-center gap-1">
             <span>⚖️</span> Consistency
           </button>
-          <button type="button" onclick="openTabInfo('consistency', event)" title="About this tab" class="info-btn absolute right-2 text-[11px] font-mono w-4 h-4 rounded-full bg-white/10 hover:bg-brand-500 text-slate-300 hover:text-white flex items-center justify-center z-10">
+          <button type="button" data-info="consistency" title="About Consistency Auditor" class="info-bubble absolute right-2 text-[11px] font-mono w-4 h-4 rounded-full bg-white/10 text-slate-300 flex items-center justify-center z-10">
             ⓘ
           </button>
         </div>
 
         <!-- Tab 4: Image -->
         <div class="relative flex items-center">
-          <button type="button" data-tab="image" class="tab-btn w-full text-xs font-bold py-2.5 pl-2 pr-7 rounded-xl border border-transparent text-slate-300 hover:text-white transition flex items-center justify-center gap-1.5">
+          <button type="button" data-tab="image" class="tab-btn w-full text-xs font-bold py-2.5 pl-2 pr-7 rounded-xl border border-transparent text-slate-300 hover:text-white transition flex items-center justify-center gap-1">
             <span>🖼️</span> Image
           </button>
-          <button type="button" onclick="openTabInfo('image', event)" title="About this tab" class="info-btn absolute right-2 text-[11px] font-mono w-4 h-4 rounded-full bg-white/10 hover:bg-brand-500 text-slate-300 hover:text-white flex items-center justify-center z-10">
+          <button type="button" data-info="image" title="About Image Forensics" class="info-bubble absolute right-2 text-[11px] font-mono w-4 h-4 rounded-full bg-white/10 text-slate-300 flex items-center justify-center z-10">
             ⓘ
           </button>
         </div>
 
         <!-- Tab 5: Video -->
         <div class="relative flex items-center">
-          <button type="button" data-tab="video" class="tab-btn w-full text-xs font-bold py-2.5 pl-2 pr-7 rounded-xl border border-transparent text-slate-300 hover:text-white transition flex items-center justify-center gap-1.5">
+          <button type="button" data-tab="video" class="tab-btn w-full text-xs font-bold py-2.5 pl-2 pr-7 rounded-xl border border-transparent text-slate-300 hover:text-white transition flex items-center justify-center gap-1">
             <span>🎬</span> Video
           </button>
-          <button type="button" onclick="openTabInfo('video', event)" title="About this tab" class="info-btn absolute right-2 text-[11px] font-mono w-4 h-4 rounded-full bg-white/10 hover:bg-brand-500 text-slate-300 hover:text-white flex items-center justify-center z-10">
+          <button type="button" data-info="video" title="About Video Forensics" class="info-bubble absolute right-2 text-[11px] font-mono w-4 h-4 rounded-full bg-white/10 text-slate-300 flex items-center justify-center z-10">
             ⓘ
           </button>
         </div>
       </nav>
 
-      <!-- TAB 1: TEXT & FORENSICS -->
-      <div id="tab-panel-text" class="tab-panel flex flex-col gap-3">
-        <div id="docDropzone" class="border-2 border-dashed border-white/10 hover:border-brand-500 rounded-2xl p-5 text-center glass-card-subtle cursor-pointer transition group">
+      <!-- TAB PANEL 1: TEXT -->
+      <div id="panel-text" class="tab-panel active-panel flex-col gap-3">
+        <div id="docDropzone" class="border-2 border-dashed border-white/10 hover:border-brand-500 rounded-2xl p-5 text-center glass-card-subtle cursor-pointer transition">
           <input type="file" id="docFileInput" class="hidden" accept=".txt,.md,.rtf,.json,.csv">
           <div class="flex flex-col items-center justify-center gap-1">
-            <span class="text-xl group-hover:scale-110 transition-transform">📂</span>
-            <p class="text-xs font-bold text-slate-200 group-hover:text-brand-300">Drop text files (.txt, .md, .rtf) or click to browse</p>
-            <p class="text-[11px] text-slate-400">Client-side lexical decomposition & statistical audit</p>
+            <span class="text-xl">📂</span>
+            <p class="text-xs font-bold text-slate-200">Drop text files (.txt, .md, .rtf) or click to browse</p>
+            <p class="text-[11px] text-slate-400">Statistical burstiness, lexical density, and reading comfort scores</p>
           </div>
         </div>
 
@@ -204,27 +211,27 @@
         <textarea
           id="textInput"
           rows="8"
-          placeholder="Paste draft or article here to evaluate token burstiness (σ), Type-Token Ratio (TTR), Flesch reading grade, and synthetic likelihood..."
-          class="w-full glass-card border border-white/10 rounded-2xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 leading-relaxed transition resize-y"
+          placeholder="Paste draft or manuscript here to analyze sentence variance (σ), Type-Token Ratio, and synthetic probability..."
+          class="w-full glass-card border border-white/10 rounded-2xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-brand-500 leading-relaxed resize-y"
         ></textarea>
         
         <div class="flex justify-between items-center gap-2">
-          <button type="button" id="loadSampleBtn" class="text-xs glass-card-subtle hover:bg-slate-800 text-slate-300 px-3.5 py-2 rounded-xl border border-white/10 transition active:scale-95">
+          <button type="button" id="loadSampleBtn" class="text-xs glass-card-subtle hover:bg-slate-800 text-slate-300 px-3.5 py-2 rounded-xl border border-white/10 transition">
             Load Sample Text
           </button>
           <div class="flex gap-2">
-            <button type="button" id="sendToRewriterBtn" class="text-xs bg-slate-800 hover:bg-slate-700 text-brand-300 font-bold px-3.5 py-2 rounded-xl border border-brand-500/30 transition active:scale-95">
+            <button type="button" id="sendToRewriterBtn" class="text-xs bg-slate-800 hover:bg-slate-700 text-brand-300 font-bold px-3.5 py-2 rounded-xl border border-brand-500/30 transition">
               Send to Rewriter →
             </button>
-            <button type="button" id="runTextForensicsBtn" class="text-xs bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold px-4 py-2 rounded-xl transition active:scale-95 shadow-md shadow-brand-600/30">
+            <button type="button" id="runTextForensicsBtn" class="text-xs bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold px-4 py-2 rounded-xl transition shadow-md shadow-brand-600/30">
               Run Inspection
             </button>
           </div>
         </div>
       </div>
 
-      <!-- TAB 2: REWRITER -->
-      <div id="tab-panel-rewriter" class="tab-panel hidden flex flex-col gap-3">
+      <!-- TAB PANEL 2: REWRITER -->
+      <div id="panel-rewriter" class="tab-panel flex-col gap-3">
         <div class="flex justify-between items-center text-xs text-slate-400 px-1">
           <span class="font-bold uppercase tracking-wider text-[10px] text-brand-400">Editorial Rewriter</span>
           <span id="rewriterStats" class="font-mono">0 words</span>
@@ -237,10 +244,10 @@
         ></textarea>
         
         <div class="flex justify-between items-center gap-2">
-          <button type="button" id="applyAllRewritesBtn" class="text-xs bg-emerald-600/80 hover:bg-emerald-500 text-white font-bold px-3.5 py-2 rounded-xl transition active:scale-95 border border-emerald-500/40">
+          <button type="button" id="applyAllRewritesBtn" class="text-xs bg-emerald-600/80 hover:bg-emerald-500 text-white font-bold px-3.5 py-2 rounded-xl transition border border-emerald-500/40">
             Accept All Tightenings
           </button>
-          <button type="button" id="copyRewriterBtn" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold px-3.5 py-2 rounded-xl border border-white/10 transition active:scale-95">
+          <button type="button" id="copyRewriterBtn" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold px-3.5 py-2 rounded-xl border border-white/10 transition">
             Copy Result
           </button>
         </div>
@@ -248,235 +255,37 @@
         <div id="rewriterCards" class="flex flex-col gap-2.5 mt-1 max-h-72 overflow-y-auto pr-1"></div>
       </div>
 
-      <!-- TAB 3: CONSISTENCY AUDITOR -->
-      <div id="tab-panel-consistency" class="tab-panel hidden flex flex-col gap-3">
+      <!-- TAB PANEL 3: CONSISTENCY -->
+      <div id="panel-consistency" class="tab-panel flex-col gap-3">
         <div class="flex justify-between items-center text-xs text-slate-400 px-1">
-          <span class="font-bold uppercase tracking-wider text-[10px] text-brand-400">Document Consistency Audit</span>
-          <button type="button" id="runConsistencyBtn" class="text-xs bg-brand-600 hover:bg-brand-500 text-white font-bold px-3 py-1.5 rounded-xl transition active:scale-95">
+          <span class="font-bold uppercase tracking-wider text-[10px] text-brand-400">Consistency Audit</span>
+          <button type="button" id="runConsistencyBtn" class="text-xs bg-brand-600 hover:bg-brand-500 text-white font-bold px-3 py-1.5 rounded-xl transition">
             Re-Audit
           </button>
         </div>
         <textarea
           id="consistencyInput"
           rows="7"
-          placeholder="Paste entire report or manuscript here to audit US/UK dialect mixing (analyze vs. analyse) and unexpanded abbreviations..."
+          placeholder="Paste entire document here to audit US/UK dialect mixing (analyze vs. analyse) and unexpanded abbreviations..."
           class="w-full glass-card border border-white/10 rounded-2xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-brand-500 leading-relaxed resize-y"
         ></textarea>
         
         <div id="consistencyReport" class="flex flex-col gap-2.5 mt-1 max-h-72 overflow-y-auto pr-1"></div>
       </div>
 
-      <!-- TAB 4: IMAGE & C2PA -->
-      <div id="tab-panel-image" class="tab-panel hidden flex flex-col gap-3">
-        <div id="imageDropzone" class="border-2 border-dashed border-white/10 hover:border-brand-500 rounded-2xl p-7 text-center glass-card cursor-pointer transition group">
+      <!-- TAB PANEL 4: IMAGE -->
+      <div id="panel-image" class="tab-panel flex-col gap-3">
+        <div id="imageDropzone" class="border-2 border-dashed border-white/10 hover:border-brand-500 rounded-2xl p-7 text-center glass-card cursor-pointer transition">
           <input type="file" id="imageFileInput" class="hidden" accept="image/png, image/jpeg, image/webp">
           <div class="flex flex-col items-center justify-center gap-2">
-            <div class="w-12 h-12 rounded-2xl bg-brand-950/60 border border-brand-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+            <div class="w-12 h-12 rounded-2xl bg-brand-950/60 border border-brand-500/30 flex items-center justify-center text-2xl">
               🖼️
             </div>
             <div>
-              <p class="text-xs font-bold text-slate-200 group-hover:text-brand-300">Choose or drop an image (.png, .jpg, .webp)</p>
+              <p class="text-xs font-bold text-slate-200">Choose or drop an image (.png, .jpg, .webp)</p>
               <p class="text-[11px] text-slate-400 mt-0.5">Scans binary metadata for C2PA provenance and SynthID signatures</p>
             </div>
           </div>
         </div>
         
-        <div id="imagePreviewBox" class="hidden glass-card rounded-2xl p-3 flex flex-col items-center gap-2">
-          <img id="imagePreview" class="max-h-56 rounded-xl object-contain border border-white/10" alt="Preview" />
-          <span id="imageMeta" class="text-[11px] font-mono text-slate-400"></span>
-        </div>
-      </div>
-
-      <!-- TAB 5: VIDEO CADENCE -->
-      <div id="tab-panel-video" class="tab-panel hidden flex flex-col gap-3">
-        <div id="videoDropzone" class="border-2 border-dashed border-white/10 hover:border-brand-500 rounded-2xl p-7 text-center glass-card cursor-pointer transition group">
-          <input type="file" id="videoFileInput" class="hidden" accept="video/mp4, video/webm">
-          <div class="flex flex-col items-center justify-center gap-2">
-            <div class="w-12 h-12 rounded-2xl bg-brand-950/60 border border-brand-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-              🎬
-            </div>
-            <div>
-              <p class="text-xs font-bold text-slate-200 group-hover:text-brand-300">Drop a video or click to browse (.mp4, .webm)</p>
-              <p class="text-[11px] text-slate-400 mt-0.5">Examines inter-frame compression signatures and continuity variance</p>
-            </div>
-          </div>
-        </div>
-
-        <div id="videoPreviewBox" class="hidden glass-card rounded-2xl p-3 flex flex-col gap-2">
-          <video id="videoPreview" controls class="max-h-56 w-full rounded-xl border border-white/10 bg-black"></video>
-          <span id="videoMeta" class="text-[11px] font-mono text-slate-400 text-center"></span>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- Right Report Panel (5 Columns) -->
-    <section class="lg:col-span-5 flex flex-col gap-4">
-      
-      <!-- Primary Verdict Card -->
-      <div class="glass-card rounded-2xl p-5 relative overflow-hidden">
-        <div class="flex items-center justify-between mb-3">
-          <div class="flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-brand-400 animate-pulse"></span>
-            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Detection Gauge</span>
-          </div>
-          <span id="verdictBadge" class="text-[10px] px-2.5 py-0.5 rounded-full font-bold bg-slate-800 text-slate-400 border border-white/10">Ready</span>
-        </div>
-        
-        <div class="flex items-baseline gap-2 mb-2">
-          <span id="scoreVal" class="text-5xl font-black text-white tracking-tight">0%</span>
-          <span class="text-xs text-slate-400">Likelihood of AI Synthesis</span>
-        </div>
-
-        <div class="w-full bg-slate-900/80 rounded-full h-2.5 p-0.5 border border-white/10 overflow-hidden">
-          <div id="scoreBar" class="bg-gradient-to-r from-brand-500 to-cyan-400 h-1.5 rounded-full transition-all duration-500" style="width: 0%"></div>
-        </div>
-      </div>
-
-      <!-- Metrics Strip -->
-      <div class="grid grid-cols-3 gap-2.5 text-center text-xs">
-        <div class="glass-card-subtle rounded-xl p-3 border border-white/5">
-          <p class="text-[9px] text-slate-400 uppercase font-bold tracking-wider">Lexical TTR</p>
-          <p id="ttrVal" class="text-base font-bold text-slate-200 mt-1 font-mono">--</p>
-        </div>
-        <div class="glass-card-subtle rounded-xl p-3 border border-white/5">
-          <p class="text-[9px] text-slate-400 uppercase font-bold tracking-wider">Burstiness (σ)</p>
-          <p id="burstVal" class="text-base font-bold text-slate-200 mt-1 font-mono">--</p>
-        </div>
-        <div class="glass-card-subtle rounded-xl p-3 border border-white/5">
-          <p class="text-[9px] text-slate-400 uppercase font-bold tracking-wider">Readability</p>
-          <p id="readabilityVal" class="text-base font-bold text-slate-200 mt-1 font-mono">--</p>
-        </div>
-      </div>
-
-      <!-- Telemetry Output -->
-      <div class="glass-card rounded-2xl p-5 flex-1 flex flex-col">
-        <div class="flex items-center justify-between pb-3 mb-3 border-b border-white/10">
-          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-            <span>🔬</span> Forensic Telemetry
-          </span>
-          <span id="telemetryStatus" class="text-[10px] font-mono text-slate-500">IDLE</span>
-        </div>
-        <div id="diagText" class="text-xs font-mono text-slate-300 space-y-2 leading-relaxed max-h-[300px] overflow-y-auto pr-1">
-          Select any workspace tab on the left to begin inspecting your content.
-        </div>
-      </div>
-
-    </section>
-  </main>
-
-  <!-- INFO MODAL POP-UP (With Grid Surface) -->
-  <div id="infoModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-md hidden flex items-center justify-center p-4">
-    <div class="popup-grid border border-brand-500/40 rounded-2xl max-w-md w-full p-6 shadow-2xl shadow-brand-500/20 relative animate-in fade-in zoom-in-95 duration-150">
-      
-      <!-- Modal Header -->
-      <div class="flex items-center justify-between pb-3 border-b border-white/10">
-        <div class="flex items-center gap-2">
-          <span id="modalIcon" class="text-xl">📝</span>
-          <h3 id="modalTitle" class="text-base font-extrabold text-white">Tab Information</h3>
-        </div>
-        <button type="button" onclick="closeTabInfo()" class="w-7 h-7 rounded-lg bg-white/5 hover:bg-rose-950/60 text-slate-400 hover:text-rose-300 border border-white/10 transition flex items-center justify-center text-sm">
-          ✕
-        </button>
-      </div>
-
-      <!-- Modal Body -->
-      <div class="py-4 space-y-3">
-        <p id="modalDescription" class="text-xs text-slate-300 leading-relaxed"></p>
-        
-        <div class="p-3 rounded-xl bg-slate-950/80 border border-white/5">
-          <span class="text-[10px] font-mono uppercase font-bold text-brand-400 block mb-1">Key Forensic Capabilities:</span>
-          <ul id="modalCapabilities" class="text-[11px] text-slate-300 space-y-1 list-disc list-inside"></ul>
-        </div>
-      </div>
-
-      <!-- Modal Footer -->
-      <div class="pt-2 flex justify-end">
-        <button type="button" onclick="closeTabInfo()" class="text-xs bg-brand-600 hover:bg-brand-500 text-white font-bold px-4 py-2 rounded-xl transition shadow-sm shadow-brand-600/30">
-          Got It
-        </button>
-      </div>
-
-    </div>
-  </div>
-
-  <script>
-    // Tab Descriptions Catalog
-    const TAB_INFO = {
-      text: {
-        icon: '📝',
-        title: 'Text & Document Forensics',
-        desc: 'Evaluates text manuscripts for statistical markers characteristic of Large Language Models (LLMs). It analyzes variation in sentence rhythm, lexical diversity, and reading comfort scores.',
-        capabilities: [
-          'Calculates Type-Token Ratio (TTR) for vocabulary repetition',
-          'Measures sentence length variance (Burstiness σ)',
-          'Computes Flesch Reading Ease index in real time',
-          'Dropzone file parsing for .txt, .md, and .rtf formats'
-        ]
-      },
-      rewriter: {
-        icon: '✨',
-        title: 'Editorial Rewriter',
-        desc: 'Acts like Wordtune or Hemingway by identifying clunky, robotic transitions and formulaic AI phrasing. It provides 3 one-click stylistic alternatives for each flagged sentence.',
-        capabilities: [
-          'Tighten: Trims wordiness and removes empty fluff',
-          'Vary Cadence: Introduces dynamic rhythm to prevent monotonicity',
-          'Executive: Rephrases into polished, concise corporate prose',
-          'One-click "Accept All Tightenings" batch processor'
-        ]
-      },
-      consistency: {
-        icon: '⚖️',
-        title: 'Consistency Auditor',
-        desc: 'Audits long-form documents for global stylistic contradictions, similar to PerfectIt. It ensures technical documents remain uniform from first page to last.',
-        capabilities: [
-          'Flags US vs. UK dialect collisions (e.g., analyze vs. analyse)',
-          'Spots undefined acronyms used without prior expansion',
-          'Identifies inconsistent hyphenation and spelling discrepancies'
-        ]
-      },
-      image: {
-        icon: '🖼️',
-        title: 'Image & Provenance Inspector',
-        desc: 'Performs deep client-side binary header inspection on uploaded graphics to detect digital watermarks and generative manifest metadata.',
-        capabilities: [
-          'Detects C2PA (Coalition for Content Provenance and Authenticity)',
-          'Flags Google SynthID and Imagen digital watermarks',
-          'Checks DALL-E, Midjourney, and Stable Diffusion markers'
-        ]
-      },
-      video: {
-        icon: '🎬',
-        title: 'Video Temporal Forensics',
-        desc: 'Examines uploaded video files for temporal motion jitter, frame compression signatures, and inter-frame luminance continuity characteristic of generative synthetic video.',
-        capabilities: [
-          'Samples video streams without external server uploads',
-          'Tests inter-frame pixel drift and motion stability',
-          'Evaluates natural optical flow against generative morphing'
-        ]
-      }
-    };
-
-    // Modal Control Functions
-    function openTabInfo(tabKey, event) {
-      if (event) event.stopPropagation(); // Avoid switching tabs when clicking info button
-      const info = TAB_INFO[tabKey];
-      if (!info) return;
-
-      document.getElementById('modalIcon').textContent = info.icon;
-      document.getElementById('modalTitle').textContent = info.title;
-      document.getElementById('modalDescription').textContent = info.desc;
-
-      const capList = document.getElementById('modalCapabilities');
-      capList.innerHTML = '';
-      info.capabilities.forEach(cap => {
-        const li = document.createElement('li');
-        li.textContent = cap;
-        capList.appendChild(li);
-      });
-
-      document.getElementById('infoModal').classList.remove('hidden');
-    }
-
-    function closeTabInfo() {
-      document.
+        <div id="imagePreviewBox" class="hidden glass-card rounded-2xl p-3 flex flex-col items-center gap-
