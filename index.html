@@ -34,12 +34,12 @@
   </script>
 
   <style>
-    /* Light Clean Slate Background */
+    /* Clean, Light Slate Palette */
     body {
       background-color: #f8fafc;
       background-image: 
-        radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.07) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.05) 0px, transparent 50%),
+        radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.08) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.06) 0px, transparent 50%),
         radial-gradient(#cbd5e1 0.75px, transparent 0.75px);
       background-size: 100% 100%, 100% 100%, 20px 20px;
     }
@@ -56,7 +56,15 @@
       border: 1px solid #e2e8f0;
     }
 
-    /* Tab active state */
+    /* Explicit Display Controller for Tabs (prevents hidden/flex collision) */
+    .tab-panel {
+      display: none !important;
+    }
+    .tab-panel.active {
+      display: flex !important;
+    }
+
+    /* Active Tab Glow */
     .tab-btn.active {
       background-color: #7c3aed !important;
       color: #ffffff !important;
@@ -64,7 +72,7 @@
       box-shadow: 0 4px 12px rgba(124, 58, 237, 0.25);
     }
 
-    /* Dropzone drag indicator */
+    /* Dropzone Drag Indicator */
     .dropzone-hover {
       border-color: #7c3aed !important;
       background-color: #f5f3ff !important;
@@ -109,26 +117,23 @@
     <section class="lg:col-span-7 flex flex-col gap-4">
       
       <!-- Primary Tabs -->
-      <nav class="grid grid-cols-3 sm:grid-cols-5 gap-1.5 card-surface p-1.5 rounded-2xl">
-        <button type="button" data-tab="text" class="tab-btn active text-xs font-bold py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1.5">
+      <nav class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 card-surface p-1.5 rounded-2xl">
+        <button type="button" data-tab="text" class="tab-btn active text-xs font-bold py-2.5 px-2 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1.5">
           <span>📝</span> Text & Docs
         </button>
-        <button type="button" data-tab="rewriter" class="tab-btn text-xs font-bold py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1.5">
+        <button type="button" data-tab="rewriter" class="tab-btn text-xs font-bold py-2.5 px-2 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1.5">
           <span>✨</span> Rewriter
         </button>
-        <button type="button" data-tab="consistency" class="tab-btn text-xs font-bold py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1.5">
+        <button type="button" data-tab="consistency" class="tab-btn text-xs font-bold py-2.5 px-2 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1.5">
           <span>⚖️</span> Consistency
         </button>
-        <button type="button" data-tab="fact" class="tab-btn text-xs font-bold py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1.5">
+        <button type="button" data-tab="fact" class="tab-btn text-xs font-bold py-2.5 px-2 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1.5">
           <span>🔍</span> Fact Check
-        </button>
-        <button type="button" data-tab="image" class="tab-btn text-xs font-bold py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1.5">
-          <span>🖼️</span> Media
         </button>
       </nav>
 
       <!-- TAB 1: TEXT & FORENSICS -->
-      <div id="tab-panel-text" class="tab-panel flex flex-col gap-3">
+      <div id="tab-panel-text" class="tab-panel active flex-col gap-3">
         <div id="docDropzone" class="border-2 border-dashed border-slate-200 hover:border-brand-500 rounded-2xl p-4 text-center card-subtle cursor-pointer transition">
           <input type="file" id="docFileInput" class="hidden" accept=".txt,.md,.rtf,.json,.csv">
           <div class="flex flex-col items-center justify-center gap-1">
@@ -166,7 +171,7 @@
       </div>
 
       <!-- TAB 2: REWRITER -->
-      <div id="tab-panel-rewriter" class="tab-panel hidden flex flex-col gap-3">
+      <div id="tab-panel-rewriter" class="tab-panel flex-col gap-3">
         <div class="flex justify-between items-center text-xs text-slate-500 px-1">
           <span class="font-bold uppercase tracking-wider text-[10px] text-brand-600">Cadence Rewriter</span>
           <span id="rewriterStats" class="font-mono">0 words</span>
@@ -191,7 +196,7 @@
       </div>
 
       <!-- TAB 3: CONSISTENCY AUDITOR -->
-      <div id="tab-panel-consistency" class="tab-panel hidden flex flex-col gap-3">
+      <div id="tab-panel-consistency" class="tab-panel flex-col gap-3">
         <div class="flex justify-between items-center text-xs text-slate-500 px-1">
           <span class="font-bold uppercase tracking-wider text-[10px] text-brand-600">Document Consistency Audit</span>
           <button type="button" id="runConsistencyBtn" class="text-xs bg-brand-600 hover:bg-brand-700 text-white font-bold px-3 py-1.5 rounded-xl transition active:scale-95 shadow-sm">
@@ -209,7 +214,7 @@
       </div>
 
       <!-- TAB 4: FACT CHECK -->
-      <div id="tab-panel-fact" class="tab-panel hidden flex flex-col gap-3">
+      <div id="tab-panel-fact" class="tab-panel flex-col gap-3">
         <div class="flex justify-between items-center text-xs text-slate-500 px-1">
           <span class="font-bold uppercase tracking-wider text-[10px] text-brand-600">Live Source Corroboration</span>
         </div>
@@ -228,23 +233,6 @@
           </button>
         </div>
         <div id="factResultContainer" class="text-xs mt-1"></div>
-      </div>
-
-      <!-- TAB 5: MEDIA & C2PA -->
-      <div id="tab-panel-image" class="tab-panel hidden flex flex-col gap-3">
-        <div id="imageDropzone" class="border-2 border-dashed border-slate-200 hover:border-brand-500 rounded-2xl p-6 text-center card-subtle cursor-pointer transition">
-          <input type="file" id="imageFileInput" class="hidden" accept="image/png, image/jpeg, image/webp">
-          <div class="flex flex-col items-center justify-center gap-1.5">
-            <span class="text-2xl">🖼️</span>
-            <p class="text-xs font-bold text-slate-800">Select or drop an image (.png, .jpg, .webp)</p>
-            <p class="text-[11px] text-slate-500">Scans binary metadata for C2PA provenance and SynthID signatures</p>
-          </div>
-        </div>
-        
-        <div id="imagePreviewBox" class="hidden card-surface rounded-2xl p-3 flex flex-col items-center gap-2">
-          <img id="imagePreview" class="max-h-56 rounded-xl object-contain border border-slate-200" alt="Preview" />
-          <span id="imageMeta" class="text-[11px] font-mono text-slate-500"></span>
-        </div>
       </div>
 
     </section>
@@ -307,7 +295,7 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       
-      // 1. SAFE TAB CONTROLLER
+      // 1. Bulletproof Tab Switching
       const tabButtons = document.querySelectorAll('.tab-btn');
       const tabPanels = document.querySelectorAll('.tab-panel');
 
@@ -322,9 +310,9 @@
 
         tabPanels.forEach(panel => {
           if (panel.id === `tab-panel-${targetTab}`) {
-            panel.classList.remove('hidden');
+            panel.classList.add('active');
           } else {
-            panel.classList.add('hidden');
+            panel.classList.remove('active');
           }
         });
 
@@ -345,13 +333,14 @@
       }
 
       tabButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
           const target = btn.getAttribute('data-tab');
           if (target) selectTab(target);
         });
       });
 
-      // 2. VERDICT ENGINE
+      // 2. Verdict Display Helper
       function setVerdict(score, verdictText, isOrganic, detailsHtml) {
         document.getElementById('scoreVal').textContent = score + '%';
         document.getElementById('scoreBar').style.width = score + '%';
@@ -370,7 +359,7 @@
         document.getElementById('diagText').innerHTML = detailsHtml;
       }
 
-      // 3. SAFE DROPZONE BINDER
+      // 3. Dropzone Controller
       function bindDropzone(zoneId, inputId, onFileSelected) {
         const zone = document.getElementById(zoneId);
         const input = document.getElementById(inputId);
@@ -392,11 +381,12 @@
         input.addEventListener('change', () => {
           if (input.files.length) {
             onFileSelected(input.files[0]);
+            input.value = ''; // Reset input to allow uploading the same file again
           }
         });
       }
 
-      // 4. TEXT PROCESSING
+      // 4. Text Processing Engine
       bindDropzone('docDropzone', 'docFileInput', (file) => {
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -408,4 +398,22 @@
 
       function processTextInput() {
         const text = document.getElementById('textInput').value;
-      
+        const chars = text.length;
+        const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+        document.getElementById('charCount').textContent = `${chars} chars | ${words} words`;
+
+        if (!text.trim()) {
+          document.getElementById('ttrVal').textContent = '--';
+          document.getElementById('burstVal').textContent = '--';
+          document.getElementById('readabilityVal').textContent = '--';
+          document.getElementById('scoreVal').textContent = '0%';
+          document.getElementById('scoreBar').style.width = '0%';
+          document.getElementById('telemetryStatus').textContent = 'IDLE';
+          const badge = document.getElementById('verdictBadge');
+          badge.textContent = 'Ready';
+          badge.className = 'text-[10px] px-2.5 py-0.5 rounded-full font-bold bg-slate-100 text-slate-600 border border-slate-200';
+          document.getElementById('diagText').textContent = 'Select any workspace tab on the left to begin inspecting your content.';
+          return;
+        }
+
+        const sentence
