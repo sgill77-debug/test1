@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Veritas Editorial Suite - Professional Writing & Provenance Platform</title>
+  <title>VeritasAI Studio - Writing Intelligence & Consistency Suite</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -20,12 +20,12 @@
           },
           colors: {
             brand: {
-              50: '#eef2ff',
-              100: '#e0e7ff',
-              400: '#818cf8',
-              500: '#6366f1',
-              600: '#4f46e5',
-              700: '#4338ca',
+              50: '#f5f3ff',
+              100: '#ede9fe',
+              200: '#ddd6fe',
+              500: '#8b5cf6',
+              600: '#7c3aed',
+              700: '#6d28d9',
             }
           }
         }
@@ -34,417 +34,252 @@
   </script>
 
   <style>
-    /* Clean workspace background */
-    .bg-workspace {
-      background-color: #0b0f19;
+    /* Light Clean Slate Background */
+    body {
+      background-color: #f8fafc;
       background-image: 
-        radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.12) 0%, transparent 60%),
-        radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-      background-size: 100% 100%, 24px 24px;
+        radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.07) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.05) 0px, transparent 50%),
+        radial-gradient(#cbd5e1 0.75px, transparent 0.75px);
+      background-size: 100% 100%, 100% 100%, 20px 20px;
     }
 
-    /* Glass elements */
-    .glass-panel {
-      background: rgba(17, 24, 39, 0.7);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+    /* Light Card Surfaces */
+    .card-surface {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -2px rgba(0, 0, 0, 0.02);
     }
 
-    /* Highlight styles */
-    .hl-cliche {
-      background-color: rgba(244, 63, 94, 0.2);
-      border-bottom: 2px wavy #f43f5e;
-      cursor: pointer;
-    }
-    .hl-wordy {
-      background-color: rgba(245, 158, 11, 0.2);
-      border-bottom: 2px wavy #f59e0b;
-      cursor: pointer;
-    }
-    .hl-dialect {
-      background-color: rgba(168, 85, 247, 0.2);
-      border-bottom: 2px wavy #a855f7;
-      cursor: pointer;
-    }
-    .hl-long {
-      background-color: rgba(59, 130, 246, 0.15);
-      border-bottom: 2px dotted #60a5fa;
-      cursor: pointer;
+    .card-subtle {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
     }
 
-    /* Print styles for Audit Certificate */
-    @media print {
-      body * {
-        visibility: hidden;
-      }
-      #certificateModal, #certificateModal * {
-        visibility: visible;
-      }
-      #certificateModal {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        background: white !important;
-        color: black !important;
-      }
-      .no-print {
-        display: none !important;
-      }
+    /* Tab active state */
+    .tab-btn.active {
+      background-color: #7c3aed !important;
+      color: #ffffff !important;
+      border-color: #7c3aed !important;
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.25);
+    }
+
+    /* Dropzone drag indicator */
+    .dropzone-hover {
+      border-color: #7c3aed !important;
+      background-color: #f5f3ff !important;
     }
   </style>
 </head>
-<body class="bg-workspace text-slate-100 min-h-screen flex flex-col font-sans antialiased selection:bg-brand-500 selection:text-white">
+<body class="text-slate-800 min-h-screen flex flex-col font-sans antialiased selection:bg-brand-500 selection:text-white">
 
   <!-- Header -->
-  <header class="border-b border-white/10 bg-slate-950/80 backdrop-blur-md sticky top-0 z-40 px-4 py-3">
-    <div class="max-w-7xl mx-auto flex items-center justify-between">
+  <header class="border-b border-slate-200 bg-white/90 backdrop-blur-md sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center shadow-lg shadow-brand-500/30 text-white font-extrabold text-sm">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-600 text-white flex items-center justify-center font-bold text-sm shadow-md shadow-brand-500/20">
           V
         </div>
         <div>
           <div class="flex items-center gap-2">
-            <h1 class="font-extrabold text-base tracking-tight text-white">Veritas<span class="text-brand-400">Editor</span></h1>
-            <span class="px-2 py-0.5 text-[9px] uppercase tracking-wider font-extrabold rounded-full bg-brand-500/20 text-brand-300 border border-brand-500/30">Pro SaaS</span>
+            <h1 class="font-extrabold text-base tracking-tight text-slate-900">Veritas<span class="text-brand-600">AI</span></h1>
+            <span class="px-2 py-0.5 text-[10px] uppercase tracking-wider font-extrabold rounded-full bg-brand-50 text-brand-700 border border-brand-200">Suite Pro</span>
           </div>
+          <p class="text-[11px] text-slate-500">Writing Intelligence, Consistency & Provenance Platform</p>
         </div>
       </div>
 
+      <!-- Action Links -->
       <div class="flex items-center gap-2.5">
-        <button type="button" id="exportCertBtn" class="text-xs bg-brand-600 hover:bg-brand-500 text-white font-bold px-3 py-1.5 rounded-lg border border-brand-400/30 transition shadow-sm flex items-center gap-1.5 active:scale-95">
-          <span>📜</span> Export Certificate
-        </button>
-        <button type="button" id="globalResetBtn" class="text-xs bg-slate-900/80 hover:bg-rose-950/40 text-slate-400 hover:text-rose-300 px-3 py-1.5 rounded-lg border border-white/10 transition active:scale-95">
+        <a href="https://github.com/sgill77-debug/testing1" target="_blank" rel="noopener noreferrer" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-1.5 rounded-xl border border-slate-200 font-semibold transition flex items-center gap-1.5 active:scale-95 shadow-sm">
+          <span>GitHub</span>
+          <span class="text-[10px] text-slate-400">↗</span>
+        </a>
+        <button type="button" id="globalResetBtn" class="text-xs bg-white hover:bg-rose-50 text-slate-600 hover:text-rose-600 px-3.5 py-1.5 rounded-xl border border-slate-200 hover:border-rose-200 transition font-medium active:scale-95 shadow-sm">
           Reset All
         </button>
       </div>
     </div>
   </header>
 
-  <!-- 3-Column Modern Workspace -->
-  <main class="max-w-7xl mx-auto w-full p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 flex-1">
+  <!-- Main Grid Workspace -->
+  <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 py-6 w-full grid grid-cols-1 lg:grid-cols-12 gap-6">
     
-    <!-- LEFT RAIL: Document Manager & Style Directives (2.5 Cols) -->
-    <aside class="lg:col-span-3 flex flex-col gap-4">
+    <!-- Left Workspace (7 Columns) -->
+    <section class="lg:col-span-7 flex flex-col gap-4">
       
-      <!-- Document Switcher -->
-      <div class="glass-panel rounded-2xl p-4 flex flex-col gap-3">
-        <div class="flex items-center justify-between">
-          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Documents</span>
-          <button type="button" id="newDocBtn" class="text-[10px] bg-slate-800 hover:bg-slate-700 text-brand-300 px-2 py-0.5 rounded border border-white/10 font-bold transition">
-            + New
-          </button>
-        </div>
-        <div class="flex flex-col gap-1.5 text-xs">
-          <button class="doc-item active text-left p-2 rounded-xl bg-brand-600/20 border border-brand-500/40 text-white font-medium flex items-center gap-2">
-            <span>📄</span> Executive Memo
-          </button>
-          <button class="doc-item text-left p-2 rounded-xl bg-slate-900/40 hover:bg-slate-800 border border-transparent text-slate-400 hover:text-slate-200 transition flex items-center gap-2">
-            <span>📄</span> Research Overview
-          </button>
-        </div>
-      </div>
+      <!-- Primary Tabs -->
+      <nav class="grid grid-cols-3 sm:grid-cols-5 gap-1.5 card-surface p-1.5 rounded-2xl">
+        <button type="button" data-tab="text" class="tab-btn active text-xs font-bold py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1.5">
+          <span>📝</span> Text & Docs
+        </button>
+        <button type="button" data-tab="rewriter" class="tab-btn text-xs font-bold py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1.5">
+          <span>✨</span> Rewriter
+        </button>
+        <button type="button" data-tab="consistency" class="tab-btn text-xs font-bold py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1.5">
+          <span>⚖️</span> Consistency
+        </button>
+        <button type="button" data-tab="fact" class="tab-btn text-xs font-bold py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1.5">
+          <span>🔍</span> Fact Check
+        </button>
+        <button type="button" data-tab="image" class="tab-btn text-xs font-bold py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1.5">
+          <span>🖼️</span> Media
+        </button>
+      </nav>
 
-      <!-- Tone & Dialect Settings -->
-      <div class="glass-panel rounded-2xl p-4 flex flex-col gap-3">
-        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Style Goals</span>
-        
-        <div class="flex flex-col gap-1">
-          <label class="text-[11px] text-slate-400">Target Tone</label>
-          <select id="toneSelect" class="bg-slate-900 border border-white/10 rounded-xl p-2 text-xs text-slate-200 focus:outline-none focus:border-brand-500">
-            <option value="executive">Executive & Direct (B2B)</option>
-            <option value="academic">Academic & Formal</option>
-            <option value="engaging">Clear & Conversational</option>
-          </select>
-        </div>
-
-        <div class="flex flex-col gap-1">
-          <label class="text-[11px] text-slate-400">Standard Dialect</label>
-          <select id="dialectSelect" class="bg-slate-900 border border-white/10 rounded-xl p-2 text-xs text-slate-200 focus:outline-none focus:border-brand-500">
-            <option value="us">American English (US)</option>
-            <option value="uk">British English (UK)</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- Live Speed & Volume -->
-      <div class="glass-panel rounded-2xl p-4 flex flex-col gap-2 text-xs">
-        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Reading Telemetry</span>
-        <div class="flex justify-between items-center text-slate-400">
-          <span>Read Time:</span>
-          <span id="readTimeVal" class="text-slate-200 font-mono font-bold">0 min</span>
-        </div>
-        <div class="flex justify-between items-center text-slate-400">
-          <span>Target Grade:</span>
-          <span id="targetGradeVal" class="text-emerald-400 font-bold">Grade 8–9</span>
-        </div>
-      </div>
-
-    </aside>
-
-    <!-- CENTER CANVAS: Focused Document Workspace (5.5 Cols) -->
-    <section class="lg:col-span-6 flex flex-col gap-3">
-      
-      <!-- Editor Controls Bar -->
-      <div class="flex items-center justify-between text-xs px-1">
-        <div class="flex items-center gap-2">
-          <span id="docWordCount" class="font-mono text-slate-400">0 words</span>
-          <span class="text-slate-600">•</span>
-          <span id="docCharCount" class="font-mono text-slate-400">0 chars</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <button type="button" id="loadSampleBtn" class="text-[11px] text-slate-400 hover:text-slate-200 bg-slate-900/60 hover:bg-slate-800 px-2.5 py-1 rounded-lg border border-white/10 transition">
-            Load Demo
-          </button>
-          <button type="button" id="applyAllBtn" class="text-[11px] text-emerald-300 bg-emerald-950/60 hover:bg-emerald-900/80 px-2.5 py-1 rounded-lg border border-emerald-800 font-bold transition">
-            Apply All Cleanups
-          </button>
-        </div>
-      </div>
-
-      <!-- Interactive Canvas -->
-      <textarea
-        id="editorCanvas"
-        rows="13"
-        placeholder="Paste your report, article, or manuscript here. Veritas monitors cadence, dialect harmony, repetitive transition formulas, and fact checks in real time..."
-        class="w-full glass-panel rounded-2xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-brand-500 leading-relaxed resize-y transition shadow-lg"
-      ></textarea>
-
-      <!-- Heatmap Review Strip -->
-      <div class="glass-panel rounded-2xl p-3.5 flex flex-col gap-2">
-        <div class="flex items-center justify-between text-[10px]">
-          <span class="font-bold text-slate-400 uppercase tracking-wider">Visual Cadence & Cliché Map</span>
-          <div class="flex items-center gap-3">
-            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-rose-500"></span> Cliché</span>
-            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-500"></span> Wordy</span>
-            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-purple-400"></span> Dialect</span>
+      <!-- TAB 1: TEXT & FORENSICS -->
+      <div id="tab-panel-text" class="tab-panel flex flex-col gap-3">
+        <div id="docDropzone" class="border-2 border-dashed border-slate-200 hover:border-brand-500 rounded-2xl p-4 text-center card-subtle cursor-pointer transition">
+          <input type="file" id="docFileInput" class="hidden" accept=".txt,.md,.rtf,.json,.csv">
+          <div class="flex flex-col items-center justify-center gap-1">
+            <span class="text-xl">📂</span>
+            <p class="text-xs font-bold text-slate-800">Drop text files (.txt, .md, .rtf) or click to browse</p>
+            <p class="text-[11px] text-slate-500">Evaluates cadence, sentence burstiness (σ), and readability</p>
           </div>
         </div>
-        <div id="heatmapContainer" class="p-2.5 rounded-xl bg-slate-950/60 border border-white/5 text-xs font-mono leading-relaxed min-h-[60px] text-slate-300">
-          Highlights will show live as you edit.
+
+        <div class="flex justify-between items-center text-[11px] text-slate-500 px-1">
+          <span class="font-bold uppercase tracking-wider text-[10px] text-brand-600">Source Manuscript</span>
+          <span id="charCount" class="font-mono">0 chars | 0 words</span>
+        </div>
+
+        <textarea
+          id="textInput"
+          rows="8"
+          placeholder="Paste draft or manuscript here to evaluate token burstiness (σ), Type-Token Ratio (TTR), Flesch reading grade, and synthetic likelihood..."
+          class="w-full card-surface rounded-2xl p-4 text-xs font-mono text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 leading-relaxed transition resize-y"
+        ></textarea>
+        
+        <div class="flex justify-between items-center gap-2">
+          <button type="button" id="loadSampleBtn" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl border border-slate-200 font-semibold transition active:scale-95">
+            Load Sample Text
+          </button>
+          <div class="flex gap-2">
+            <button type="button" id="sendToRewriterBtn" class="text-xs bg-brand-50 hover:bg-brand-100 text-brand-700 font-bold px-3.5 py-2 rounded-xl border border-brand-200 transition active:scale-95">
+              Send to Rewriter →
+            </button>
+            <button type="button" id="runTextForensicsBtn" class="text-xs bg-brand-600 hover:bg-brand-700 text-white font-bold px-4 py-2 rounded-xl transition active:scale-95 shadow-md shadow-brand-500/20">
+              Run Inspection
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: REWRITER -->
+      <div id="tab-panel-rewriter" class="tab-panel hidden flex flex-col gap-3">
+        <div class="flex justify-between items-center text-xs text-slate-500 px-1">
+          <span class="font-bold uppercase tracking-wider text-[10px] text-brand-600">Cadence Rewriter</span>
+          <span id="rewriterStats" class="font-mono">0 words</span>
+        </div>
+        <textarea
+          id="rewriterInput"
+          rows="7"
+          placeholder="Paste draft text here. Detected synthetic formulas receive 3 alternate cadence options..."
+          class="w-full card-surface rounded-2xl p-4 text-xs font-mono text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 leading-relaxed resize-y"
+        ></textarea>
+        
+        <div class="flex justify-between items-center gap-2">
+          <button type="button" id="applyAllRewritesBtn" class="text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3.5 py-2 rounded-xl transition active:scale-95 shadow-sm">
+            Accept All Tightenings
+          </button>
+          <button type="button" id="copyRewriterBtn" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-3.5 py-2 rounded-xl border border-slate-200 transition active:scale-95">
+            Copy Result
+          </button>
+        </div>
+
+        <div id="rewriterCards" class="flex flex-col gap-2.5 mt-1 max-h-72 overflow-y-auto pr-1"></div>
+      </div>
+
+      <!-- TAB 3: CONSISTENCY AUDITOR -->
+      <div id="tab-panel-consistency" class="tab-panel hidden flex flex-col gap-3">
+        <div class="flex justify-between items-center text-xs text-slate-500 px-1">
+          <span class="font-bold uppercase tracking-wider text-[10px] text-brand-600">Document Consistency Audit</span>
+          <button type="button" id="runConsistencyBtn" class="text-xs bg-brand-600 hover:bg-brand-700 text-white font-bold px-3 py-1.5 rounded-xl transition active:scale-95 shadow-sm">
+            Re-Audit
+          </button>
+        </div>
+        <textarea
+          id="consistencyInput"
+          rows="7"
+          placeholder="Paste entire report or manuscript here to audit US/UK dialect mixing (analyze vs. analyse) and unexpanded abbreviations..."
+          class="w-full card-surface rounded-2xl p-4 text-xs font-mono text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 leading-relaxed resize-y"
+        ></textarea>
+        
+        <div id="consistencyReport" class="flex flex-col gap-2.5 mt-1 max-h-72 overflow-y-auto pr-1"></div>
+      </div>
+
+      <!-- TAB 4: FACT CHECK -->
+      <div id="tab-panel-fact" class="tab-panel hidden flex flex-col gap-3">
+        <div class="flex justify-between items-center text-xs text-slate-500 px-1">
+          <span class="font-bold uppercase tracking-wider text-[10px] text-brand-600">Live Source Corroboration</span>
+        </div>
+        <p class="text-xs text-slate-600 leading-relaxed">
+          Verify assertions or historical facts against live encyclopedia records to protect against AI hallucinations.
+        </p>
+        <div class="flex gap-2">
+          <input 
+            type="text" 
+            id="factQueryInput" 
+            placeholder="e.g. Apollo 11 moon landing date"
+            class="flex-1 card-surface rounded-xl px-3.5 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500"
+          >
+          <button type="button" id="runFactCheckBtn" class="text-xs bg-brand-600 hover:bg-brand-700 text-white font-bold px-4 py-2 rounded-xl transition active:scale-95 shadow-sm">
+            Verify
+          </button>
+        </div>
+        <div id="factResultContainer" class="text-xs mt-1"></div>
+      </div>
+
+      <!-- TAB 5: MEDIA & C2PA -->
+      <div id="tab-panel-image" class="tab-panel hidden flex flex-col gap-3">
+        <div id="imageDropzone" class="border-2 border-dashed border-slate-200 hover:border-brand-500 rounded-2xl p-6 text-center card-subtle cursor-pointer transition">
+          <input type="file" id="imageFileInput" class="hidden" accept="image/png, image/jpeg, image/webp">
+          <div class="flex flex-col items-center justify-center gap-1.5">
+            <span class="text-2xl">🖼️</span>
+            <p class="text-xs font-bold text-slate-800">Select or drop an image (.png, .jpg, .webp)</p>
+            <p class="text-[11px] text-slate-500">Scans binary metadata for C2PA provenance and SynthID signatures</p>
+          </div>
+        </div>
+        
+        <div id="imagePreviewBox" class="hidden card-surface rounded-2xl p-3 flex flex-col items-center gap-2">
+          <img id="imagePreview" class="max-h-56 rounded-xl object-contain border border-slate-200" alt="Preview" />
+          <span id="imageMeta" class="text-[11px] font-mono text-slate-500"></span>
         </div>
       </div>
 
     </section>
 
-    <!-- RIGHT RAIL: Assistant Feed & Moat Engine (3.5 Cols) -->
-    <aside class="lg:col-span-3 flex flex-col gap-4">
+    <!-- Right Report Panel (5 Columns) -->
+    <section class="lg:col-span-5 flex flex-col gap-4">
       
-      <!-- Primary Editorial Score -->
-      <div class="glass-panel rounded-2xl p-4">
-        <div class="flex items-center justify-between mb-2">
-          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Quality Score</span>
-          <span id="scoreBadge" class="text-[10px] px-2 py-0.5 rounded-full font-bold bg-slate-800 text-slate-400 border border-white/10">Ready</span>
-        </div>
-        <div class="flex items-baseline gap-2 mb-2">
-          <span id="qualityScoreVal" class="text-4xl font-black text-white">100</span>
-          <span class="text-xs text-slate-400">/ 100</span>
-        </div>
-        <div class="w-full bg-slate-900 rounded-full h-2 overflow-hidden border border-white/5">
-          <div id="qualityScoreBar" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-2 rounded-full transition-all duration-300" style="width: 100%"></div>
-        </div>
-      </div>
-
-      <!-- Quick Forensic Gauges -->
-      <div class="grid grid-cols-3 gap-2 text-center text-xs">
-        <div class="glass-panel rounded-xl p-2">
-          <p class="text-[9px] text-slate-400 uppercase font-bold">Flesch</p>
-          <p id="fleschVal" class="text-sm font-bold text-slate-200 mt-0.5">--</p>
-        </div>
-        <div class="glass-panel rounded-xl p-2">
-          <p class="text-[9px] text-slate-400 uppercase font-bold">Cadence (σ)</p>
-          <p id="cadenceVal" class="text-sm font-bold text-slate-200 mt-0.5">--</p>
-        </div>
-        <div class="glass-panel rounded-xl p-2">
-          <p class="text-[9px] text-slate-400 uppercase font-bold">TTR</p>
-          <p id="ttrVal" class="text-sm font-bold text-slate-200 mt-0.5">--</p>
-        </div>
-      </div>
-
-      <!-- Action Feed Tabs (Rewrites, Consistency, Fact Check) -->
-      <div class="glass-panel rounded-2xl p-3 flex-1 flex flex-col gap-2.5">
-        <div class="flex items-center justify-between border-b border-white/10 pb-2">
-          <div class="flex gap-2">
-            <button type="button" id="feedTabRewrites" class="feed-btn active text-[11px] font-bold text-brand-400 pb-1 border-b-2 border-brand-500">
-              Suggestions (<span id="countRewrites">0</span>)
-            </button>
-            <button type="button" id="feedTabConsistency" class="feed-btn text-[11px] font-bold text-slate-400 hover:text-slate-200 pb-1 border-b-2 border-transparent">
-              Consistency (<span id="countConsistency">0</span>)
-            </button>
-            <button type="button" id="feedTabFact" class="feed-btn text-[11px] font-bold text-slate-400 hover:text-slate-200 pb-1 border-b-2 border-transparent">
-              Fact Guard
-            </button>
+      <!-- Primary Verdict Card -->
+      <div class="card-surface rounded-2xl p-5 relative overflow-hidden">
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-brand-600 animate-pulse"></span>
+            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Detection Gauge</span>
           </div>
+          <span id="verdictBadge" class="text-[10px] px-2.5 py-0.5 rounded-full font-bold bg-slate-100 text-slate-600 border border-slate-200">Ready</span>
+        </div>
+        
+        <div class="flex items-baseline gap-2 mb-2">
+          <span id="scoreVal" class="text-5xl font-black text-slate-900 tracking-tight">0%</span>
+          <span class="text-xs text-slate-500">Likelihood of AI Synthesis</span>
         </div>
 
-        <!-- Panel 1: Suggestions -->
-        <div id="feedPanelRewrites" class="flex flex-col gap-2 max-h-[340px] overflow-y-auto pr-1"></div>
-
-        <!-- Panel 2: Consistency -->
-        <div id="feedPanelConsistency" class="hidden flex flex-col gap-2 max-h-[340px] overflow-y-auto pr-1"></div>
-
-        <!-- Panel 3: Fact Guard (Hallucination Checker) -->
-        <div id="feedPanelFact" class="hidden flex flex-col gap-2">
-          <p class="text-[11px] text-slate-400 leading-relaxed">
-            Verify specific statements or named entities against public encyclopedia registries to guard against AI hallucinations.
-          </p>
-          <input 
-            type="text" 
-            id="factQueryInput" 
-            placeholder="e.g., Eiffel Tower completed 1889"
-            class="bg-slate-900 border border-white/10 rounded-xl p-2 text-xs text-slate-200 focus:outline-none focus:border-brand-500"
-          >
-          <button type="button" id="runFactCheckBtn" class="text-xs bg-brand-600 hover:bg-brand-500 text-white font-bold py-1.5 rounded-lg transition active:scale-95 shadow-sm">
-            Cross-Reference Live
-          </button>
-          <div id="factResultContainer" class="text-xs mt-1"></div>
+        <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden border border-slate-200">
+          <div id="scoreBar" class="bg-gradient-to-r from-brand-500 to-indigo-600 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
         </div>
       </div>
 
-    </aside>
-  </main>
-
-  <!-- EXPORT AUDIT CERTIFICATE MODAL -->
-  <div id="certificateModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
-    <div class="bg-slate-900 border border-white/10 rounded-2xl max-w-lg w-full p-6 shadow-2xl relative flex flex-col gap-4 text-slate-200">
-      
-      <div class="flex items-center justify-between border-b border-white/10 pb-3">
-        <div class="flex items-center gap-2">
-          <span class="text-xl">📜</span>
-          <h3 class="font-extrabold text-sm text-white">Editorial Provenance & Audit Certificate</h3>
+      <!-- Quick Metrics Strip -->
+      <div class="grid grid-cols-3 gap-2.5 text-center text-xs">
+        <div class="card-surface rounded-xl p-3">
+          <p class="text-[9px] text-slate-500 uppercase font-bold tracking-wider">Lexical TTR</p>
+          <p id="ttrVal" class="text-base font-bold text-slate-800 mt-1 font-mono">--</p>
         </div>
-        <button type="button" id="closeModalBtn" class="text-slate-400 hover:text-white text-base no-print">✕</button>
-      </div>
-
-      <div class="p-4 bg-slate-950 rounded-xl border border-white/5 space-y-2 text-xs font-mono">
-        <div class="flex justify-between border-b border-white/5 pb-1">
-          <span class="text-slate-400">Timestamp:</span>
-          <span id="certTime" class="text-slate-200">--</span>
+        <div class="card-surface rounded-xl p-3">
+          <p class="text-[9px] text-slate-500 uppercase font-bold tracking-wider">Burstiness (σ)</p>
+          <p id="burstVal" class="text-base font-bold text-slate-800 mt-1 font-mono">--</p>
         </div>
-        <div class="flex justify-between border-b border-white/5 pb-1">
-          <span class="text-slate-400">Word Count:</span>
-          <span id="certWords" class="text-slate-200">--</span>
-        </div>
-        <div class="flex justify-between border-b border-white/5 pb-1">
-          <span class="text-slate-400">Flesch Reading Ease:</span>
-          <span id="certFlesch" class="text-slate-200">--</span>
-        </div>
-        <div class="flex justify-between border-b border-white/5 pb-1">
-          <span class="text-slate-400">Dialect Harmony:</span>
-          <span id="certDialect" class="text-emerald-400 font-bold">100% Consistent</span>
-        </div>
-        <div class="flex justify-between">
-          <span class="text-slate-400">Editorial Integrity Score:</span>
-          <span id="certScore" class="text-emerald-400 font-bold">--</span>
-        </div>
-      </div>
-
-      <p class="text-[11px] text-slate-400 leading-relaxed">
-        This clearance certificate verifies that the attached manuscript has undergone stylistic cadence balancing, dialect reconciliation, and clunky AI formula removal.
-      </p>
-
-      <div class="flex justify-end gap-2 border-t border-white/10 pt-3 no-print">
-        <button type="button" onclick="window.print()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold px-3 py-1.5 rounded-lg border border-white/10 transition">
-          Print / Save PDF
-        </button>
-        <button type="button" id="closeModalConfirmBtn" class="text-xs bg-brand-600 hover:bg-brand-500 text-white font-bold px-3 py-1.5 rounded-lg transition">
-          Done
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-
-      // --- 1. CORE DATA & RULES ---
-      const REWRITE_RULES = [
-        {
-          match: /\bin order to\b/gi,
-          type: 'wordy',
-          label: 'Wordy',
-          tighten: 'to',
-          vary: 'so we can',
-          executive: 'to directly'
-        },
-        {
-          match: /\bit is important to note that\b/gi,
-          type: 'cliche',
-          label: 'AI Filler',
-          tighten: 'notably,',
-          vary: 'crucially,',
-          executive: 'importantly,'
-        },
-        {
-          match: /\bdelve into\b/gi,
-          type: 'cliche',
-          label: 'AI Cliché',
-          tighten: 'explore',
-          vary: 'examine closely',
-          executive: 'evaluate'
-        },
-        {
-          match: /\ba testament to\b/gi,
-          type: 'cliche',
-          label: 'AI Cliché',
-          tighten: 'proof of',
-          vary: 'clearly reflecting',
-          executive: 'evidence of'
-        },
-        {
-          match: /\bdue to the fact that\b/gi,
-          type: 'wordy',
-          label: 'Wordy',
-          tighten: 'because',
-          vary: 'since',
-          executive: 'given that'
-        },
-        {
-          match: /\butilize(d|s)?\b/gi,
-          type: 'wordy',
-          label: 'Jargon',
-          tighten: 'use$1',
-          vary: 'apply$1',
-          executive: 'deploy$1'
-        },
-        {
-          match: /\bin conclusion,?\b/gi,
-          type: 'cliche',
-          label: 'AI Transition',
-          tighten: 'ultimately,',
-          vary: 'looking forward,',
-          executive: 'in summary,'
-        }
-      ];
-
-      const SPELLING_PAIRS = [
-        { us: 'analyze', uk: 'analyse' },
-        { us: 'behavior', uk: 'behaviour' },
-        { us: 'color', uk: 'colour' },
-        { us: 'center', uk: 'centre' },
-        { us: 'defense', uk: 'defence' },
-        { us: 'organize', uk: 'organise' },
-        { us: 'traveled', uk: 'travelled' }
-      ];
-
-      // --- 2. ELEMENTS ---
-      const canvas = document.getElementById('editorCanvas');
-      const docWordCount = document.getElementById('docWordCount');
-      const docCharCount = document.getElementById('docCharCount');
-      const readTimeVal = document.getElementById('readTimeVal');
-      const qualityScoreVal = document.getElementById('qualityScoreVal');
-      const qualityScoreBar = document.getElementById('qualityScoreBar');
-      const scoreBadge = document.getElementById('scoreBadge');
-      const fleschVal = document.getElementById('fleschVal');
-      const cadenceVal = document.getElementById('cadenceVal');
-      const ttrVal = document.getElementById('ttrVal');
-      const heatmapContainer = document.getElementById('heatmapContainer');
-
-      const feedTabRewrites = document.getElementById('feedTabRewrites');
-      const feedTabConsistency = document.getElementById('feedTabConsistency');
-      const feedTabFact = document.getElementById('feedTabFact');
-      const feedPanelRewrites = document.getElementById('feedPanelRewrites');
-      const feedPanelConsistency = document.getElementById('feedPanelConsistency');
-      const feedPanelFact = document.getElementById('feedPan
+        
