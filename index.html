@@ -282,4 +282,130 @@
           <p class="text-[9px] text-slate-500 uppercase font-bold tracking-wider">Burstiness (σ)</p>
           <p id="burstVal" class="text-base font-bold text-slate-800 mt-1 font-mono">--</p>
         </div>
-        
+        <div class="card-surface rounded-xl p-3">
+          <p class="text-[9px] text-slate-500 uppercase font-bold tracking-wider">Readability</p>
+          <p id="readabilityVal" class="text-base font-bold text-slate-800 mt-1 font-mono">--</p>
+        </div>
+      </div>
+
+      <!-- Telemetry Output -->
+      <div class="card-surface rounded-2xl p-5 flex-1 flex flex-col">
+        <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
+          <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+            <span>🔬</span> Forensic Telemetry
+          </span>
+          <span id="telemetryStatus" class="text-[10px] font-mono text-slate-400">IDLE</span>
+        </div>
+        <div id="diagText" class="text-xs font-mono text-slate-600 space-y-2 leading-relaxed max-h-[300px] overflow-y-auto pr-1">
+          Select any workspace tab on the left to begin inspecting your content.
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      
+      // 1. SAFE TAB CONTROLLER
+      const tabButtons = document.querySelectorAll('.tab-btn');
+      const tabPanels = document.querySelectorAll('.tab-panel');
+
+      function selectTab(targetTab) {
+        tabButtons.forEach(btn => {
+          if (btn.getAttribute('data-tab') === targetTab) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+
+        tabPanels.forEach(panel => {
+          if (panel.id === `tab-panel-${targetTab}`) {
+            panel.classList.remove('hidden');
+          } else {
+            panel.classList.add('hidden');
+          }
+        });
+
+        if (targetTab === 'rewriter' && !document.getElementById('rewriterInput').value.trim()) {
+          const src = document.getElementById('textInput').value;
+          if (src.trim()) {
+            document.getElementById('rewriterInput').value = src;
+            runRewriterAnalysis();
+          }
+        }
+        if (targetTab === 'consistency' && !document.getElementById('consistencyInput').value.trim()) {
+          const src = document.getElementById('textInput').value || document.getElementById('rewriterInput').value;
+          if (src.trim()) {
+            document.getElementById('consistencyInput').value = src;
+            runConsistencyAudit();
+          }
+        }
+      }
+
+      tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = btn.getAttribute('data-tab');
+          if (target) selectTab(target);
+        });
+      });
+
+      // 2. VERDICT ENGINE
+      function setVerdict(score, verdictText, isOrganic, detailsHtml) {
+        document.getElementById('scoreVal').textContent = score + '%';
+        document.getElementById('scoreBar').style.width = score + '%';
+        document.getElementById('telemetryStatus').textContent = 'ACTIVE';
+
+        const badge = document.getElementById('verdictBadge');
+        badge.textContent = verdictText;
+        if (isOrganic) {
+          badge.className = 'text-[10px] px-2.5 py-0.5 rounded-full font-bold bg-emerald-100 text-emerald-800 border border-emerald-200';
+          document.getElementById('scoreBar').className = 'bg-gradient-to-r from-emerald-500 to-teal-500 h-2 rounded-full transition-all duration-500';
+        } else {
+          badge.className = 'text-[10px] px-2.5 py-0.5 rounded-full font-bold bg-rose-100 text-rose-800 border border-rose-200';
+          document.getElementById('scoreBar').className = 'bg-gradient-to-r from-rose-500 to-amber-500 h-2 rounded-full transition-all duration-500';
+        }
+
+        document.getElementById('diagText').innerHTML = detailsHtml;
+      }
+
+      // 3. SAFE DROPZONE BINDER
+      function bindDropzone(zoneId, inputId, onFileSelected) {
+        const zone = document.getElementById(zoneId);
+        const input = document.getElementById(inputId);
+        if (!zone || !input) return;
+
+        zone.addEventListener('click', () => input.click());
+        zone.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          zone.classList.add('dropzone-hover');
+        });
+        zone.addEventListener('dragleave', () => zone.classList.remove('dropzone-hover'));
+        zone.addEventListener('drop', (e) => {
+          e.preventDefault();
+          zone.classList.remove('dropzone-hover');
+          if (e.dataTransfer && e.dataTransfer.files.length) {
+            onFileSelected(e.dataTransfer.files[0]);
+          }
+        });
+        input.addEventListener('change', () => {
+          if (input.files.length) {
+            onFileSelected(input.files[0]);
+          }
+        });
+      }
+
+      // 4. TEXT PROCESSING
+      bindDropzone('docDropzone', 'docFileInput', (file) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          document.getElementById('textInput').value = e.target.result;
+          processTextInput();
+        };
+        reader.readAsText(file);
+      });
+
+      function processTextInput() {
+        const text = document.getElementById('textInput').value;
+      
