@@ -19,15 +19,15 @@
             mono: ['"JetBrains Mono"', 'monospace'],
           },
           colors: {
-            skybrand: {
+            brandblue: {
               50: '#f0f9ff',
               100: '#e0f2fe',
               200: '#bae6fd',
-              300: '#7dd3fc',
-              400: '#38bdf8',
-              500: '#0ea5e9',
-              600: '#0284c7',
-              700: '#0369a1',
+              500: '#0284c7',
+              600: '#0369a1',
+              700: '#075985',
+              800: '#0c4a6e',
+              900: '#082f49',
             }
           }
         }
@@ -36,76 +36,73 @@
   </script>
 
   <style>
-    /* Clean Light-Blue Radial Backdrop */
+    /* Technical Graph Paper Blueprint Background */
     body {
-      background-color: #f8fafc;
+      background-color: #f1f5f9;
       background-image: 
-        radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.12) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(14, 165, 233, 0.08) 0px, transparent 50%),
-        radial-gradient(#cbd5e1 0.75px, transparent 0.75px);
-      background-size: 100% 100%, 100% 100%, 20px 20px;
+        linear-gradient(to right, rgba(3, 105, 161, 0.08) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(3, 105, 161, 0.08) 1px, transparent 1px),
+        linear-gradient(to right, rgba(14, 165, 233, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(14, 165, 233, 0.03) 1px, transparent 1px),
+        radial-gradient(circle at 50% 0%, rgba(2, 132, 199, 0.12) 0%, transparent 65%);
+      background-size: 40px 40px, 40px 40px, 8px 8px, 8px 8px, 100% 100%;
     }
 
-    /* Light Blue & Pure White Card Surfaces */
+    /* Structured Surface Panels */
     .card-surface {
       background: #ffffff;
-      border: 1px solid #e2e8f0;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -2px rgba(0, 0, 0, 0.02);
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 4px 6px -1px rgba(12, 74, 110, 0.05), 0 2px 4px -2px rgba(12, 74, 110, 0.03);
     }
 
-    .card-subtle {
-      background: #f0f9ff;
-      border: 1px solid #bae6fd;
-    }
-
-    /* Deterministic Tab Panels */
+    /* Robust Tab Panel Visibility */
     .tab-panel {
-      display: none;
+      display: none !important;
     }
     .tab-panel.active {
-      display: flex;
+      display: flex !important;
     }
 
-    /* Light Blue Active Tab Style */
+    /* Active Tab Button Styling */
     .tab-btn.active {
-      background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%) !important;
+      background: linear-gradient(135deg, #0284c7 0%, #075985 100%) !important;
       color: #ffffff !important;
-      border-color: #0284c7 !important;
-      box-shadow: 0 4px 14px rgba(14, 165, 233, 0.35);
+      border-color: #075985 !important;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35);
     }
 
     /* Dropzone Highlight */
     .dropzone-hover {
-      border-color: #0ea5e9 !important;
-      background-color: #f0f9ff !important;
+      border-color: #0284c7 !important;
+      background-color: #e0f2fe !important;
     }
   </style>
 </head>
-<body class="text-slate-800 min-h-screen flex flex-col font-sans antialiased selection:bg-skybrand-500 selection:text-white">
+<body class="text-slate-800 min-h-screen flex flex-col font-sans antialiased selection:bg-brandblue-500 selection:text-white">
 
   <!-- Header -->
-  <header class="border-b border-slate-200 bg-white/90 backdrop-blur-md sticky top-0 z-40">
+  <header class="border-b border-slate-300 bg-white/95 backdrop-blur-md sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-skybrand-500 to-cyan-500 text-white flex items-center justify-center font-bold text-sm shadow-md shadow-skybrand-500/25">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-brandblue-600 to-cyan-600 text-white flex items-center justify-center font-bold text-sm shadow-md shadow-brandblue-600/30">
           ⚡
         </div>
         <div>
           <div class="flex items-center gap-2">
-            <h1 class="font-extrabold text-base tracking-tight text-slate-900">Veritas<span class="text-skybrand-600">AI</span></h1>
-            <span class="px-2 py-0.5 text-[10px] uppercase tracking-wider font-extrabold rounded-full bg-skybrand-50 text-skybrand-700 border border-skybrand-200">College & Pro</span>
+            <h1 class="font-extrabold text-base tracking-tight text-slate-900">Veritas<span class="text-brandblue-600">AI</span></h1>
+            <span class="px-2 py-0.5 text-[10px] uppercase tracking-wider font-extrabold rounded-full bg-brandblue-50 text-brandblue-800 border border-brandblue-200">Suite Pro</span>
           </div>
-          <p class="text-[11px] text-slate-500">Writing Intelligence, Citation Suite & Academic Provenance</p>
+          <p class="text-[11px] text-slate-500">Writing Intelligence, Citation Formatting & Cadence Audit</p>
         </div>
       </div>
 
       <!-- Action Links -->
       <div class="flex items-center gap-2.5">
-        <a href="https://github.com/sgill77-debug/testing1" target="_blank" rel="noopener noreferrer" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-1.5 rounded-xl border border-slate-200 font-semibold transition flex items-center gap-1.5 shadow-sm active:scale-95">
+        <a href="https://github.com/sgill77-debug/testing1" target="_blank" rel="noopener noreferrer" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-1.5 rounded-xl border border-slate-300 font-semibold transition flex items-center gap-1.5 shadow-sm active:scale-95">
           <span>GitHub</span>
           <span class="text-[10px] text-slate-400">↗</span>
         </a>
-        <button type="button" onclick="window.resetAll()" class="text-xs bg-white hover:bg-rose-50 text-slate-600 hover:text-rose-600 px-3.5 py-1.5 rounded-xl border border-slate-200 hover:border-rose-200 transition font-medium shadow-sm active:scale-95">
+        <button type="button" id="globalResetBtn" class="text-xs bg-white hover:bg-rose-50 text-slate-600 hover:text-rose-600 px-3.5 py-1.5 rounded-xl border border-slate-300 hover:border-rose-300 transition font-medium shadow-sm active:scale-95">
           Reset All
         </button>
       </div>
@@ -118,31 +115,31 @@
     <!-- Left Workspace (7 Columns) -->
     <section class="lg:col-span-7 flex flex-col gap-4">
       
-      <!-- Primary Tabs (Updated with Student Features) -->
+      <!-- Primary Tabs -->
       <nav class="grid grid-cols-3 sm:grid-cols-6 gap-1.5 card-surface p-1.5 rounded-2xl">
-        <button type="button" id="tab-btn-text" class="tab-btn active text-xs font-bold py-2.5 px-1.5 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1" onclick="window.switchTab('text')">
+        <button type="button" data-tab="text" class="tab-btn active text-xs font-bold py-2.5 px-1.5 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1 border border-transparent">
           <span>📝</span> Text
         </button>
-        <button type="button" id="tab-btn-rewriter" class="tab-btn text-xs font-bold py-2.5 px-1.5 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1" onclick="window.switchTab('rewriter')">
+        <button type="button" data-tab="rewriter" class="tab-btn text-xs font-bold py-2.5 px-1.5 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1 border border-transparent">
           <span>✨</span> Rewrite
         </button>
-        <button type="button" id="tab-btn-citations" class="tab-btn text-xs font-bold py-2.5 px-1.5 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1" onclick="window.switchTab('citations')">
+        <button type="button" data-tab="citations" class="tab-btn text-xs font-bold py-2.5 px-1.5 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1 border border-transparent">
           <span>📚</span> Citations
         </button>
-        <button type="button" id="tab-btn-checklist" class="tab-btn text-xs font-bold py-2.5 px-1.5 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1" onclick="window.switchTab('checklist')">
+        <button type="button" data-tab="checklist" class="tab-btn text-xs font-bold py-2.5 px-1.5 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1 border border-transparent">
           <span>📋</span> Checklist
         </button>
-        <button type="button" id="tab-btn-consistency" class="tab-btn text-xs font-bold py-2.5 px-1.5 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1" onclick="window.switchTab('consistency')">
+        <button type="button" data-tab="consistency" class="tab-btn text-xs font-bold py-2.5 px-1.5 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1 border border-transparent">
           <span>⚖️</span> Audit
         </button>
-        <button type="button" id="tab-btn-fact" class="tab-btn text-xs font-bold py-2.5 px-1.5 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1" onclick="window.switchTab('fact')">
+        <button type="button" data-tab="fact" class="tab-btn text-xs font-bold py-2.5 px-1.5 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1 border border-transparent">
           <span>🔍</span> Verify
         </button>
       </nav>
 
       <!-- TAB 1: TEXT & FORENSICS -->
-      <div id="panel-text" class="tab-panel active flex-col gap-3">
-        <div id="docDropzone" class="border-2 border-dashed border-skybrand-200 hover:border-skybrand-500 rounded-2xl p-4 text-center bg-skybrand-50/50 cursor-pointer transition">
+      <div id="tab-panel-text" class="tab-panel active flex-col gap-3">
+        <div id="docDropzone" class="border-2 border-dashed border-brandblue-200 hover:border-brandblue-500 rounded-2xl p-4 text-center bg-brandblue-50/60 cursor-pointer transition">
           <input type="file" id="docFileInput" class="hidden" accept=".txt,.md,.rtf,.json,.csv">
           <div class="flex flex-col items-center justify-center gap-1">
             <span class="text-xl">📂</span>
@@ -152,7 +149,7 @@
         </div>
 
         <div class="flex justify-between items-center text-[11px] text-slate-500 px-1">
-          <span class="font-bold uppercase tracking-wider text-[10px] text-skybrand-600">Draft Manuscript</span>
+          <span class="font-bold uppercase tracking-wider text-[10px] text-brandblue-700">Draft Manuscript</span>
           <span id="charCount" class="font-mono">0 chars | 0 words</span>
         </div>
 
@@ -160,44 +157,42 @@
           id="textInput"
           rows="8"
           placeholder="Paste draft or manuscript here to evaluate token burstiness (σ), Type-Token Ratio (TTR), Flesch reading grade, and synthetic likelihood..."
-          class="w-full card-surface rounded-2xl p-4 text-xs font-mono text-slate-800 placeholder-slate-400 focus:outline-none focus:border-skybrand-500 focus:ring-2 focus:ring-skybrand-500/20 leading-relaxed transition resize-y"
-          oninput="window.processTextInput()"
+          class="w-full card-surface rounded-2xl p-4 text-xs font-mono text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brandblue-500 focus:ring-2 focus:ring-brandblue-500/20 leading-relaxed transition resize-y"
         ></textarea>
         
         <div class="flex justify-between items-center gap-2">
-          <button type="button" onclick="window.loadSampleText()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl border border-slate-200 font-semibold transition active:scale-95">
+          <button type="button" id="loadSampleBtn" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl border border-slate-300 font-semibold transition active:scale-95">
             Load Student Paper Demo
           </button>
           <div class="flex gap-2">
-            <button type="button" onclick="window.sendToRewriter()" class="text-xs bg-skybrand-50 hover:bg-skybrand-100 text-skybrand-700 font-bold px-3.5 py-2 rounded-xl border border-skybrand-200 transition active:scale-95">
+            <button type="button" id="sendToRewriterBtn" class="text-xs bg-brandblue-50 hover:bg-brandblue-100 text-brandblue-700 font-bold px-3.5 py-2 rounded-xl border border-brandblue-200 transition active:scale-95">
               Send to Rewriter →
             </button>
-            <button type="button" onclick="window.processTextInput()" class="text-xs bg-skybrand-500 hover:bg-skybrand-600 text-white font-bold px-4 py-2 rounded-xl transition shadow-md shadow-skybrand-500/20 active:scale-95">
+            <button type="button" id="runTextInspectionBtn" class="text-xs bg-brandblue-600 hover:bg-brandblue-700 text-white font-bold px-4 py-2 rounded-xl transition shadow-md shadow-brandblue-600/20 active:scale-95">
               Run Inspection
             </button>
           </div>
         </div>
       </div>
 
-      <!-- TAB 2: REWRITER (Academic Guard included) -->
-      <div id="panel-rewriter" class="tab-panel flex-col gap-3">
+      <!-- TAB 2: REWRITER -->
+      <div id="tab-panel-rewriter" class="tab-panel flex-col gap-3">
         <div class="flex justify-between items-center text-xs text-slate-500 px-1">
-          <span class="font-bold uppercase tracking-wider text-[10px] text-skybrand-600">Academic & Cadence Rewriter</span>
+          <span class="font-bold uppercase tracking-wider text-[10px] text-brandblue-700">Academic & Cadence Rewriter</span>
           <span id="rewriterStats" class="font-mono">0 words</span>
         </div>
         <textarea
           id="rewriterInput"
           rows="7"
           placeholder="Paste draft text here. AI transitions and informal colloquialisms will be flagged with academic alternatives..."
-          class="w-full card-surface rounded-2xl p-4 text-xs font-mono text-slate-800 placeholder-slate-400 focus:outline-none focus:border-skybrand-500 leading-relaxed resize-y"
-          oninput="window.runRewriterAnalysis()"
+          class="w-full card-surface rounded-2xl p-4 text-xs font-mono text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brandblue-500 leading-relaxed resize-y"
         ></textarea>
         
         <div class="flex justify-between items-center gap-2">
-          <button type="button" onclick="window.applyAllRewrites()" class="text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3.5 py-2 rounded-xl transition shadow-sm active:scale-95">
+          <button type="button" id="applyAllRewritesBtn" class="text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3.5 py-2 rounded-xl transition shadow-sm active:scale-95">
             Accept All Tightenings
           </button>
-          <button type="button" id="copyRewriterBtn" onclick="window.copyRewriterText()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-3.5 py-2 rounded-xl border border-slate-200 transition active:scale-95">
+          <button type="button" id="copyRewriterBtn" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-3.5 py-2 rounded-xl border border-slate-300 transition active:scale-95">
             Copy Result
           </button>
         </div>
@@ -205,25 +200,25 @@
         <div id="rewriterCards" class="flex flex-col gap-2.5 mt-1 max-h-72 overflow-y-auto pr-1"></div>
       </div>
 
-      <!-- TAB 3: CITATION & BIBLIOGRAPHY GENERATOR (NEW) -->
-      <div id="panel-citations" class="tab-panel flex-col gap-3">
+      <!-- TAB 3: CITATIONS -->
+      <div id="tab-panel-citations" class="tab-panel flex-col gap-3">
         <div class="flex justify-between items-center text-xs text-slate-500 px-1">
-          <span class="font-bold uppercase tracking-wider text-[10px] text-skybrand-600">Citation & Bibliography Generator</span>
+          <span class="font-bold uppercase tracking-wider text-[10px] text-brandblue-700">Citation & Bibliography Generator</span>
           <span class="text-[10px] text-slate-400">APA 7th • MLA 9th • Chicago • IEEE</span>
         </div>
         
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <input type="text" id="citeAuthor" placeholder="Author(s) (e.g. Smith, J. & Davis, R.)" class="card-surface rounded-xl px-3 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-skybrand-500">
-          <input type="text" id="citeYear" placeholder="Year (e.g. 2024)" class="card-surface rounded-xl px-3 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-skybrand-500">
-          <input type="text" id="citeTitle" placeholder="Title of Article or Book" class="card-surface rounded-xl px-3 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-skybrand-500">
-          <input type="text" id="citeSource" placeholder="Journal, Publisher, or Website" class="card-surface rounded-xl px-3 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-skybrand-500">
+          <input type="text" id="citeAuthor" placeholder="Author(s) (e.g. Smith, J. & Davis, R.)" class="card-surface rounded-xl px-3 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brandblue-500">
+          <input type="text" id="citeYear" placeholder="Year (e.g. 2024)" class="card-surface rounded-xl px-3 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brandblue-500">
+          <input type="text" id="citeTitle" placeholder="Title of Article or Book" class="card-surface rounded-xl px-3 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brandblue-500">
+          <input type="text" id="citeSource" placeholder="Journal, Publisher, or Website" class="card-surface rounded-xl px-3 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brandblue-500">
         </div>
 
         <div class="flex justify-between items-center gap-2">
-          <button type="button" onclick="window.loadSampleCitation()" class="text-xs text-slate-500 hover:text-slate-800 underline">
+          <button type="button" id="loadSampleCitationBtn" class="text-xs text-slate-500 hover:text-slate-800 underline">
             Load Sample Citation
           </button>
-          <button type="button" onclick="window.generateCitations()" class="text-xs bg-skybrand-500 hover:bg-skybrand-600 text-white font-bold px-4 py-2 rounded-xl transition shadow-sm active:scale-95">
+          <button type="button" id="generateCitationsBtn" class="text-xs bg-brandblue-600 hover:bg-brandblue-700 text-white font-bold px-4 py-2 rounded-xl transition shadow-sm active:scale-95">
             Format Citation
           </button>
         </div>
@@ -231,11 +226,11 @@
         <div id="citationOutputContainer" class="flex flex-col gap-2 mt-1"></div>
       </div>
 
-      <!-- TAB 4: PRE-SUBMISSION CHECKLIST (NEW) -->
-      <div id="panel-checklist" class="tab-panel flex-col gap-3">
+      <!-- TAB 4: CHECKLIST -->
+      <div id="tab-panel-checklist" class="tab-panel flex-col gap-3">
         <div class="flex justify-between items-center text-xs text-slate-500 px-1">
-          <span class="font-bold uppercase tracking-wider text-[10px] text-skybrand-600">Canvas / Blackboard Pre-flight Audit</span>
-          <button type="button" onclick="window.runPreflightCheck()" class="text-xs bg-skybrand-500 hover:bg-skybrand-600 text-white font-bold px-3 py-1.5 rounded-xl transition shadow-sm active:scale-95">
+          <span class="font-bold uppercase tracking-wider text-[10px] text-brandblue-700">Pre-Submission Quality Audit</span>
+          <button type="button" id="runPreflightBtn" class="text-xs bg-brandblue-600 hover:bg-brandblue-700 text-white font-bold px-3 py-1.5 rounded-xl transition shadow-sm active:scale-95">
             Run Pre-flight
           </button>
         </div>
@@ -244,17 +239,17 @@
         </p>
 
         <div id="checklistResults" class="flex flex-col gap-2 mt-1">
-          <div class="p-3 card-surface rounded-xl border border-slate-200 text-xs text-slate-500 italic">
+          <div class="p-3 card-surface rounded-xl border border-slate-300 text-xs text-slate-500 italic">
             Click "Run Pre-flight" to evaluate the manuscript currently in your Text tab.
           </div>
         </div>
       </div>
 
-      <!-- TAB 5: CONSISTENCY AUDITOR -->
-      <div id="panel-consistency" class="tab-panel flex-col gap-3">
+      <!-- TAB 5: CONSISTENCY -->
+      <div id="tab-panel-consistency" class="tab-panel flex-col gap-3">
         <div class="flex justify-between items-center text-xs text-slate-500 px-1">
-          <span class="font-bold uppercase tracking-wider text-[10px] text-skybrand-600">Document Consistency Audit</span>
-          <button type="button" onclick="window.runConsistencyAudit()" class="text-xs bg-skybrand-500 hover:bg-skybrand-600 text-white font-bold px-3 py-1.5 rounded-xl transition shadow-sm active:scale-95">
+          <span class="font-bold uppercase tracking-wider text-[10px] text-brandblue-700">Document Consistency Audit</span>
+          <button type="button" id="runConsistencyBtn" class="text-xs bg-brandblue-600 hover:bg-brandblue-700 text-white font-bold px-3 py-1.5 rounded-xl transition shadow-sm active:scale-95">
             Re-Audit
           </button>
         </div>
@@ -262,30 +257,28 @@
           id="consistencyInput"
           rows="7"
           placeholder="Paste manuscript to audit dialect collisions (analyze vs analyse) and undefined acronyms..."
-          class="w-full card-surface rounded-2xl p-4 text-xs font-mono text-slate-800 placeholder-slate-400 focus:outline-none focus:border-skybrand-500 leading-relaxed resize-y"
-          oninput="window.runConsistencyAudit()"
+          class="w-full card-surface rounded-2xl p-4 text-xs font-mono text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brandblue-500 leading-relaxed resize-y"
         ></textarea>
         
         <div id="consistencyReport" class="flex flex-col gap-2.5 mt-1 max-h-72 overflow-y-auto pr-1"></div>
       </div>
 
-      <!-- TAB 6: FACT CHECK -->
-      <div id="panel-fact" class="tab-panel flex-col gap-3">
+      <!-- TAB 6: VERIFY -->
+      <div id="tab-panel-fact" class="tab-panel flex-col gap-3">
         <div class="flex justify-between items-center text-xs text-slate-500 px-1">
-          <span class="font-bold uppercase tracking-wider text-[10px] text-skybrand-600">Live Source & Fact Corroboration</span>
+          <span class="font-bold uppercase tracking-wider text-[10px] text-brandblue-700">Live Source & Fact Corroboration</span>
         </div>
         <p class="text-xs text-slate-600 leading-relaxed">
-          Verify factual claims, dates, and historical definitions against public encyclopedia records to avoid hallucinations[span_2](start_span)[span_2](end_span).
+          Verify factual claims, dates, and historical definitions against public encyclopedia records to avoid hallucinations[span_8](start_span)[span_8](end_span).
         </p>
         <div class="flex gap-2">
           <input 
             type="text" 
             id="factQueryInput" 
             placeholder="e.g. Treaty of Versailles signed date"
-            class="flex-1 card-surface rounded-xl px-3.5 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-skybrand-500"
-            onkeydown="if(event.key === 'Enter') window.runFactCheck()"
+            class="flex-1 card-surface rounded-xl px-3.5 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brandblue-500"
           >
-          <button type="button" onclick="window.runFactCheck()" class="text-xs bg-skybrand-500 hover:bg-skybrand-600 text-white font-bold px-4 py-2 rounded-xl transition shadow-sm active:scale-95">
+          <button type="button" id="runFactCheckBtn" class="text-xs bg-brandblue-600 hover:bg-brandblue-700 text-white font-bold px-4 py-2 rounded-xl transition shadow-sm active:scale-95">
             Verify
           </button>
         </div>
@@ -301,10 +294,10 @@
       <div class="card-surface rounded-2xl p-5 relative overflow-hidden">
         <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-skybrand-500 animate-pulse"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-brandblue-500 animate-pulse"></span>
             <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Detection Gauge</span>
           </div>
-          <span id="verdictBadge" class="text-[10px] px-2.5 py-0.5 rounded-full font-bold bg-slate-100 text-slate-600 border border-slate-200">Ready</span>
+          <span id="verdictBadge" class="text-[10px] px-2.5 py-0.5 rounded-full font-bold bg-slate-100 text-slate-600 border border-slate-300">Ready</span>
         </div>
         
         <div class="flex items-baseline gap-2 mb-2">
@@ -313,7 +306,7 @@
         </div>
 
         <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden border border-slate-200">
-          <div id="scoreBar" class="bg-gradient-to-r from-skybrand-400 to-skybrand-600 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+          <div id="scoreBar" class="bg-gradient-to-r from-brandblue-500 to-brandblue-700 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
         </div>
       </div>
 
@@ -335,7 +328,7 @@
 
       <!-- Telemetry Output -->
       <div class="card-surface rounded-2xl p-5 flex-1 flex flex-col">
-        <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
+        <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-200">
           <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
             <span>🔬</span> Academic Telemetry
           </span>
@@ -350,18 +343,28 @@
   </main>
 
   <script>
-    // --- 1. GLOBAL TAB SWITCHER ---
-    window.switchTab = function(name) {
-      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-      const activePanel = document.getElementById('panel-' + name);
-      if (activePanel) activePanel.classList.add('active');
+    document.addEventListener('DOMContentLoaded', () => {
+      
+      // Helper: HTML entity escaping
+      function escapeHtml(str) {
+        return (str || '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+      }
 
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      const activeBtn = document.getElementById('tab-btn-' + name);
-      if (activeBtn) activeBtn.classList.add('active');
+      // --- 1. TAB CONTROLLER ---
+      const tabButtons = document.querySelectorAll('.tab-btn');
+      const tabPanels = document.querySelectorAll('.tab-panel');
 
-      if (name === 'rewriter' && !document.getElementById('rewriterInput').value.trim()) {
-        const text = document.getElementById('textInput').value;
-        if (text.trim()) {
-          document.getElementById('rewriterInput').value = text;
-          window.runRewriterAnalysis();
+      function switchTab(name) {
+        tabPanels.forEach(p => p.classList.remove('active'));
+        const activePanel = document.getElementById('tab-panel-' + name);
+        if (activePanel) activePanel.classList.add('active');
+
+        tabButtons.forEach(b => b.classList.remove('active'));
+        const activeBtn = document.querySelector(`.tab-btn[data-tab="${name}"]`);
+        if (activeBtn) activeBtn.classList.add('active');
+
+        if (name === 'rewriter' && !document.getElementById('rewriterInput').value.trim()) {
+          const text = document.getElementById('textInput').value;
+          if (text.trim()) {
+            document.getElementById('rewriterInput').value = text;
+            runRewriterAnalysis
