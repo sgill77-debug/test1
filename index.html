@@ -3,496 +3,448 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VeritasAI Studio</title>
+  <title>Veritas Editorial Suite - Professional Writing & Provenance Platform</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
   <style>
-    /* Subtle Technical Grid Background */
-    .bg-grid-cyber {
-      background-color: #030712;
+    /* Clean workspace background */
+    .bg-workspace {
+      background-color: #0b0f19;
       background-image: 
-        linear-gradient(to right, rgba(99, 102, 241, 0.08) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(99, 102, 241, 0.08) 1px, transparent 1px);
-      background-size: 28px 28px;
+        radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.12) 0%, transparent 60%),
+        radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      background-size: 100% 100%, 24px 24px;
     }
 
-    /* Pop-up Grid Pattern */
-    .bg-grid-modal {
-      background-color: #0b1120;
-      background-image: 
-        linear-gradient(to right, rgba(139, 92, 246, 0.12) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(139, 92, 246, 0.12) 1px, transparent 1px);
-      background-size: 20px 20px;
+    /* Glass elements */
+    .glass-panel {
+      background: rgba(17, 24, 39, 0.7);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    /* Explicit Tab Displays (No Tailwind hidden/flex collision) */
-    .tab-panel {
-      display: none;
+    /* Highlight styles */
+    .hl-cliche {
+      background-color: rgba(244, 63, 94, 0.2);
+      border-bottom: 2px wavy #f43f5e;
+      cursor: pointer;
     }
-    .tab-panel.active {
-      display: flex;
+    .hl-wordy {
+      background-color: rgba(245, 158, 11, 0.2);
+      border-bottom: 2px wavy #f59e0b;
+      cursor: pointer;
+    }
+    .hl-dialect {
+      background-color: rgba(168, 85, 247, 0.2);
+      border-bottom: 2px wavy #a855f7;
+      cursor: pointer;
+    }
+    .hl-long {
+      background-color: rgba(59, 130, 246, 0.15);
+      border-bottom: 2px dotted #60a5fa;
+      cursor: pointer;
     }
 
-    /* Active Tab Glow */
-    .tab-btn.active {
-      background-color: #4f46e5 !important;
-      color: #ffffff !important;
-      border-color: #6366f1 !important;
-    }
-
-    /* Modal Display Control */
-    #infoModal {
-      display: none;
-    }
-    #infoModal.open {
-      display: flex !important;
+    /* Print styles for Audit Certificate */
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #certificateModal, #certificateModal * {
+        visibility: visible;
+      }
+      #certificateModal {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        background: white !important;
+        color: black !important;
+      }
+      .no-print {
+        display: none !important;
+      }
     }
   </style>
 </head>
-<body class="bg-grid-cyber text-slate-100 min-h-screen flex flex-col font-sans">
+<body class="bg-workspace text-slate-100 min-h-screen flex flex-col font-sans antialiased selection:bg-brand-500 selection:text-white">
 
   <!-- Header -->
-  <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur sticky top-0 z-40 px-4 py-3">
-    <div class="max-w-6xl mx-auto flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <span class="text-xl">⚡</span>
-        <h1 class="font-bold text-lg text-white">Veritas<span class="text-indigo-400">AI</span> Studio</h1>
+  <header class="border-b border-white/10 bg-slate-950/80 backdrop-blur-md sticky top-0 z-40 px-4 py-3">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center shadow-lg shadow-brand-500/30 text-white font-extrabold text-sm">
+          V
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="font-extrabold text-base tracking-tight text-white">Veritas<span class="text-brand-400">Editor</span></h1>
+            <span class="px-2 py-0.5 text-[9px] uppercase tracking-wider font-extrabold rounded-full bg-brand-500/20 text-brand-300 border border-brand-500/30">Pro SaaS</span>
+          </div>
+        </div>
       </div>
-      <div class="flex items-center gap-2">
-        <a href="https://github.com/sgill77-debug/testing1" target="_blank" rel="noopener noreferrer" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">
-          GitHub Repo ↗
-        </a>
-        <button type="button" id="resetAllBtn" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">
+
+      <div class="flex items-center gap-2.5">
+        <button type="button" id="exportCertBtn" class="text-xs bg-brand-600 hover:bg-brand-500 text-white font-bold px-3 py-1.5 rounded-lg border border-brand-400/30 transition shadow-sm flex items-center gap-1.5 active:scale-95">
+          <span>📜</span> Export Certificate
+        </button>
+        <button type="button" id="globalResetBtn" class="text-xs bg-slate-900/80 hover:bg-rose-950/40 text-slate-400 hover:text-rose-300 px-3 py-1.5 rounded-lg border border-white/10 transition active:scale-95">
           Reset All
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Main Workspace -->
-  <main class="max-w-6xl mx-auto w-full p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 flex-1">
+  <!-- 3-Column Modern Workspace -->
+  <main class="max-w-7xl mx-auto w-full p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 flex-1">
     
-    <!-- Left Workspace (7 Columns) -->
-    <section class="lg:col-span-7 flex flex-col gap-4">
+    <!-- LEFT RAIL: Document Manager & Style Directives (2.5 Cols) -->
+    <aside class="lg:col-span-3 flex flex-col gap-4">
       
-      <!-- Tab Navigation with Info Bubbles -->
-      <nav class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 bg-slate-900/80 p-1.5 rounded-xl border border-slate-800">
+      <!-- Document Switcher -->
+      <div class="glass-panel rounded-2xl p-4 flex flex-col gap-3">
+        <div class="flex items-center justify-between">
+          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Documents</span>
+          <button type="button" id="newDocBtn" class="text-[10px] bg-slate-800 hover:bg-slate-700 text-brand-300 px-2 py-0.5 rounded border border-white/10 font-bold transition">
+            + New
+          </button>
+        </div>
+        <div class="flex flex-col gap-1.5 text-xs">
+          <button class="doc-item active text-left p-2 rounded-xl bg-brand-600/20 border border-brand-500/40 text-white font-medium flex items-center gap-2">
+            <span>📄</span> Executive Memo
+          </button>
+          <button class="doc-item text-left p-2 rounded-xl bg-slate-900/40 hover:bg-slate-800 border border-transparent text-slate-400 hover:text-slate-200 transition flex items-center gap-2">
+            <span>📄</span> Research Overview
+          </button>
+        </div>
+      </div>
+
+      <!-- Tone & Dialect Settings -->
+      <div class="glass-panel rounded-2xl p-4 flex flex-col gap-3">
+        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Style Goals</span>
         
-        <!-- Tab 1: Text -->
-        <div class="relative flex items-center">
-          <button type="button" class="tab-btn active w-full text-xs font-bold py-2.5 pl-2 pr-6 rounded-lg border border-transparent text-slate-300 hover:text-white transition" data-tab="text">
-            📝 Text
-          </button>
-          <button type="button" class="info-bubble absolute right-1.5 w-4 h-4 rounded-full bg-slate-800 hover:bg-indigo-600 text-[10px] text-slate-300 hover:text-white flex items-center justify-center border border-slate-700" data-info="text" title="About Text Tab">
-            i
-          </button>
+        <div class="flex flex-col gap-1">
+          <label class="text-[11px] text-slate-400">Target Tone</label>
+          <select id="toneSelect" class="bg-slate-900 border border-white/10 rounded-xl p-2 text-xs text-slate-200 focus:outline-none focus:border-brand-500">
+            <option value="executive">Executive & Direct (B2B)</option>
+            <option value="academic">Academic & Formal</option>
+            <option value="engaging">Clear & Conversational</option>
+          </select>
         </div>
 
-        <!-- Tab 2: Rewriter -->
-        <div class="relative flex items-center">
-          <button type="button" class="tab-btn w-full text-xs font-bold py-2.5 pl-2 pr-6 rounded-lg border border-transparent text-slate-300 hover:text-white transition" data-tab="rewriter">
-            ✨ Rewrite
+        <div class="flex flex-col gap-1">
+          <label class="text-[11px] text-slate-400">Standard Dialect</label>
+          <select id="dialectSelect" class="bg-slate-900 border border-white/10 rounded-xl p-2 text-xs text-slate-200 focus:outline-none focus:border-brand-500">
+            <option value="us">American English (US)</option>
+            <option value="uk">British English (UK)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Live Speed & Volume -->
+      <div class="glass-panel rounded-2xl p-4 flex flex-col gap-2 text-xs">
+        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Reading Telemetry</span>
+        <div class="flex justify-between items-center text-slate-400">
+          <span>Read Time:</span>
+          <span id="readTimeVal" class="text-slate-200 font-mono font-bold">0 min</span>
+        </div>
+        <div class="flex justify-between items-center text-slate-400">
+          <span>Target Grade:</span>
+          <span id="targetGradeVal" class="text-emerald-400 font-bold">Grade 8–9</span>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- CENTER CANVAS: Focused Document Workspace (5.5 Cols) -->
+    <section class="lg:col-span-6 flex flex-col gap-3">
+      
+      <!-- Editor Controls Bar -->
+      <div class="flex items-center justify-between text-xs px-1">
+        <div class="flex items-center gap-2">
+          <span id="docWordCount" class="font-mono text-slate-400">0 words</span>
+          <span class="text-slate-600">•</span>
+          <span id="docCharCount" class="font-mono text-slate-400">0 chars</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button type="button" id="loadSampleBtn" class="text-[11px] text-slate-400 hover:text-slate-200 bg-slate-900/60 hover:bg-slate-800 px-2.5 py-1 rounded-lg border border-white/10 transition">
+            Load Demo
           </button>
-          <button type="button" class="info-bubble absolute right-1.5 w-4 h-4 rounded-full bg-slate-800 hover:bg-indigo-600 text-[10px] text-slate-300 hover:text-white flex items-center justify-center border border-slate-700" data-info="rewriter" title="About Rewriter Tab">
-            i
+          <button type="button" id="applyAllBtn" class="text-[11px] text-emerald-300 bg-emerald-950/60 hover:bg-emerald-900/80 px-2.5 py-1 rounded-lg border border-emerald-800 font-bold transition">
+            Apply All Cleanups
           </button>
         </div>
+      </div>
 
-        <!-- Tab 3: Image -->
-        <div class="relative flex items-center">
-          <button type="button" class="tab-btn w-full text-xs font-bold py-2.5 pl-2 pr-6 rounded-lg border border-transparent text-slate-300 hover:text-white transition" data-tab="image">
-            🖼️ Image
-          </button>
-          <button type="button" class="info-bubble absolute right-1.5 w-4 h-4 rounded-full bg-slate-800 hover:bg-indigo-600 text-[10px] text-slate-300 hover:text-white flex items-center justify-center border border-slate-700" data-info="image" title="About Image Tab">
-            i
-          </button>
+      <!-- Interactive Canvas -->
+      <textarea
+        id="editorCanvas"
+        rows="13"
+        placeholder="Paste your report, article, or manuscript here. Veritas monitors cadence, dialect harmony, repetitive transition formulas, and fact checks in real time..."
+        class="w-full glass-panel rounded-2xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-brand-500 leading-relaxed resize-y transition shadow-lg"
+      ></textarea>
+
+      <!-- Heatmap Review Strip -->
+      <div class="glass-panel rounded-2xl p-3.5 flex flex-col gap-2">
+        <div class="flex items-center justify-between text-[10px]">
+          <span class="font-bold text-slate-400 uppercase tracking-wider">Visual Cadence & Cliché Map</span>
+          <div class="flex items-center gap-3">
+            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-rose-500"></span> Cliché</span>
+            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-500"></span> Wordy</span>
+            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-purple-400"></span> Dialect</span>
+          </div>
         </div>
-
-        <!-- Tab 4: Video -->
-        <div class="relative flex items-center">
-          <button type="button" class="tab-btn w-full text-xs font-bold py-2.5 pl-2 pr-6 rounded-lg border border-transparent text-slate-300 hover:text-white transition" data-tab="video">
-            🎬 Video
-          </button>
-          <button type="button" class="info-bubble absolute right-1.5 w-4 h-4 rounded-full bg-slate-800 hover:bg-indigo-600 text-[10px] text-slate-300 hover:text-white flex items-center justify-center border border-slate-700" data-info="video" title="About Video Tab">
-            i
-          </button>
+        <div id="heatmapContainer" class="p-2.5 rounded-xl bg-slate-950/60 border border-white/5 text-xs font-mono leading-relaxed min-h-[60px] text-slate-300">
+          Highlights will show live as you edit.
         </div>
+      </div>
 
-      </nav>
+    </section>
 
-      <!-- PANEL 1: TEXT & FORENSICS -->
-      <div id="panel-text" class="tab-panel active flex-col gap-3">
-        <textarea
-          id="textInput"
-          rows="8"
-          placeholder="Paste text here to evaluate sentence variance, burstiness (σ), and AI probability..."
-          class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 leading-relaxed"
-        ></textarea>
-        
-        <div class="flex justify-between items-center text-[11px] text-slate-400">
-          <span id="charCount">0 characters | 0 words</span>
+    <!-- RIGHT RAIL: Assistant Feed & Moat Engine (3.5 Cols) -->
+    <aside class="lg:col-span-3 flex flex-col gap-4">
+      
+      <!-- Primary Editorial Score -->
+      <div class="glass-panel rounded-2xl p-4">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Quality Score</span>
+          <span id="scoreBadge" class="text-[10px] px-2 py-0.5 rounded-full font-bold bg-slate-800 text-slate-400 border border-white/10">Ready</span>
+        </div>
+        <div class="flex items-baseline gap-2 mb-2">
+          <span id="qualityScoreVal" class="text-4xl font-black text-white">100</span>
+          <span class="text-xs text-slate-400">/ 100</span>
+        </div>
+        <div class="w-full bg-slate-900 rounded-full h-2 overflow-hidden border border-white/5">
+          <div id="qualityScoreBar" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-2 rounded-full transition-all duration-300" style="width: 100%"></div>
+        </div>
+      </div>
+
+      <!-- Quick Forensic Gauges -->
+      <div class="grid grid-cols-3 gap-2 text-center text-xs">
+        <div class="glass-panel rounded-xl p-2">
+          <p class="text-[9px] text-slate-400 uppercase font-bold">Flesch</p>
+          <p id="fleschVal" class="text-sm font-bold text-slate-200 mt-0.5">--</p>
+        </div>
+        <div class="glass-panel rounded-xl p-2">
+          <p class="text-[9px] text-slate-400 uppercase font-bold">Cadence (σ)</p>
+          <p id="cadenceVal" class="text-sm font-bold text-slate-200 mt-0.5">--</p>
+        </div>
+        <div class="glass-panel rounded-xl p-2">
+          <p class="text-[9px] text-slate-400 uppercase font-bold">TTR</p>
+          <p id="ttrVal" class="text-sm font-bold text-slate-200 mt-0.5">--</p>
+        </div>
+      </div>
+
+      <!-- Action Feed Tabs (Rewrites, Consistency, Fact Check) -->
+      <div class="glass-panel rounded-2xl p-3 flex-1 flex flex-col gap-2.5">
+        <div class="flex items-center justify-between border-b border-white/10 pb-2">
           <div class="flex gap-2">
-            <button type="button" id="loadSampleBtn" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">
-              Load Sample
+            <button type="button" id="feedTabRewrites" class="feed-btn active text-[11px] font-bold text-brand-400 pb-1 border-b-2 border-brand-500">
+              Suggestions (<span id="countRewrites">0</span>)
             </button>
-            <button type="button" id="analyzeTextBtn" class="text-xs bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-3.5 py-1.5 rounded-lg transition">
-              Run Forensics
+            <button type="button" id="feedTabConsistency" class="feed-btn text-[11px] font-bold text-slate-400 hover:text-slate-200 pb-1 border-b-2 border-transparent">
+              Consistency (<span id="countConsistency">0</span>)
+            </button>
+            <button type="button" id="feedTabFact" class="feed-btn text-[11px] font-bold text-slate-400 hover:text-slate-200 pb-1 border-b-2 border-transparent">
+              Fact Guard
             </button>
           </div>
         </div>
-      </div>
 
-      <!-- PANEL 2: EDITORIAL REWRITER -->
-      <div id="panel-rewriter" class="tab-panel flex-col gap-3">
-        <textarea
-          id="rewriterInput"
-          rows="7"
-          placeholder="Paste draft here. Formulaic AI clichés will be detected and offer one-click alternatives..."
-          class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 leading-relaxed"
-        ></textarea>
+        <!-- Panel 1: Suggestions -->
+        <div id="feedPanelRewrites" class="flex flex-col gap-2 max-h-[340px] overflow-y-auto pr-1"></div>
 
-        <div class="flex justify-between items-center">
-          <button type="button" id="applyAllBtn" class="text-xs bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-3 py-1.5 rounded-lg transition">
-            Apply All Cleanups
+        <!-- Panel 2: Consistency -->
+        <div id="feedPanelConsistency" class="hidden flex flex-col gap-2 max-h-[340px] overflow-y-auto pr-1"></div>
+
+        <!-- Panel 3: Fact Guard (Hallucination Checker) -->
+        <div id="feedPanelFact" class="hidden flex flex-col gap-2">
+          <p class="text-[11px] text-slate-400 leading-relaxed">
+            Verify specific statements or named entities against public encyclopedia registries to guard against AI hallucinations.
+          </p>
+          <input 
+            type="text" 
+            id="factQueryInput" 
+            placeholder="e.g., Eiffel Tower completed 1889"
+            class="bg-slate-900 border border-white/10 rounded-xl p-2 text-xs text-slate-200 focus:outline-none focus:border-brand-500"
+          >
+          <button type="button" id="runFactCheckBtn" class="text-xs bg-brand-600 hover:bg-brand-500 text-white font-bold py-1.5 rounded-lg transition active:scale-95 shadow-sm">
+            Cross-Reference Live
           </button>
-          <button type="button" id="copyRewriterBtn" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg border border-slate-700 transition">
-            Copy Text
-          </button>
-        </div>
-
-        <div id="rewriteResults" class="flex flex-col gap-2 mt-1 max-h-56 overflow-y-auto"></div>
-      </div>
-
-      <!-- PANEL 3: IMAGE INSPECTOR -->
-      <div id="panel-image" class="tab-panel flex-col gap-3">
-        <div id="imageDropzone" class="border-2 border-dashed border-slate-800 hover:border-indigo-500 rounded-xl p-6 text-center bg-slate-900/40 cursor-pointer transition">
-          <input type="file" id="imageFileInput" class="hidden" accept="image/png, image/jpeg, image/webp">
-          <p class="text-xs font-bold text-slate-200">Click to choose or drop an image (.png, .jpg, .webp)</p>
-          <p class="text-[11px] text-slate-500 mt-1">Inspects header markers for SynthID, C2PA, and generative tags</p>
-        </div>
-        <img id="imagePreview" class="hidden max-h-52 rounded-lg object-contain mx-auto border border-slate-800" alt="Preview" />
-      </div>
-
-      <!-- PANEL 4: VIDEO CADENCE -->
-      <div id="panel-video" class="tab-panel flex-col gap-3">
-        <div id="videoDropzone" class="border-2 border-dashed border-slate-800 hover:border-indigo-500 rounded-xl p-6 text-center bg-slate-900/40 cursor-pointer transition">
-          <input type="file" id="videoFileInput" class="hidden" accept="video/mp4, video/webm">
-          <p class="text-xs font-bold text-slate-200">Click to choose or drop a video (.mp4, .webm)</p>
-          <p class="text-[11px] text-slate-500 mt-1">Examines inter-frame continuity and motion consistency</p>
-        </div>
-        <video id="videoPreview" controls class="hidden max-h-52 w-full rounded-lg border border-slate-800 bg-black"></video>
-      </div>
-
-    </section>
-
-    <!-- Right Summary Panel (5 Columns) -->
-    <section class="lg:col-span-5 flex flex-col gap-4">
-      
-      <!-- Primary Score Gauge -->
-      <div class="bg-slate-900 border border-slate-800 rounded-xl p-4">
-        <div class="flex items-center justify-between mb-2">
-          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Detection Gauge</span>
-          <span id="verdictBadge" class="text-[10px] px-2 py-0.5 rounded font-bold bg-slate-800 text-slate-400 border border-slate-700">Ready</span>
-        </div>
-        <div class="flex items-baseline gap-2">
-          <span id="scoreVal" class="text-4xl font-extrabold text-white">0%</span>
-          <span class="text-xs text-slate-400">Likelihood of AI Synthesis</span>
-        </div>
-        <div class="w-full bg-slate-800 rounded-full h-2 mt-3 overflow-hidden">
-          <div id="scoreBar" class="bg-indigo-500 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+          <div id="factResultContainer" class="text-xs mt-1"></div>
         </div>
       </div>
 
-      <!-- Quick Stats -->
-      <div class="grid grid-cols-2 gap-2 text-center text-xs">
-        <div class="bg-slate-900 border border-slate-800 p-2.5 rounded-xl">
-          <p class="text-[9px] text-slate-400 uppercase font-bold">Lexical TTR</p>
-          <p id="ttrVal" class="text-base font-bold text-slate-200 mt-0.5">--</p>
-        </div>
-        <div class="bg-slate-900 border border-slate-800 p-2.5 rounded-xl">
-          <p class="text-[9px] text-slate-400 uppercase font-bold">Burstiness (σ)</p>
-          <p id="burstVal" class="text-base font-bold text-slate-200 mt-0.5">--</p>
-        </div>
-      </div>
-
-      <!-- Telemetry Output -->
-      <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex-1 flex flex-col">
-        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Diagnostic Output</span>
-        <div id="diagText" class="text-xs font-mono text-slate-300 space-y-1.5 leading-relaxed">
-          Select any tab or paste content on the left to begin analysis.
-        </div>
-      </div>
-
-    </section>
+    </aside>
   </main>
 
-  <!-- INFO POP-UP MODAL (Cyber Grid Texture) -->
-  <div id="infoModal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm items-center justify-center p-4">
-    <div class="bg-grid-modal border border-indigo-500/40 rounded-2xl max-w-sm w-full p-5 shadow-2xl relative">
-      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
-        <h3 id="modalTitle" class="text-sm font-bold text-white flex items-center gap-2">Tab Details</h3>
-        <button type="button" id="modalCloseBtn" class="text-slate-400 hover:text-white text-base">✕</button>
+  <!-- EXPORT AUDIT CERTIFICATE MODAL -->
+  <div id="certificateModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="bg-slate-900 border border-white/10 rounded-2xl max-w-lg w-full p-6 shadow-2xl relative flex flex-col gap-4 text-slate-200">
+      
+      <div class="flex items-center justify-between border-b border-white/10 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">📜</span>
+          <h3 class="font-extrabold text-sm text-white">Editorial Provenance & Audit Certificate</h3>
+        </div>
+        <button type="button" id="closeModalBtn" class="text-slate-400 hover:text-white text-base no-print">✕</button>
       </div>
-      <p id="modalDesc" class="text-xs text-slate-300 leading-relaxed py-4"></p>
-      <div class="flex justify-end">
-        <button type="button" id="modalConfirmBtn" class="text-xs bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-3.5 py-1.5 rounded-lg transition">
-          Got It
+
+      <div class="p-4 bg-slate-950 rounded-xl border border-white/5 space-y-2 text-xs font-mono">
+        <div class="flex justify-between border-b border-white/5 pb-1">
+          <span class="text-slate-400">Timestamp:</span>
+          <span id="certTime" class="text-slate-200">--</span>
+        </div>
+        <div class="flex justify-between border-b border-white/5 pb-1">
+          <span class="text-slate-400">Word Count:</span>
+          <span id="certWords" class="text-slate-200">--</span>
+        </div>
+        <div class="flex justify-between border-b border-white/5 pb-1">
+          <span class="text-slate-400">Flesch Reading Ease:</span>
+          <span id="certFlesch" class="text-slate-200">--</span>
+        </div>
+        <div class="flex justify-between border-b border-white/5 pb-1">
+          <span class="text-slate-400">Dialect Harmony:</span>
+          <span id="certDialect" class="text-emerald-400 font-bold">100% Consistent</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-400">Editorial Integrity Score:</span>
+          <span id="certScore" class="text-emerald-400 font-bold">--</span>
+        </div>
+      </div>
+
+      <p class="text-[11px] text-slate-400 leading-relaxed">
+        This clearance certificate verifies that the attached manuscript has undergone stylistic cadence balancing, dialect reconciliation, and clunky AI formula removal.
+      </p>
+
+      <div class="flex justify-end gap-2 border-t border-white/10 pt-3 no-print">
+        <button type="button" onclick="window.print()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold px-3 py-1.5 rounded-lg border border-white/10 transition">
+          Print / Save PDF
+        </button>
+        <button type="button" id="closeModalConfirmBtn" class="text-xs bg-brand-600 hover:bg-brand-500 text-white font-bold px-3 py-1.5 rounded-lg transition">
+          Done
         </button>
       </div>
     </div>
   </div>
 
   <script>
-    // Tab Descriptions Catalog
-    const TAB_INFO = {
-      text: {
-        title: "📝 Text Forensics",
-        desc: "Measures vocabulary diversity (Type-Token Ratio) and sentence variance (Burstiness σ) to detect typical synthetic LLM writing cadences."
-      },
-      rewriter: {
-        title: "✨ Editorial Rewriter",
-        desc: "Scans your text for repetitive AI transitions ('in conclusion', 'delve into', 'a testament to') and provides clean, humanized replacements."
-      },
-      image: {
-        title: "🖼️ Image Provenance",
-        desc: "Performs client-side header checks for generative metadata, C2PA manifests, and watermarks (SynthID, Midjourney, DALL-E)."
-      },
-      video: {
-        title: "🎬 Video Cadence",
-        desc: "Validates local video playback and verifies inter-frame pixel stability against synthetic morphing artifacts."
-      }
-    };
-
-    // Central Initializer
     document.addEventListener('DOMContentLoaded', () => {
 
-      // 1. Tab Switching
-      const tabBtns = document.querySelectorAll('.tab-btn');
-      const tabPanels = document.querySelectorAll('.tab-panel');
-
-      function activateTab(tabKey) {
-        tabBtns.forEach(btn => {
-          btn.classList.toggle('active', btn.getAttribute('data-tab') === tabKey);
-        });
-        tabPanels.forEach(panel => {
-          panel.classList.toggle('active', panel.id === `panel-${tabKey}`);
-        });
-
-        if (tabKey === 'rewriter' && !document.getElementById('rewriterInput').value.trim()) {
-          const src = document.getElementById('textInput').value;
-          if (src) {
-            document.getElementById('rewriterInput').value = src;
-            runRewriter();
-          }
+      // --- 1. CORE DATA & RULES ---
+      const REWRITE_RULES = [
+        {
+          match: /\bin order to\b/gi,
+          type: 'wordy',
+          label: 'Wordy',
+          tighten: 'to',
+          vary: 'so we can',
+          executive: 'to directly'
+        },
+        {
+          match: /\bit is important to note that\b/gi,
+          type: 'cliche',
+          label: 'AI Filler',
+          tighten: 'notably,',
+          vary: 'crucially,',
+          executive: 'importantly,'
+        },
+        {
+          match: /\bdelve into\b/gi,
+          type: 'cliche',
+          label: 'AI Cliché',
+          tighten: 'explore',
+          vary: 'examine closely',
+          executive: 'evaluate'
+        },
+        {
+          match: /\ba testament to\b/gi,
+          type: 'cliche',
+          label: 'AI Cliché',
+          tighten: 'proof of',
+          vary: 'clearly reflecting',
+          executive: 'evidence of'
+        },
+        {
+          match: /\bdue to the fact that\b/gi,
+          type: 'wordy',
+          label: 'Wordy',
+          tighten: 'because',
+          vary: 'since',
+          executive: 'given that'
+        },
+        {
+          match: /\butilize(d|s)?\b/gi,
+          type: 'wordy',
+          label: 'Jargon',
+          tighten: 'use$1',
+          vary: 'apply$1',
+          executive: 'deploy$1'
+        },
+        {
+          match: /\bin conclusion,?\b/gi,
+          type: 'cliche',
+          label: 'AI Transition',
+          tighten: 'ultimately,',
+          vary: 'looking forward,',
+          executive: 'in summary,'
         }
-      }
-
-      tabBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          activateTab(btn.getAttribute('data-tab'));
-        });
-      });
-
-      // 2. Info Pop-Up Controller
-      const modal = document.getElementById('infoModal');
-      const modalTitle = document.getElementById('modalTitle');
-      const modalDesc = document.getElementById('modalDesc');
-
-      function showModal(key) {
-        const item = TAB_INFO[key];
-        if (!item) return;
-        modalTitle.textContent = item.title;
-        modalDesc.textContent = item.desc;
-        modal.classList.add('open');
-      }
-
-      function closeModal() {
-        modal.classList.remove('open');
-      }
-
-      document.querySelectorAll('.info-bubble').forEach(b => {
-        b.addEventListener('click', (e) => {
-          e.stopPropagation();
-          showModal(b.getAttribute('data-info'));
-        });
-      });
-
-      document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
-      document.getElementById('modalConfirmBtn').addEventListener('click', closeModal);
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal();
-      });
-
-      // 3. Verdict Gauge Updates
-      function setVerdict(score, label, isOrganic, details) {
-        document.getElementById('scoreVal').textContent = score + '%';
-        document.getElementById('scoreBar').style.width = score + '%';
-        
-        const badge = document.getElementById('verdictBadge');
-        badge.textContent = label;
-        badge.className = isOrganic
-          ? 'text-[10px] px-2 py-0.5 rounded font-bold bg-emerald-950 text-emerald-300 border border-emerald-800'
-          : 'text-[10px] px-2 py-0.5 rounded font-bold bg-rose-950 text-rose-300 border border-rose-800';
-
-        document.getElementById('diagText').innerHTML = details;
-      }
-
-      // 4. Text Forensics Analysis
-      function analyzeText() {
-        const text = document.getElementById('textInput').value.trim();
-        const chars = text.length;
-        const words = text ? text.split(/\s+/).length : 0;
-        document.getElementById('charCount').textContent = `${chars} characters | ${words} words`;
-
-        if (!text) return;
-
-        const sentences = text.match(/[^.!?]+[.!?]+|\S+/g) || [text];
-        const tokens = text.toLowerCase().match(/\b[a-z0-9']+\b/g) || [];
-        if (!tokens.length) return;
-
-        const ttr = (new Set(tokens).size / tokens.length).toFixed(3);
-        const lengths = sentences.map(s => (s.match(/\b[a-z0-9']+\b/gi) || []).length);
-        const mean = lengths.reduce((a, b) => a + b, 0) / lengths.length;
-        const variance = lengths.reduce((acc, len) => acc + Math.pow(len - mean, 2), 0) / lengths.length;
-        const sigma = Math.sqrt(variance).toFixed(2);
-
-        document.getElementById('ttrVal').textContent = ttr;
-        document.getElementById('burstVal').textContent = sigma;
-
-        let prob = 50;
-        if (sigma < 3.5) prob += 25;
-        if (sigma > 6.5) prob -= 25;
-        if (ttr < 0.5) prob += 15;
-        prob = Math.min(Math.max(prob, 10), 92);
-
-        const isHuman = prob < 50;
-        setVerdict(
-          prob,
-          isHuman ? "Likely Organic" : "Likely AI-Generated",
-          isHuman,
-          `<div>• Sentences: ${sentences.length} | Words: ${tokens.length}</div>
-           <div>• Lexical Richness (TTR): ${ttr}</div>
-           <div>• Cadence Variance (σ): ${sigma}</div>`
-        );
-      }
-
-      document.getElementById('textInput').addEventListener('input', analyzeText);
-      document.getElementById('analyzeTextBtn').addEventListener('click', analyzeText);
-
-      document.getElementById('loadSampleBtn').addEventListener('click', () => {
-        document.getElementById('textInput').value = "In order to evaluate natural language processing, it is important to note that we must delve into the delicate balance between structural variance and repetitive formulas. A testament to this reality is modern synthetic generation.";
-        analyzeText();
-      });
-
-      // 5. Rewriter Engine
-      const REWRITES = [
-        { match: /\bin order to\b/gi, rep: 'to' },
-        { match: /\bit is important to note that\b/gi, rep: 'notably,' },
-        { match: /\bdelve into\b/gi, rep: 'explore' },
-        { match: /\ba testament to\b/gi, rep: 'proof of' },
-        { match: /\bdue to the fact that\b/gi, rep: 'because' },
-        { match: /\bin conclusion,?\b/gi, rep: 'ultimately,' }
       ];
 
-      function runRewriter() {
-        const val = document.getElementById('rewriterInput').value;
-        const container = document.getElementById('rewriteResults');
-        container.innerHTML = '';
-        if (!val.trim()) return;
+      const SPELLING_PAIRS = [
+        { us: 'analyze', uk: 'analyse' },
+        { us: 'behavior', uk: 'behaviour' },
+        { us: 'color', uk: 'colour' },
+        { us: 'center', uk: 'centre' },
+        { us: 'defense', uk: 'defence' },
+        { us: 'organize', uk: 'organise' },
+        { us: 'traveled', uk: 'travelled' }
+      ];
 
-        let found = 0;
-        REWRITES.forEach(rule => {
-          if (rule.match.test(val)) {
-            found++;
-            const card = document.createElement('div');
-            card.className = "p-2 bg-slate-900 border border-slate-800 rounded-lg text-xs flex justify-between items-center";
-            card.innerHTML = `
-              <span class="text-rose-400 font-mono">${rule.match.source.replace(/\\b/g, '')} → <strong class="text-emerald-400">${rule.rep}</strong></span>
-              <button type="button" class="text-[10px] bg-slate-800 hover:bg-slate-700 text-slate-200 px-2 py-1 rounded border border-slate-700">Apply</button>
-            `;
-            card.querySelector('button').addEventListener('click', () => {
-              document.getElementById('rewriterInput').value = document.getElementById('rewriterInput').value.replace(rule.match, rule.rep);
-              runRewriter();
-            });
-            container.appendChild(card);
-          }
-        });
+      // --- 2. ELEMENTS ---
+      const canvas = document.getElementById('editorCanvas');
+      const docWordCount = document.getElementById('docWordCount');
+      const docCharCount = document.getElementById('docCharCount');
+      const readTimeVal = document.getElementById('readTimeVal');
+      const qualityScoreVal = document.getElementById('qualityScoreVal');
+      const qualityScoreBar = document.getElementById('qualityScoreBar');
+      const scoreBadge = document.getElementById('scoreBadge');
+      const fleschVal = document.getElementById('fleschVal');
+      const cadenceVal = document.getElementById('cadenceVal');
+      const ttrVal = document.getElementById('ttrVal');
+      const heatmapContainer = document.getElementById('heatmapContainer');
 
-        if (found === 0) {
-          container.innerHTML = `<div class="text-xs text-emerald-400 p-2 bg-emerald-950/20 border border-emerald-900 rounded-lg">✓ No formulaic clichés detected.</div>`;
-        }
-      }
-
-      document.getElementById('rewriterInput').addEventListener('input', runRewriter);
-
-      document.getElementById('applyAllBtn').addEventListener('click', () => {
-        let text = document.getElementById('rewriterInput').value;
-        REWRITES.forEach(r => { text = text.replace(r.match, r.rep); });
-        document.getElementById('rewriterInput').value = text;
-        runRewriter();
-      });
-
-      document.getElementById('copyRewriterBtn').addEventListener('click', async () => {
-        const text = document.getElementById('rewriterInput').value;
-        if (!text) return;
-        await navigator.clipboard.writeText(text);
-        const btn = document.getElementById('copyRewriterBtn');
-        btn.textContent = 'Copied!';
-        setTimeout(() => btn.textContent = 'Copy Text', 1500);
-      });
-
-      // 6. Image & Video File Loaders
-      const imgDrop = document.getElementById('imageDropzone');
-      const imgInput = document.getElementById('imageFileInput');
-      const imgPrev = document.getElementById('imagePreview');
-
-      imgDrop.addEventListener('click', () => imgInput.click());
-      imgInput.addEventListener('change', () => {
-        const file = imgInput.files[0];
-        if (!file) return;
-        imgPrev.src = URL.createObjectURL(file);
-        imgPrev.classList.remove('hidden');
-
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const bytes = new Uint8Array(e.target.result);
-          let str = '';
-          for (let i = 0; i < Math.min(bytes.length, 40000); i++) str += String.fromCharCode(bytes[i]);
-          const isAi = /Google|Imagen|SynthID|c2pa|dall-e|midjourney|stablediffusion/i.test(str);
-          setVerdict(isAi ? 95 : 20, isAi ? "Synthetic Marker Found" : "Organic Provenance", !isAi, `<div>• File: ${file.name}</div><div>• Markers: ${isAi ? "Generative watermark detected" : "Clean header"}</div>`);
-        };
-        reader.readAsArrayBuffer(file);
-      });
-
-      const vidDrop = document.getElementById('videoDropzone');
-      const vidInput = document.getElementById('videoFileInput');
-      const vidPrev = document.getElementById('videoPreview');
-
-      vidDrop.addEventListener('click', () => vidInput.click());
-      vidInput.addEventListener('change', () => {
-        const file = vidInput.files[0];
-        if (!file) return;
-        vidPrev.src = URL.createObjectURL(file);
-        vidPrev.classList.remove('hidden');
-        setVerdict(25, "Organic Continuity", true, `<div>• File: ${file.name}</div><div>• Temporal cadence within standard thresholds.</div>`);
-      });
-
-      // 7. Global Reset
-      document.getElementById('resetAllBtn').addEventListener('click', () => {
-        document.querySelectorAll('textarea').forEach(t => t.value = '');
-        imgPrev.classList.add('hidden');
-        vidPrev.classList.add('hidden');
-        document.getElementById('rewriteResults').innerHTML = '';
-        document.getElementById('charCount').textContent = '0 characters | 0 words';
-        document.getElementById('ttrVal').textContent = '--';
-        document.getElementById('burstVal').textContent = '--';
-        document.getElementById('scoreVal').textContent = '0%';
-        document.getElementById('scoreBar').style.width = '0%';
-        document.getElementById('verdictBadge').textContent = 'Ready';
-        document.getElementById('verdictBadge').className = 'text-[10px] px-2 py-0.5 rounded font-bold bg-slate-800 text-slate-400 border border-slate-700';
-        document.getElementById('diagText').textContent = 'Select any tab or paste content on the left to begin analysis.';
-      });
-    });
-  </script>
-</body>
-</html>
+      const feedTabRewrites = document.getElementById('feedTabRewrites');
+      const feedTabConsistency = document.getElementById('feedTabConsistency');
+      const feedTabFact = document.getElementById('feedTabFact');
+      const feedPanelRewrites = document.getElementById('feedPanelRewrites');
+      const feedPanelConsistency = document.getElementById('feedPanelConsistency');
+      const feedPanelFact = document.getElementById('feedPan
