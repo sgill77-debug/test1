@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VeritasAI Studio - Writing Intelligence & Consistency Suite</title>
+  <title>VeritasAI Studio - Academic & Professional Intelligence Suite</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,12 +19,15 @@
             mono: ['"JetBrains Mono"', 'monospace'],
           },
           colors: {
-            brand: {
-              50: '#f5f3ff',
-              100: '#ede9fe',
-              500: '#8b5cf6',
-              600: '#7c3aed',
-              700: '#6d28d9',
+            skybrand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
             }
           }
         }
@@ -33,22 +36,29 @@
   </script>
 
   <style>
+    /* Clean Light-Blue Radial Backdrop */
     body {
       background-color: #f8fafc;
       background-image: 
-        radial-gradient(at 0% 0%, rgba(124, 58, 237, 0.08) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.06) 0px, transparent 50%),
+        radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.12) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(14, 165, 233, 0.08) 0px, transparent 50%),
         radial-gradient(#cbd5e1 0.75px, transparent 0.75px);
       background-size: 100% 100%, 100% 100%, 20px 20px;
     }
 
+    /* Light Blue & Pure White Card Surfaces */
     .card-surface {
       background: #ffffff;
       border: 1px solid #e2e8f0;
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -2px rgba(0, 0, 0, 0.02);
     }
 
-    /* Scoped tab displays to prevent Tailwind hidden/flex collision */
+    .card-subtle {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+    }
+
+    /* Deterministic Tab Panels */
     .tab-panel {
       display: none;
     }
@@ -56,43 +66,46 @@
       display: flex;
     }
 
+    /* Light Blue Active Tab Style */
     .tab-btn.active {
-      background-color: #7c3aed !important;
+      background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%) !important;
       color: #ffffff !important;
-      border-color: #7c3aed !important;
-      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.25);
+      border-color: #0284c7 !important;
+      box-shadow: 0 4px 14px rgba(14, 165, 233, 0.35);
     }
 
+    /* Dropzone Highlight */
     .dropzone-hover {
-      border-color: #7c3aed !important;
-      background-color: #f5f3ff !important;
+      border-color: #0ea5e9 !important;
+      background-color: #f0f9ff !important;
     }
   </style>
 </head>
-<body class="text-slate-800 min-h-screen flex flex-col font-sans antialiased selection:bg-brand-500 selection:text-white">
+<body class="text-slate-800 min-h-screen flex flex-col font-sans antialiased selection:bg-skybrand-500 selection:text-white">
 
   <!-- Header -->
   <header class="border-b border-slate-200 bg-white/90 backdrop-blur-md sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-600 text-white flex items-center justify-center font-bold text-sm shadow-md shadow-brand-500/20">
-          V
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-skybrand-500 to-cyan-500 text-white flex items-center justify-center font-bold text-sm shadow-md shadow-skybrand-500/25">
+          ⚡
         </div>
         <div>
           <div class="flex items-center gap-2">
-            <h1 class="font-extrabold text-base tracking-tight text-slate-900">Veritas<span class="text-brand-600">AI</span></h1>
-            <span class="px-2 py-0.5 text-[10px] uppercase tracking-wider font-extrabold rounded-full bg-brand-50 text-brand-700 border border-brand-200">Suite Pro</span>
+            <h1 class="font-extrabold text-base tracking-tight text-slate-900">Veritas<span class="text-skybrand-600">AI</span></h1>
+            <span class="px-2 py-0.5 text-[10px] uppercase tracking-wider font-extrabold rounded-full bg-skybrand-50 text-skybrand-700 border border-skybrand-200">College & Pro</span>
           </div>
-          <p class="text-[11px] text-slate-500">Writing Intelligence, Consistency & Provenance Platform</p>
+          <p class="text-[11px] text-slate-500">Writing Intelligence, Citation Suite & Academic Provenance</p>
         </div>
       </div>
 
+      <!-- Action Links -->
       <div class="flex items-center gap-2.5">
         <a href="https://github.com/sgill77-debug/testing1" target="_blank" rel="noopener noreferrer" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-1.5 rounded-xl border border-slate-200 font-semibold transition flex items-center gap-1.5 shadow-sm active:scale-95">
           <span>GitHub</span>
           <span class="text-[10px] text-slate-400">↗</span>
         </a>
-        <button type="button" onclick="resetAll()" class="text-xs bg-white hover:bg-rose-50 text-slate-600 hover:text-rose-600 px-3.5 py-1.5 rounded-xl border border-slate-200 hover:border-rose-200 transition font-medium shadow-sm active:scale-95">
+        <button type="button" onclick="window.resetAll()" class="text-xs bg-white hover:bg-rose-50 text-slate-600 hover:text-rose-600 px-3.5 py-1.5 rounded-xl border border-slate-200 hover:border-rose-200 transition font-medium shadow-sm active:scale-95">
           Reset All
         </button>
       </div>
@@ -102,38 +115,44 @@
   <!-- Main Grid Workspace -->
   <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 py-6 w-full grid grid-cols-1 lg:grid-cols-12 gap-6">
     
-    <!-- Left Interaction Panel (7 Columns) -->
+    <!-- Left Workspace (7 Columns) -->
     <section class="lg:col-span-7 flex flex-col gap-4">
       
-      <!-- Primary Tabs -->
-      <nav class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 card-surface p-1.5 rounded-2xl">
-        <button type="button" id="tab-btn-text" class="tab-btn active text-xs font-bold py-2.5 px-2 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1.5" onclick="switchTab('text')">
-          <span>📝</span> Text & Docs
+      <!-- Primary Tabs (Updated with Student Features) -->
+      <nav class="grid grid-cols-3 sm:grid-cols-6 gap-1.5 card-surface p-1.5 rounded-2xl">
+        <button type="button" id="tab-btn-text" class="tab-btn active text-xs font-bold py-2.5 px-1.5 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1" onclick="window.switchTab('text')">
+          <span>📝</span> Text
         </button>
-        <button type="button" id="tab-btn-rewriter" class="tab-btn text-xs font-bold py-2.5 px-2 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1.5" onclick="switchTab('rewriter')">
-          <span>✨</span> Rewriter
+        <button type="button" id="tab-btn-rewriter" class="tab-btn text-xs font-bold py-2.5 px-1.5 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1" onclick="window.switchTab('rewriter')">
+          <span>✨</span> Rewrite
         </button>
-        <button type="button" id="tab-btn-consistency" class="tab-btn text-xs font-bold py-2.5 px-2 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1.5" onclick="switchTab('consistency')">
-          <span>⚖️</span> Consistency
+        <button type="button" id="tab-btn-citations" class="tab-btn text-xs font-bold py-2.5 px-1.5 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1" onclick="window.switchTab('citations')">
+          <span>📚</span> Citations
         </button>
-        <button type="button" id="tab-btn-fact" class="tab-btn text-xs font-bold py-2.5 px-2 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1.5" onclick="switchTab('fact')">
-          <span>🔍</span> Fact Check
+        <button type="button" id="tab-btn-checklist" class="tab-btn text-xs font-bold py-2.5 px-1.5 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1" onclick="window.switchTab('checklist')">
+          <span>📋</span> Checklist
+        </button>
+        <button type="button" id="tab-btn-consistency" class="tab-btn text-xs font-bold py-2.5 px-1.5 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1" onclick="window.switchTab('consistency')">
+          <span>⚖️</span> Audit
+        </button>
+        <button type="button" id="tab-btn-fact" class="tab-btn text-xs font-bold py-2.5 px-1.5 rounded-xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1" onclick="window.switchTab('fact')">
+          <span>🔍</span> Verify
         </button>
       </nav>
 
       <!-- TAB 1: TEXT & FORENSICS -->
       <div id="panel-text" class="tab-panel active flex-col gap-3">
-        <div id="docDropzone" class="border-2 border-dashed border-slate-200 hover:border-brand-500 rounded-2xl p-4 text-center bg-slate-50 cursor-pointer transition">
+        <div id="docDropzone" class="border-2 border-dashed border-skybrand-200 hover:border-skybrand-500 rounded-2xl p-4 text-center bg-skybrand-50/50 cursor-pointer transition">
           <input type="file" id="docFileInput" class="hidden" accept=".txt,.md,.rtf,.json,.csv">
           <div class="flex flex-col items-center justify-center gap-1">
             <span class="text-xl">📂</span>
-            <p class="text-xs font-bold text-slate-800">Drop text files (.txt, .md, .rtf) or click to browse</p>
-            <p class="text-[11px] text-slate-500">Evaluates cadence, sentence burstiness (σ), and readability</p>
+            <p class="text-xs font-bold text-slate-800">Drop essay or paper files (.txt, .md, .rtf) or click to browse</p>
+            <p class="text-[11px] text-slate-500">Evaluates cadence, sentence variance (σ), and readability</p>
           </div>
         </div>
 
         <div class="flex justify-between items-center text-[11px] text-slate-500 px-1">
-          <span class="font-bold uppercase tracking-wider text-[10px] text-brand-600">Source Manuscript</span>
+          <span class="font-bold uppercase tracking-wider text-[10px] text-skybrand-600">Draft Manuscript</span>
           <span id="charCount" class="font-mono">0 chars | 0 words</span>
         </div>
 
@@ -141,44 +160,44 @@
           id="textInput"
           rows="8"
           placeholder="Paste draft or manuscript here to evaluate token burstiness (σ), Type-Token Ratio (TTR), Flesch reading grade, and synthetic likelihood..."
-          class="w-full card-surface rounded-2xl p-4 text-xs font-mono text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 leading-relaxed transition resize-y"
-          oninput="processTextInput()"
+          class="w-full card-surface rounded-2xl p-4 text-xs font-mono text-slate-800 placeholder-slate-400 focus:outline-none focus:border-skybrand-500 focus:ring-2 focus:ring-skybrand-500/20 leading-relaxed transition resize-y"
+          oninput="window.processTextInput()"
         ></textarea>
         
         <div class="flex justify-between items-center gap-2">
-          <button type="button" onclick="loadSampleText()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl border border-slate-200 font-semibold transition active:scale-95">
-            Load Sample Text
+          <button type="button" onclick="window.loadSampleText()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl border border-slate-200 font-semibold transition active:scale-95">
+            Load Student Paper Demo
           </button>
           <div class="flex gap-2">
-            <button type="button" onclick="sendToRewriter()" class="text-xs bg-brand-50 hover:bg-brand-100 text-brand-700 font-bold px-3.5 py-2 rounded-xl border border-brand-200 transition active:scale-95">
+            <button type="button" onclick="window.sendToRewriter()" class="text-xs bg-skybrand-50 hover:bg-skybrand-100 text-skybrand-700 font-bold px-3.5 py-2 rounded-xl border border-skybrand-200 transition active:scale-95">
               Send to Rewriter →
             </button>
-            <button type="button" onclick="processTextInput()" class="text-xs bg-brand-600 hover:bg-brand-700 text-white font-bold px-4 py-2 rounded-xl transition shadow-md shadow-brand-500/20 active:scale-95">
+            <button type="button" onclick="window.processTextInput()" class="text-xs bg-skybrand-500 hover:bg-skybrand-600 text-white font-bold px-4 py-2 rounded-xl transition shadow-md shadow-skybrand-500/20 active:scale-95">
               Run Inspection
             </button>
           </div>
         </div>
       </div>
 
-      <!-- TAB 2: REWRITER -->
+      <!-- TAB 2: REWRITER (Academic Guard included) -->
       <div id="panel-rewriter" class="tab-panel flex-col gap-3">
         <div class="flex justify-between items-center text-xs text-slate-500 px-1">
-          <span class="font-bold uppercase tracking-wider text-[10px] text-brand-600">Cadence Rewriter</span>
+          <span class="font-bold uppercase tracking-wider text-[10px] text-skybrand-600">Academic & Cadence Rewriter</span>
           <span id="rewriterStats" class="font-mono">0 words</span>
         </div>
         <textarea
           id="rewriterInput"
           rows="7"
-          placeholder="Paste draft text here. Detected synthetic formulas receive 3 alternate cadence options..."
-          class="w-full card-surface rounded-2xl p-4 text-xs font-mono text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 leading-relaxed resize-y"
-          oninput="runRewriterAnalysis()"
+          placeholder="Paste draft text here. AI transitions and informal colloquialisms will be flagged with academic alternatives..."
+          class="w-full card-surface rounded-2xl p-4 text-xs font-mono text-slate-800 placeholder-slate-400 focus:outline-none focus:border-skybrand-500 leading-relaxed resize-y"
+          oninput="window.runRewriterAnalysis()"
         ></textarea>
         
         <div class="flex justify-between items-center gap-2">
-          <button type="button" onclick="applyAllRewrites()" class="text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3.5 py-2 rounded-xl transition shadow-sm active:scale-95">
+          <button type="button" onclick="window.applyAllRewrites()" class="text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3.5 py-2 rounded-xl transition shadow-sm active:scale-95">
             Accept All Tightenings
           </button>
-          <button type="button" id="copyRewriterBtn" onclick="copyRewriterText()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-3.5 py-2 rounded-xl border border-slate-200 transition active:scale-95">
+          <button type="button" id="copyRewriterBtn" onclick="window.copyRewriterText()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-3.5 py-2 rounded-xl border border-slate-200 transition active:scale-95">
             Copy Result
           </button>
         </div>
@@ -186,42 +205,87 @@
         <div id="rewriterCards" class="flex flex-col gap-2.5 mt-1 max-h-72 overflow-y-auto pr-1"></div>
       </div>
 
-      <!-- TAB 3: CONSISTENCY AUDITOR -->
+      <!-- TAB 3: CITATION & BIBLIOGRAPHY GENERATOR (NEW) -->
+      <div id="panel-citations" class="tab-panel flex-col gap-3">
+        <div class="flex justify-between items-center text-xs text-slate-500 px-1">
+          <span class="font-bold uppercase tracking-wider text-[10px] text-skybrand-600">Citation & Bibliography Generator</span>
+          <span class="text-[10px] text-slate-400">APA 7th • MLA 9th • Chicago • IEEE</span>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <input type="text" id="citeAuthor" placeholder="Author(s) (e.g. Smith, J. & Davis, R.)" class="card-surface rounded-xl px-3 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-skybrand-500">
+          <input type="text" id="citeYear" placeholder="Year (e.g. 2024)" class="card-surface rounded-xl px-3 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-skybrand-500">
+          <input type="text" id="citeTitle" placeholder="Title of Article or Book" class="card-surface rounded-xl px-3 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-skybrand-500">
+          <input type="text" id="citeSource" placeholder="Journal, Publisher, or Website" class="card-surface rounded-xl px-3 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-skybrand-500">
+        </div>
+
+        <div class="flex justify-between items-center gap-2">
+          <button type="button" onclick="window.loadSampleCitation()" class="text-xs text-slate-500 hover:text-slate-800 underline">
+            Load Sample Citation
+          </button>
+          <button type="button" onclick="window.generateCitations()" class="text-xs bg-skybrand-500 hover:bg-skybrand-600 text-white font-bold px-4 py-2 rounded-xl transition shadow-sm active:scale-95">
+            Format Citation
+          </button>
+        </div>
+
+        <div id="citationOutputContainer" class="flex flex-col gap-2 mt-1"></div>
+      </div>
+
+      <!-- TAB 4: PRE-SUBMISSION CHECKLIST (NEW) -->
+      <div id="panel-checklist" class="tab-panel flex-col gap-3">
+        <div class="flex justify-between items-center text-xs text-slate-500 px-1">
+          <span class="font-bold uppercase tracking-wider text-[10px] text-skybrand-600">Canvas / Blackboard Pre-flight Audit</span>
+          <button type="button" onclick="window.runPreflightCheck()" class="text-xs bg-skybrand-500 hover:bg-skybrand-600 text-white font-bold px-3 py-1.5 rounded-xl transition shadow-sm active:scale-95">
+            Run Pre-flight
+          </button>
+        </div>
+        <p class="text-xs text-slate-600 leading-relaxed">
+          Verifies that your essay meets college formatting standards, contains a clear stance or thesis statement, defines acronyms, and avoids colloquialisms.
+        </p>
+
+        <div id="checklistResults" class="flex flex-col gap-2 mt-1">
+          <div class="p-3 card-surface rounded-xl border border-slate-200 text-xs text-slate-500 italic">
+            Click "Run Pre-flight" to evaluate the manuscript currently in your Text tab.
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 5: CONSISTENCY AUDITOR -->
       <div id="panel-consistency" class="tab-panel flex-col gap-3">
         <div class="flex justify-between items-center text-xs text-slate-500 px-1">
-          <span class="font-bold uppercase tracking-wider text-[10px] text-brand-600">Document Consistency Audit</span>
-          <button type="button" onclick="runConsistencyAudit()" class="text-xs bg-brand-600 hover:bg-brand-700 text-white font-bold px-3 py-1.5 rounded-xl transition shadow-sm active:scale-95">
+          <span class="font-bold uppercase tracking-wider text-[10px] text-skybrand-600">Document Consistency Audit</span>
+          <button type="button" onclick="window.runConsistencyAudit()" class="text-xs bg-skybrand-500 hover:bg-skybrand-600 text-white font-bold px-3 py-1.5 rounded-xl transition shadow-sm active:scale-95">
             Re-Audit
           </button>
         </div>
         <textarea
           id="consistencyInput"
           rows="7"
-          placeholder="Paste entire report or manuscript here to audit US/UK dialect mixing (analyze vs. analyse) and unexpanded abbreviations..."
-          class="w-full card-surface rounded-2xl p-4 text-xs font-mono text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 leading-relaxed resize-y"
-          oninput="runConsistencyAudit()"
+          placeholder="Paste manuscript to audit dialect collisions (analyze vs analyse) and undefined acronyms..."
+          class="w-full card-surface rounded-2xl p-4 text-xs font-mono text-slate-800 placeholder-slate-400 focus:outline-none focus:border-skybrand-500 leading-relaxed resize-y"
+          oninput="window.runConsistencyAudit()"
         ></textarea>
         
         <div id="consistencyReport" class="flex flex-col gap-2.5 mt-1 max-h-72 overflow-y-auto pr-1"></div>
       </div>
 
-      <!-- TAB 4: FACT CHECK -->
+      <!-- TAB 6: FACT CHECK -->
       <div id="panel-fact" class="tab-panel flex-col gap-3">
         <div class="flex justify-between items-center text-xs text-slate-500 px-1">
-          <span class="font-bold uppercase tracking-wider text-[10px] text-brand-600">Live Source Corroboration</span>
+          <span class="font-bold uppercase tracking-wider text-[10px] text-skybrand-600">Live Source & Fact Corroboration</span>
         </div>
         <p class="text-xs text-slate-600 leading-relaxed">
-          Verify assertions or historical facts against live encyclopedia records to protect against AI hallucinations[span_17](start_span)[span_17](end_span)[span_18](start_span)[span_18](end_span)[span_19](start_span)[span_19](end_span).
+          Verify factual claims, dates, and historical definitions against public encyclopedia records to avoid hallucinations[span_2](start_span)[span_2](end_span).
         </p>
         <div class="flex gap-2">
           <input 
             type="text" 
             id="factQueryInput" 
-            placeholder="e.g. Apollo 11 moon landing date"
-            class="flex-1 card-surface rounded-xl px-3.5 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500"
-            onkeydown="if(event.key === 'Enter') runFactCheck()"
+            placeholder="e.g. Treaty of Versailles signed date"
+            class="flex-1 card-surface rounded-xl px-3.5 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-skybrand-500"
+            onkeydown="if(event.key === 'Enter') window.runFactCheck()"
           >
-          <button type="button" onclick="runFactCheck()" class="text-xs bg-brand-600 hover:bg-brand-700 text-white font-bold px-4 py-2 rounded-xl transition shadow-sm active:scale-95">
+          <button type="button" onclick="window.runFactCheck()" class="text-xs bg-skybrand-500 hover:bg-skybrand-600 text-white font-bold px-4 py-2 rounded-xl transition shadow-sm active:scale-95">
             Verify
           </button>
         </div>
@@ -230,14 +294,14 @@
 
     </section>
 
-    <!-- Right Telemetry Panel (5 Columns) -->
+    <!-- Right Report Panel (5 Columns) -->
     <section class="lg:col-span-5 flex flex-col gap-4">
       
-      <!-- Detection Verdict -->
+      <!-- Primary Verdict Card -->
       <div class="card-surface rounded-2xl p-5 relative overflow-hidden">
         <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-brand-600 animate-pulse"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-skybrand-500 animate-pulse"></span>
             <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Detection Gauge</span>
           </div>
           <span id="verdictBadge" class="text-[10px] px-2.5 py-0.5 rounded-full font-bold bg-slate-100 text-slate-600 border border-slate-200">Ready</span>
@@ -249,7 +313,7 @@
         </div>
 
         <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden border border-slate-200">
-          <div id="scoreBar" class="bg-gradient-to-r from-brand-500 to-indigo-600 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+          <div id="scoreBar" class="bg-gradient-to-r from-skybrand-400 to-skybrand-600 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
         </div>
       </div>
 
@@ -273,7 +337,7 @@
       <div class="card-surface rounded-2xl p-5 flex-1 flex flex-col">
         <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
           <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
-            <span>🔬</span> Forensic Telemetry
+            <span>🔬</span> Academic Telemetry
           </span>
           <span id="telemetryStatus" class="text-[10px] font-mono text-slate-400">IDLE</span>
         </div>
@@ -287,7 +351,7 @@
 
   <script>
     // --- 1. GLOBAL TAB SWITCHER ---
-    function switchTab(name) {
+    window.switchTab = function(name) {
       document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
       const activePanel = document.getElementById('panel-' + name);
       if (activePanel) activePanel.classList.add('active');
@@ -300,350 +364,4 @@
         const text = document.getElementById('textInput').value;
         if (text.trim()) {
           document.getElementById('rewriterInput').value = text;
-          runRewriterAnalysis();
-        }
-      }
-      if (name === 'consistency' && !document.getElementById('consistencyInput').value.trim()) {
-        const text = document.getElementById('textInput').value || document.getElementById('rewriterInput').value;
-        if (text.trim()) {
-          document.getElementById('consistencyInput').value = text;
-          runConsistencyAudit();
-        }
-      }
-    }
-
-    // --- 2. VERDICT & STATUS ENGINE ---
-    function setVerdict(score, verdictText, isOrganic, detailsHtml) {
-      document.getElementById('scoreVal').textContent = score + '%';
-      document.getElementById('scoreBar').style.width = score + '%';
-      document.getElementById('telemetryStatus').textContent = 'ACTIVE';
-
-      const badge = document.getElementById('verdictBadge');
-      badge.textContent = verdictText;
-      if (isOrganic) {
-        badge.className = 'text-[10px] px-2.5 py-0.5 rounded-full font-bold bg-emerald-100 text-emerald-800 border border-emerald-200';
-        document.getElementById('scoreBar').className = 'bg-gradient-to-r from-emerald-500 to-teal-500 h-2 rounded-full transition-all duration-500';
-      } else {
-        badge.className = 'text-[10px] px-2.5 py-0.5 rounded-full font-bold bg-rose-100 text-rose-800 border border-rose-200';
-        document.getElementById('scoreBar').className = 'bg-gradient-to-r from-rose-500 to-amber-500 h-2 rounded-full transition-all duration-500';
-      }
-
-      document.getElementById('diagText').innerHTML = detailsHtml;
-    }
-
-    // --- 3. DROPZONE BINDINGS ---
-    function initDropzone() {
-      const dropzone = document.getElementById('docDropzone');
-      const fileInput = document.getElementById('docFileInput');
-      if (!dropzone || !fileInput) return;
-
-      dropzone.addEventListener('click', () => fileInput.click());
-      dropzone.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        dropzone.classList.add('dropzone-hover');
-      });
-      dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dropzone-hover'));
-      dropzone.addEventListener('drop', (e) => {
-        e.preventDefault();
-        dropzone.classList.remove('dropzone-hover');
-        if (e.dataTransfer && e.dataTransfer.files.length) {
-          handleFile(e.dataTransfer.files[0]);
-        }
-      });
-      fileInput.addEventListener('change', () => {
-        if (fileInput.files.length) {
-          handleFile(fileInput.files[0]);
-          fileInput.value = ''; // Reset to allow re-uploading the same file
-        }
-      });
-    }
-
-    function handleFile(file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        document.getElementById('textInput').value = e.target.result;
-        processTextInput();
-      };
-      reader.readAsText(file);
-    }
-
-    // --- 4. TEXT PROCESSING ENGINE ---
-    function processTextInput() {
-      const text = document.getElementById('textInput').value;
-      const chars = text.length;
-      const words = text.trim() ? text.trim().split(/\s+/).length : 0;
-      document.getElementById('charCount').textContent = `${chars} chars | ${words} words`;
-
-      if (!text.trim()) {
-        document.getElementById('ttrVal').textContent = '--';
-        document.getElementById('burstVal').textContent = '--';
-        document.getElementById('readabilityVal').textContent = '--';
-        document.getElementById('scoreVal').textContent = '0%';
-        document.getElementById('scoreBar').style.width = '0%';
-        document.getElementById('telemetryStatus').textContent = 'IDLE';
-        const badge = document.getElementById('verdictBadge');
-        badge.textContent = 'Ready';
-        badge.className = 'text-[10px] px-2.5 py-0.5 rounded-full font-bold bg-slate-100 text-slate-600 border border-slate-200';
-        document.getElementById('diagText').textContent = 'Select any workspace tab on the left to begin inspecting your content.';
-        return;
-      }
-
-      const sentences = text.match(/[^.!?]+[.!?]+|\S+/g) || [text];
-      const tokens = text.toLowerCase().match(/\b[a-z0-9']+\b/g) || [];
-      if (!tokens.length) return;
-
-      const ttr = (new Set(tokens).size / tokens.length).toFixed(3);
-      const lengths = sentences.map(s => (s.match(/\b[a-z0-9']+\b/gi) || []).length);
-      const mean = lengths.reduce((a, b) => a + b, 0) / lengths.length;
-      const variance = lengths.reduce((acc, len) => acc + Math.pow(len - mean, 2), 0) / lengths.length;
-      const sigma = Math.sqrt(variance).toFixed(2);
-
-      let syllables = 0;
-      tokens.forEach(w => {
-        const matches = w.replace(/(?:[^laeiouy]|ed|es|e)$/, '').match(/[aeiouy]{1,2}/g);
-        syllables += matches ? matches.length : 1;
-      });
-      const flesch = Math.max(0, Math.min(100, Math.round(206.835 - 1.015 * (tokens.length / sentences.length) - 84.6 * (syllables / tokens.length))));
-
-      document.getElementById('ttrVal').textContent = ttr;
-      document.getElementById('burstVal').textContent = sigma;
-      document.getElementById('readabilityVal').textContent = flesch + '/100';
-
-      let prob = 50;
-      if (sigma < 3.5) prob += 25;
-      else if (sigma > 6.5) prob -= 25;
-      if (ttr < 0.5) prob += 15;
-      else if (ttr > 0.75) prob -= 20;
-      prob = Math.min(Math.max(prob, 8), 94);
-
-      const isHuman = prob < 50;
-      setVerdict(
-        prob,
-        isHuman ? "Likely Organic / Human" : "Likely AI-Generated",
-        isHuman,
-        `<div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
-          <div>• <strong>Sentences:</strong> ${sentences.length} | <strong>Words:</strong> ${tokens.length}</div>
-          <div>• <strong>Lexical Richness (TTR):</strong> ${ttr}</div>
-          <div>• <strong>Burstiness Variance (σ):</strong> ${sigma}</div>
-          <div>• <strong>Flesch Reading Ease:</strong> ${flesch}/100</div>
-        </div>`
-      );
-    }
-
-    function loadSampleText() {
-      document.getElementById('textInput').value = "In order to evaluate natural language processing, it is important to note that we must delve into the delicate balance between structural variance and repetitive formulas. A testament to this reality is modern synthetic generation. Furthermore, the system utilized complex algorithms to analyze the behaviour of tokens.";
-      processTextInput();
-    }
-
-    function sendToRewriter() {
-      const txt = document.getElementById('textInput').value;
-      document.getElementById('rewriterInput').value = txt;
-      switchTab('rewriter');
-      runRewriterAnalysis();
-    }
-
-    // --- 5. REWRITER ENGINE ---
-    const REWRITE_RULES = [
-      { match: /\bin order to\b/gi, tighten: 'to', vary: 'so we can', executive: 'to directly' },
-      { match: /\bit is important to note that\b/gi, tighten: 'notably,', vary: 'crucially,', executive: 'importantly,' },
-      { match: /\bdelve into\b/gi, tighten: 'explore', vary: 'take a closer look at', executive: 'examine' },
-      { match: /\ba testament to\b/gi, tighten: 'proof of', vary: 'clearly showing', executive: 'evidence of' },
-      { match: /\bdue to the fact that\b/gi, tighten: 'because', vary: 'since', executive: 'as demonstrated by' },
-      { match: /\butilize(d|s)?\b/gi, tighten: 'use', vary: 'leverage', executive: 'deploy' },
-      { match: /\bin conclusion,?\b/gi, tighten: 'ultimately,', vary: 'in summary,', executive: 'to close,' }
-    ];
-
-    function runRewriterAnalysis() {
-      const text = document.getElementById('rewriterInput').value;
-      const words = text.trim() ? text.trim().split(/\s+/).length : 0;
-      document.getElementById('rewriterStats').textContent = `${words} words`;
-      const container = document.getElementById('rewriterCards');
-      container.innerHTML = '';
-      if (!text.trim()) return;
-
-      let found = 0;
-      REWRITE_RULES.forEach((rule) => {
-        let match;
-        const reg = new RegExp(rule.match.source, 'gi');
-        while ((match = reg.exec(text)) !== null) {
-          found++;
-          const original = match[0];
-          const card = document.createElement('div');
-          card.className = "p-3 card-surface rounded-xl flex flex-col gap-2";
-          card.innerHTML = `
-            <div class="flex items-center justify-between">
-              <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-rose-50 text-rose-700 border border-rose-200">Flagged Formula</span>
-              <span class="text-xs text-rose-500 font-mono line-through">${escapeHtml(original)}</span>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-1">
-              <button type="button" class="opt-btn text-left p-2 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 transition">
-                <span class="text-[9px] uppercase tracking-wider text-emerald-600 font-bold block">Tighten</span>
-                <span class="text-xs text-slate-800">${rule.tighten}</span>
-              </button>
-              <button type="button" class="opt-btn text-left p-2 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 transition">
-                <span class="text-[9px] uppercase tracking-wider text-brand-600 font-bold block">Vary Cadence</span>
-                <span class="text-xs text-slate-800">${rule.vary}</span>
-              </button>
-              <button type="button" class="opt-btn text-left p-2 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 transition">
-                <span class="text-[9px] uppercase tracking-wider text-amber-600 font-bold block">Executive</span>
-                <span class="text-xs text-slate-800">${rule.executive}</span>
-              </button>
-            </div>
-          `;
-          const buttons = card.querySelectorAll('.opt-btn');
-          buttons[0].onclick = () => replaceRewrite(original, rule.tighten);
-          buttons[1].onclick = () => replaceRewrite(original, rule.vary);
-          buttons[2].onclick = () => replaceRewrite(original, rule.executive);
-          container.appendChild(card);
-        }
-      });
-
-      if (found === 0) {
-        container.innerHTML = '<div class="text-xs text-emerald-700 p-3 border border-emerald-200 bg-emerald-50 rounded-xl">✓ No repetitive synthetic clichés or bulky transition markers found.</div>';
-      }
-    }
-
-    function replaceRewrite(orig, rep) {
-      const area = document.getElementById('rewriterInput');
-      area.value = area.value.replace(orig, rep);
-      runRewriterAnalysis();
-    }
-
-    function applyAllRewrites() {
-      const area = document.getElementById('rewriterInput');
-      let val = area.value;
-      REWRITE_RULES.forEach(r => { val = val.replace(r.match, r.tighten); });
-      area.value = val;
-      runRewriterAnalysis();
-    }
-
-    async function copyRewriterText() {
-      const val = document.getElementById('rewriterInput').value;
-      if (!val) return;
-      await navigator.clipboard.writeText(val);
-      const b = document.getElementById('copyRewriterBtn');
-      b.textContent = 'Copied!';
-      setTimeout(() => b.textContent = 'Copy Result', 1500);
-    }
-
-    // --- 6. CONSISTENCY AUDITOR ---
-    const SPELLING_PAIRS = [
-      { us: 'analyze', uk: 'analyse' },
-      { us: 'behavior', uk: 'behaviour' },
-      { us: 'color', uk: 'colour' },
-      { us: 'center', uk: 'centre' },
-      { us: 'defense', uk: 'defence' },
-      { us: 'organize', uk: 'organise' },
-      { us: 'traveled', uk: 'travelled' }
-    ];
-
-    function runConsistencyAudit() {
-      const text = document.getElementById('consistencyInput').value;
-      const report = document.getElementById('consistencyReport');
-      report.innerHTML = '';
-      if (!text.trim()) return;
-
-      let issueCount = 0;
-      const dialectIssues = [];
-      SPELLING_PAIRS.forEach(pair => {
-        const hasUS = new RegExp(`\\b${pair.us}(?:s|d|ed|ing)?\\b`, 'i').test(text);
-        const hasUK = new RegExp(`\\b${pair.uk}(?:s|d|ed|ing)?\\b`, 'i').test(text);
-        if (hasUS && hasUK) {
-          dialectIssues.push(`Mixed dialect spelling: <strong>${pair.us}</strong> (US) vs <strong>${pair.uk}</strong> (UK)`);
-        }
-      });
-
-      if (dialectIssues.length) {
-        issueCount++;
-        const card = document.createElement('div');
-        card.className = "p-3 card-surface rounded-xl text-xs flex flex-col gap-1 border border-amber-200";
-        card.innerHTML = `
-          <span class="text-[9px] font-bold px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200 w-max">Spelling Inconsistency</span>
-          <div class="text-slate-700 mt-1">${dialectIssues.join('<br>')}</div>
-        `;
-        report.appendChild(card);
-      }
-
-      const acronymMatches = text.match(/\b[A-Z]{3,5}\b/g) || [];
-      const unexpanded = [];
-      [...new Set(acronymMatches)].forEach(acro => {
-        const defPattern = new RegExp(`\\(${acro}\\)|${acro}\\s+\\(`, 'i');
-        if (!defPattern.test(text)) unexpanded.push(acro);
-      });
-
-      if (unexpanded.length) {
-        issueCount++;
-        const card = document.createElement('div');
-        card.className = "p-3 card-surface rounded-xl text-xs flex flex-col gap-1 border border-brand-200";
-        card.innerHTML = `
-          <span class="text-[9px] font-bold px-2 py-0.5 rounded bg-brand-50 text-brand-800 border border-brand-200 w-max">Undefined Acronyms</span>
-          <div class="text-slate-700 mt-1">These abbreviations appear without definition: <strong>${unexpanded.slice(0, 6).join(', ')}</strong></div>
-        `;
-        report.appendChild(card);
-      }
-
-      if (issueCount === 0) {
-        report.innerHTML = '<div class="text-xs text-emerald-700 p-3 border border-emerald-200 bg-emerald-50 rounded-xl">✓ No spelling dialect collisions or unexpanded acronym discrepancies detected.</div>';
-      }
-    }
-
-    // --- 7. FACT CHECK (Wikipedia API) ---
-    async function runFactCheck() {
-      const input = document.getElementById('factQueryInput');
-      const query = input.value.trim();
-      const container = document.getElementById('factResultContainer');
-      if (!query) return alert("Please enter a claim or topic to check.");
-
-      container.innerHTML = '<span class="text-slate-500">Querying encyclopedia records...</span>';
-      try {
-        const res = await fetch(`https://en.wikipedia.org/w/api.php?action=opensearch&search=${encodeURIComponent(query)}&limit=1&format=json&origin=*`);
-        if (!res.ok) throw new Error("Network response was not ok");
-        const data = await res.json();
-        const snippet = data[2] && data[2][0] ? data[2][0] : null;
-        const link = data[3] && data[3][0] ? data[3][0] : null;
-
-        if (snippet && link) {
-          container.innerHTML = `
-            <div class="p-3 card-surface rounded-xl border border-emerald-200 space-y-1">
-              <span class="text-emerald-700 font-bold">✓ Reference Verified</span>
-              <p class="text-slate-700 leading-relaxed">${escapeHtml(snippet)}</p>
-              <a href="${link}" target="_blank" rel="noopener noreferrer" class="text-brand-600 hover:underline font-medium inline-block mt-1">Read primary entry ↗</a>
-            </div>`;
-        } else {
-          container.innerHTML = `<div class="p-3 text-amber-800 bg-amber-50 rounded-xl border border-amber-200">No public record matched "${escapeHtml(query)}".</div>`;
-        }
-      } catch (err) {
-        container.innerHTML = `<div class="text-rose-600">Verification check failed: ${escapeHtml(err.message)}</div>`;
-      }
-    }
-
-    // --- 8. RESET UTILITY ---
-    function resetAll() {
-      document.querySelectorAll('textarea').forEach(t => t.value = '');
-      document.getElementById('rewriterCards').innerHTML = '';
-      document.getElementById('consistencyReport').innerHTML = '';
-      document.getElementById('factResultContainer').innerHTML = '';
-      document.getElementById('factQueryInput').value = '';
-      document.getElementById('charCount').textContent = '0 chars | 0 words';
-      document.getElementById('rewriterStats').textContent = '0 words';
-      document.getElementById('ttrVal').textContent = '--';
-      document.getElementById('burstVal').textContent = '--';
-      document.getElementById('readabilityVal').textContent = '--';
-      document.getElementById('scoreVal').textContent = '0%';
-      document.getElementById('scoreBar').style.width = '0%';
-      document.getElementById('telemetryStatus').textContent = 'IDLE';
-      const badge = document.getElementById('verdictBadge');
-      badge.textContent = 'Ready';
-      badge.className = 'text-[10px] px-2.5 py-0.5 rounded-full font-bold bg-slate-100 text-slate-600 border border-slate-200';
-      document.getElementById('diagText').textContent = 'Select any workspace tab on the left to begin inspecting your content.';
-    }
-
-    function escapeHtml(str) {
-      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
-    }
-
-    // Attach dropzone on load
-    document.addEventListener('DOMContentLoaded', initDropzone);
-  </script>
-</body>
-</html>
+          window.runRewriterAnalysis();
