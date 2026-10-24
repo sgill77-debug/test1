@@ -38,66 +38,60 @@
 
   <!-- Header -->
   <header class="border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-xl sticky top-0 z-50">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-600 to-orange-400 flex items-center justify-center text-white shadow-lg shadow-amber-500/25">
           <i data-lucide="check-check" class="w-5 h-5"></i>
         </div>
         <div>
-          <div class="flex items-center gap-2">
-            <h1 class="font-extrabold text-base sm:text-lg tracking-tight text-white">Veritas<span class="text-amber-400">AI</span></h1>
-            <span class="px-2 py-0.5 text-[10px] font-bold rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/20">Fact Engine</span>
-          </div>
-          <p class="text-[11px] text-slate-400">Autonomous Fact Finding & Verification</p>
+          <h1 class="font-extrabold text-base sm:text-lg tracking-tight text-white">Veritas<span class="text-amber-400">AI</span></h1>
+          <p class="text-[11px] text-slate-400">Claim Verification Engine</p>
         </div>
       </div>
 
-      <button type="button" id="resetBtn" class="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-xs font-semibold text-slate-400 border border-slate-800 transition flex items-center gap-1.5 active:scale-95">
+      <button type="button" id="resetBtn" class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-xs font-semibold text-slate-400 border border-slate-800 transition flex items-center gap-1.5 active:scale-95">
         <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
         <span>Reset</span>
       </button>
     </div>
   </header>
 
-  <!-- Main Fact Finding Container -->
-  <main class="flex-1 max-w-4xl mx-auto px-4 sm:px-6 py-8 w-full flex flex-col gap-6">
+  <!-- Main Container -->
+  <main class="flex-1 max-w-3xl mx-auto px-4 sm:px-6 py-8 w-full flex flex-col gap-6">
     
-    <!-- Input Section -->
-    <div class="flex flex-col gap-3">
-      <div class="flex justify-between items-center text-xs text-slate-400 px-1">
-        <label for="factInput" class="font-bold tracking-wider uppercase text-[11px] text-amber-400 flex items-center gap-1.5">
-          <i data-lucide="help-circle" class="w-3.5 h-3.5"></i> Enter Statement or Claim to Verify
-        </label>
-        <span id="factCharCount" class="font-mono text-[11px] text-slate-500">0 words</span>
-      </div>
-
+    <!-- Input Field -->
+    <div class="flex flex-col gap-2">
       <textarea
         id="factInput"
         rows="4"
-        placeholder="e.g. 'The Eiffel Tower was completed in 1889 in Paris' or 'Neil Armstrong was the first person to walk on the moon'..."
+        placeholder="Enter statement or claim here (e.g., 'The Eiffel Tower was completed in 1889 in Paris')..."
         class="w-full bg-slate-900/90 border border-slate-800 focus:border-amber-500/60 rounded-2xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20 leading-relaxed resize-y transition shadow-inner"
       ></textarea>
 
       <button type="button" id="verifyFactBtn" class="flex items-center justify-center gap-2 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white font-bold py-3.5 px-6 rounded-xl shadow-lg shadow-amber-600/25 transition active:scale-[0.99] text-xs sm:text-sm">
-        <i data-lucide="search-check" class="w-4 h-4"></i> Verify Claim
+        <i data-lucide="search-check" class="w-4 h-4"></i> Check Claim
       </button>
     </div>
 
-    <!-- THE ONLY ANSWER BOX -->
-    <div id="answerBox" class="hidden bg-slate-900/95 border border-slate-800 rounded-2xl p-6 shadow-2xl flex flex-col gap-4">
-      <div class="flex items-center justify-between border-b border-slate-800/80 pb-4">
-        <span class="text-[11px] font-bold tracking-wider text-slate-400 uppercase">Verification Finding</span>
-        <span id="verdictStatus" class="text-xs font-black px-3.5 py-1.5 rounded-lg border tracking-wider"></span>
+    <!-- The Single Answer Box (Always Visible) -->
+    <div id="answerBox" class="bg-slate-900/95 border border-slate-800 rounded-2xl p-6 shadow-2xl flex flex-col gap-4">
+      <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+        <span class="text-[11px] font-bold tracking-wider text-slate-400 uppercase">Status</span>
+        <span id="verdictStatus" class="text-xs font-black px-3.5 py-1.5 rounded-lg border tracking-wider bg-slate-800 text-slate-400 border-slate-700">
+          AWAITING INPUT
+        </span>
       </div>
       
       <div class="flex flex-col gap-2">
         <span class="text-[10px] font-bold text-amber-400 uppercase tracking-wider">Correct Answer</span>
-        <p id="verifiedAnswer" class="text-sm font-mono text-slate-100 bg-slate-950/90 border border-slate-800/90 rounded-xl p-4 leading-relaxed"></p>
+        <p id="verifiedAnswer" class="text-sm font-mono text-slate-300 bg-slate-950/90 border border-slate-800/90 rounded-xl p-4 leading-relaxed min-h-[72px]">
+          Enter a statement above and click "Check Claim" to display the verified answer.
+        </p>
       </div>
 
       <div id="sourceRow" class="flex items-center justify-between pt-1 text-xs">
-        <span id="matchedEntity" class="font-mono text-slate-400 text-[11px]"></span>
-        <a id="sourceAnchor" href="#" target="_blank" rel="noopener noreferrer" class="font-bold text-amber-400 hover:text-amber-300 flex items-center gap-1 transition">
+        <span id="matchedEntity" class="font-mono text-slate-500 text-[11px]"></span>
+        <a id="sourceAnchor" href="#" target="_blank" rel="noopener noreferrer" class="hidden font-bold text-amber-400 hover:text-amber-300 flex items-center gap-1 transition">
           View Corroborating Source <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
         </a>
       </div>
@@ -110,24 +104,13 @@
       if (window.lucide) lucide.createIcons();
 
       const factInput = document.getElementById('factInput');
-      const factCharCount = document.getElementById('factCharCount');
       const verifyFactBtn = document.getElementById('verifyFactBtn');
-      const answerBox = document.getElementById('answerBox');
       const verdictStatus = document.getElementById('verdictStatus');
       const verifiedAnswer = document.getElementById('verifiedAnswer');
       const matchedEntity = document.getElementById('matchedEntity');
       const sourceAnchor = document.getElementById('sourceAnchor');
       const resetBtn = document.getElementById('resetBtn');
 
-      // Word count tracker
-      if (factInput && factCharCount) {
-        factInput.addEventListener('input', () => {
-          const words = factInput.value.trim() ? factInput.value.trim().split(/\s+/).length : 0;
-          factCharCount.textContent = `${words} words`;
-        });
-      }
-
-      // Verification Resolvers across open sources
       async function searchMediaWiki(queryTerms) {
         try {
           const res = await fetch(`https://en.wikipedia.org/w/api.php?action=opensearch&search=${encodeURIComponent(queryTerms)}&limit=1&namespace=0&format=json&origin=*`);
@@ -189,7 +172,6 @@
           verifyFactBtn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Checking Verification Sources...`;
           if (window.lucide) lucide.createIcons();
 
-          // Extract key search tokens
           const searchTerms = query.replace(/[^\w\s]/gi, '')
             .split(/\s+/)
             .filter(w => w.length > 2 && (w[0] === w[0].toUpperCase() || /\d/.test(w)))
@@ -197,16 +179,11 @@
             .join(' ') || query.split(/\s+/).slice(0, 3).join(' ');
 
           try {
-            // Check registries
             let result = await searchMediaWiki(searchTerms);
             if (!result) result = await searchWikidata(searchTerms);
             if (!result) result = await searchOpenLibrary(searchTerms);
 
-            // Display Answer Box
-            answerBox.classList.remove('hidden');
-
             if (result && result.answer) {
-              // TRUE: Corroborated
               verdictStatus.textContent = 'TRUE';
               verdictStatus.className = 'text-xs font-black px-4 py-1.5 rounded-lg border tracking-wider bg-emerald-950 text-emerald-300 border-emerald-700 shadow-sm';
               verifiedAnswer.textContent = result.answer;
@@ -219,29 +196,30 @@
                 sourceAnchor.classList.add('hidden');
               }
             } else {
-              // FALSE / UNVERIFIED: No reference match
               verdictStatus.textContent = 'FALSE / UNVERIFIED';
               verdictStatus.className = 'text-xs font-black px-4 py-1.5 rounded-lg border tracking-wider bg-rose-950 text-rose-300 border-rose-700 shadow-sm';
               verifiedAnswer.textContent = `No reliable records corroborate this statement. The claim could not be matched against verified encyclopedic or historical entries.`;
-              matchedEntity.textContent = `Searched Terms: "${searchTerms}"`;
+              matchedEntity.textContent = `Searched: "${searchTerms}"`;
               sourceAnchor.classList.add('hidden');
             }
           } catch (err) {
             alert('Lookup failed: ' + err.message);
           } finally {
             verifyFactBtn.disabled = false;
-            verifyFactBtn.innerHTML = `<i data-lucide="search-check" class="w-4 h-4"></i> Verify Claim`;
+            verifyFactBtn.innerHTML = `<i data-lucide="search-check" class="w-4 h-4"></i> Check Claim`;
             if (window.lucide) lucide.createIcons();
           }
         });
       }
 
-      // Reset
       if (resetBtn) {
         resetBtn.addEventListener('click', () => {
           factInput.value = '';
-          factCharCount.textContent = '0 words';
-          answerBox.classList.add('hidden');
+          verdictStatus.textContent = 'AWAITING INPUT';
+          verdictStatus.className = 'text-xs font-black px-3.5 py-1.5 rounded-lg border tracking-wider bg-slate-800 text-slate-400 border-slate-700';
+          verifiedAnswer.textContent = 'Enter a statement above and click "Check Claim" to display the verified answer.';
+          matchedEntity.textContent = '';
+          sourceAnchor.classList.add('hidden');
         });
       }
     });
