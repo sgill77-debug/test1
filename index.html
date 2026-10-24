@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VeritasAI Studio - Fact Verification</title>
+  <title>VeritasAI Studio - Multi-Source Fact Verification</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,7 +45,7 @@
         </div>
         <div>
           <h1 class="font-extrabold text-base sm:text-lg tracking-tight text-white">Veritas<span class="text-amber-400">AI</span></h1>
-          <p class="text-[11px] text-slate-400">Claim & Fact Verification Engine</p>
+          <p class="text-[11px] text-slate-400">Multi-Source Fact Verification</p>
         </div>
       </div>
 
@@ -76,7 +76,10 @@
     <!-- The Single Answer Box -->
     <div id="answerBox" class="bg-slate-900/95 border border-slate-800 rounded-2xl p-6 shadow-2xl flex flex-col gap-4">
       <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
-        <span class="text-[11px] font-bold tracking-wider text-slate-400 uppercase">Verification Finding</span>
+        <div class="flex items-center gap-2">
+          <span class="text-[11px] font-bold tracking-wider text-slate-400 uppercase">Verification Finding</span>
+          <span id="sourceOriginBadge" class="hidden text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700"></span>
+        </div>
         <span id="verdictStatus" class="text-xs font-black px-3.5 py-1.5 rounded-lg border tracking-wider bg-slate-800 text-slate-400 border-slate-700">
           AWAITING INPUT
         </span>
@@ -85,7 +88,7 @@
       <div class="flex flex-col gap-2">
         <span class="text-[10px] font-bold text-amber-400 uppercase tracking-wider">Correct Answer & Verified Fact</span>
         <p id="verifiedAnswer" class="text-sm font-mono text-slate-200 bg-slate-950/90 border border-slate-800/90 rounded-xl p-4 leading-relaxed min-h-[72px]">
-          Enter a statement above and click "Check & Verify Claim" to evaluate whether it is True or False and display the verified correct answer.
+          Enter a statement above and click "Check & Verify Claim" to evaluate whether it is True or False and display the verified correct answer across open encyclopedias, library records, and knowledge graphs.
         </p>
       </div>
 
@@ -107,11 +110,11 @@
       const verifyFactBtn = document.getElementById('verifyFactBtn');
       const verdictStatus = document.getElementById('verdictStatus');
       const verifiedAnswer = document.getElementById('verifiedAnswer');
+      const sourceOriginBadge = document.getElementById('sourceOriginBadge');
       const matchedEntity = document.getElementById('matchedEntity');
       const sourceAnchor = document.getElementById('sourceAnchor');
       const resetBtn = document.getElementById('resetBtn');
 
-      // Common stop words to strip so search engines find the actual subject entities
       const stopWords = new Set([
         'is', 'are', 'was', 'were', 'the', 'a', 'an', 'in', 'on', 'at', 'of', 'for', 
         'to', 'by', 'with', 'from', 'that', 'this', 'did', 'does', 'do', 'who', 
@@ -119,22 +122,18 @@
       ]);
 
       function extractSearchQuery(rawText) {
-        // Clean punctuation
         const cleaned = rawText.replace(/[?.,!;"'()]/g, ' ').trim();
         const tokens = cleaned.split(/\s+/).filter(Boolean);
 
-        // Find named entities (capitalized) or numbers/years
         const entities = tokens.filter(t => (t[0] === t[0].toUpperCase() && !stopWords.has(t.toLowerCase())) || /\d{3,4}/.test(t));
         if (entities.length >= 2) {
           return entities.slice(0, 4).join(' ');
         }
 
-        // Fallback: strip generic stop words
         const filtered = tokens.filter(t => !stopWords.has(t.toLowerCase()));
         return (filtered.slice(0, 4).join(' ') || cleaned.slice(0, 40));
       }
 
-      // Query Wikipedia OpenSearch & Extract API
       async function queryWikipedia(searchPhrase) {
         try {
           const endpoint = `https://en.wikipedia.org/w/api.php?action=opensearch&search=${encodeURIComponent(searchPhrase)}&limit=3&namespace=0&format=json&origin=*`;
@@ -143,23 +142,22 @@
           
           if (!data || !data[1] || data[1].length === 0) return null;
 
-          // Find the first result that returns a valid summary text
           for (let i = 0; i < data[1].length; i++) {
             const title = data[1][i];
             const snippet = data[2][i];
             const url = data[3][i];
 
             if (snippet && snippet.trim().length > 15 && !snippet.includes('may refer to:')) {
-              return { title, answer: snippet, url };
+              return { origin: 'Wikipedia Reference', title, answer: snippet, url };
             }
 
-            // If snippet was truncated, query page extract directly
             const extractUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title.replace(/\s+/g, '_'))}`;
             const extractRes = await fetch(extractUrl);
             if (extractRes.ok) {
               const summaryData = await extractRes.json();
               if (summaryData.extract && summaryData.extract.length > 20) {
                 return {
+                  origin: 'Wikipedia Summary',
                   title: summaryData.title,
                   answer: summaryData.extract,
                   url: summaryData.content_urls ? summaryData.content_urls.desktop.page : url
@@ -173,7 +171,6 @@
         return null;
       }
 
-      // Query Wikidata Entity API
       async function queryWikidata(searchPhrase) {
         try {
           const endpoint = `https://www.wikidata.org/w/api.php?action=wbsearchentities&search=${encodeURIComponent(searchPhrase)}&language=en&format=json&origin=*`;
@@ -184,6 +181,7 @@
             const match = data.search.find(item => item.description && item.description.length > 10);
             if (match) {
               return {
+                origin: 'Wikidata Knowledge Base',
                 title: match.label,
                 answer: `${match.label}: ${match.description}.`,
                 url: `https://www.wikidata.org/wiki/${match.id}`
@@ -196,7 +194,28 @@
         return null;
       }
 
-      // Verification Logic
+      async function queryOpenLibrary(searchPhrase) {
+        try {
+          const endpoint = `https://openlibrary.org/search.json?q=${encodeURIComponent(searchPhrase)}&limit=1`;
+          const res = await fetch(endpoint);
+          const data = await res.json();
+          if (data && data.docs && data.docs.length > 0) {
+            const doc = data.docs[0];
+            const author = doc.author_name ? doc.author_name.join(', ') : 'Documented Author';
+            const year = doc.first_publish_year ? ` (first published in ${doc.first_publish_year})` : '';
+            return {
+              origin: 'Open Library Catalog',
+              title: doc.title,
+              answer: `"${doc.title}" by ${author}${year}. Documented in open literary archives.`,
+              url: `https://openlibrary.org${doc.key}`
+            };
+          }
+        } catch (e) {
+          console.warn('Open Library query error:', e);
+        }
+        return null;
+      }
+
       if (verifyFactBtn) {
         verifyFactBtn.addEventListener('click', async () => {
           const query = factInput.value.trim();
@@ -206,33 +225,30 @@
           }
 
           verifyFactBtn.disabled = true;
-          verifyFactBtn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Checking Reference Records...`;
+          verifyFactBtn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Checking Reference Sources...`;
           if (window.lucide) lucide.createIcons();
 
           const searchTerms = extractSearchQuery(query);
 
           try {
-            // Check primary encyclopedic sources with fallback search
             let record = await queryWikipedia(searchTerms);
-            if (!record) {
-              record = await queryWikidata(searchTerms);
-            }
+            if (!record) record = await queryWikidata(searchTerms);
+            if (!record) record = await queryOpenLibrary(searchTerms);
+
             if (!record && searchTerms.includes(' ')) {
-              // Retry with just the primary subject keywords
               const fallbackTerms = searchTerms.split(' ').slice(0, 2).join(' ');
               record = await queryWikipedia(fallbackTerms);
+              if (!record) record = await queryWikidata(fallbackTerms);
             }
 
             if (record && record.answer) {
-              // Compare query tokens with the verified answer text
               const userTokens = query.toLowerCase().replace(/[^\w\s]/g, '').split(/\s+/).filter(w => !stopWords.has(w) && w.length > 2);
               const answerTextLower = record.answer.toLowerCase();
               
               const matchedCount = userTokens.filter(t => answerTextLower.includes(t)).length;
               const matchRatio = userTokens.length > 0 ? (matchedCount / userTokens.length) : 0;
 
-              // Corroboration Decision
-              if (matchRatio >= 0.45 || (userTokens.some(t => /\d{3,4}/.test(t) && answerTextLower.includes(t)))) {
+              if (matchRatio >= 0.45 || userTokens.some(t => /\d{3,4}/.test(t) && answerTextLower.includes(t))) {
                 verdictStatus.textContent = 'TRUE';
                 verdictStatus.className = 'text-xs font-black px-4 py-1.5 rounded-lg border tracking-wider bg-emerald-950 text-emerald-300 border-emerald-700 shadow-sm';
               } else {
@@ -243,6 +259,11 @@
               verifiedAnswer.textContent = record.answer;
               matchedEntity.textContent = `Verified Subject: ${record.title}`;
 
+              if (sourceOriginBadge) {
+                sourceOriginBadge.textContent = record.origin;
+                sourceOriginBadge.classList.remove('hidden');
+              }
+
               if (record.url) {
                 sourceAnchor.href = record.url;
                 sourceAnchor.classList.remove('hidden');
@@ -250,11 +271,15 @@
                 sourceAnchor.classList.add('hidden');
               }
             } else {
-              // No reference record matched
               verdictStatus.textContent = 'FALSE / UNVERIFIED';
               verdictStatus.className = 'text-xs font-black px-4 py-1.5 rounded-lg border tracking-wider bg-rose-950 text-rose-300 border-rose-700 shadow-sm';
-              verifiedAnswer.textContent = `No reliable encyclopedic or historical record was found matching this statement. The claim could not be corroborated.`;
+              verifiedAnswer.textContent = `No reliable encyclopedic or historical record was found matching this statement across public knowledge sources. The claim could not be corroborated.`;
               matchedEntity.textContent = `Searched Terms: "${searchTerms}"`;
+              
+              if (sourceOriginBadge) {
+                sourceOriginBadge.textContent = 'Cross-Referenced All Sources';
+                sourceOriginBadge.classList.remove('hidden');
+              }
               sourceAnchor.classList.add('hidden');
             }
           } catch (err) {
@@ -267,14 +292,14 @@
         });
       }
 
-      // Reset Button
       if (resetBtn) {
         resetBtn.addEventListener('click', () => {
           factInput.value = '';
           verdictStatus.textContent = 'AWAITING INPUT';
           verdictStatus.className = 'text-xs font-black px-3.5 py-1.5 rounded-lg border tracking-wider bg-slate-800 text-slate-400 border-slate-700';
-          verifiedAnswer.textContent = 'Enter a statement above and click "Check & Verify Claim" to evaluate whether it is True or False and display the verified correct answer.';
+          verifiedAnswer.textContent = 'Enter a statement above and click "Check & Verify Claim" to evaluate whether it is True or False and display the verified correct answer across open encyclopedias, library records, and knowledge graphs.';
           matchedEntity.textContent = '';
+          if (sourceOriginBadge) sourceOriginBadge.classList.add('hidden');
           sourceAnchor.classList.add('hidden');
         });
       }
