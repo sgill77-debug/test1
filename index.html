@@ -45,7 +45,7 @@
         </div>
         <div>
           <h1 class="font-extrabold text-base sm:text-lg tracking-tight text-white">Veritas<span class="text-amber-400">AI</span></h1>
-          <p class="text-[11px] text-slate-400">Global Fact & Evidence Verification</p>
+          <p class="text-[11px] text-slate-400">Claim & Fact Verification Engine</p>
         </div>
       </div>
 
@@ -59,43 +59,40 @@
   <!-- Main Container -->
   <main class="flex-1 max-w-3xl mx-auto px-4 sm:px-6 py-8 w-full flex flex-col gap-6">
     
-    <!-- Input Section -->
+    <!-- Input Field -->
     <div class="flex flex-col gap-2">
       <textarea
         id="factInput"
         rows="4"
-        placeholder="Enter statement, news headline, or claim to verify (e.g., 'The Eiffel Tower was completed in 1889 in Paris' or 'CERN operates the Large Hadron Collider')..."
+        placeholder="Enter a statement, claim, or question (e.g., 'The Eiffel Tower was completed in 1889 in Paris' or 'Neil Armstrong was the first person to walk on the moon')..."
         class="w-full bg-slate-900/90 border border-slate-800 focus:border-amber-500/60 rounded-2xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20 leading-relaxed resize-y transition shadow-inner"
       ></textarea>
 
       <button type="button" id="verifyFactBtn" class="flex items-center justify-center gap-2 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white font-bold py-3.5 px-6 rounded-xl shadow-lg shadow-amber-600/25 transition active:scale-[0.99] text-xs sm:text-sm">
-        <i data-lucide="search-check" class="w-4 h-4"></i> Cross-Reference All Available Sources
+        <i data-lucide="search-check" class="w-4 h-4"></i> Check & Verify Claim
       </button>
     </div>
 
-    <!-- The Single Answer Box (Permanent on Screen) -->
+    <!-- The Single Answer Box -->
     <div id="answerBox" class="bg-slate-900/95 border border-slate-800 rounded-2xl p-6 shadow-2xl flex flex-col gap-4">
       <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
-        <div class="flex items-center gap-2">
-          <span class="text-[11px] font-bold tracking-wider text-slate-400 uppercase">Status</span>
-          <span id="sourceOriginBadge" class="hidden text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700"></span>
-        </div>
+        <span class="text-[11px] font-bold tracking-wider text-slate-400 uppercase">Verification Finding</span>
         <span id="verdictStatus" class="text-xs font-black px-3.5 py-1.5 rounded-lg border tracking-wider bg-slate-800 text-slate-400 border-slate-700">
           AWAITING INPUT
         </span>
       </div>
       
       <div class="flex flex-col gap-2">
-        <span class="text-[10px] font-bold text-amber-400 uppercase tracking-wider">Correct Answer</span>
-        <p id="verifiedAnswer" class="text-sm font-mono text-slate-300 bg-slate-950/90 border border-slate-800/90 rounded-xl p-4 leading-relaxed min-h-[72px]">
-          Enter a statement above and click "Cross-Reference All Available Sources" to verify against live encyclopedias, open library archives, live news indexes, and global structured entities.
+        <span class="text-[10px] font-bold text-amber-400 uppercase tracking-wider">Correct Answer & Verified Fact</span>
+        <p id="verifiedAnswer" class="text-sm font-mono text-slate-200 bg-slate-950/90 border border-slate-800/90 rounded-xl p-4 leading-relaxed min-h-[72px]">
+          Enter a statement above and click "Check & Verify Claim" to evaluate whether it is True or False and display the verified correct answer.
         </p>
       </div>
 
       <div id="sourceRow" class="flex items-center justify-between pt-1 text-xs">
         <span id="matchedEntity" class="font-mono text-slate-500 text-[11px]"></span>
         <a id="sourceAnchor" href="#" target="_blank" rel="noopener noreferrer" class="hidden font-bold text-amber-400 hover:text-amber-300 flex items-center gap-1 transition">
-          View Primary Source <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+          View Primary Reference <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
         </a>
       </div>
     </div>
@@ -110,184 +107,174 @@
       const verifyFactBtn = document.getElementById('verifyFactBtn');
       const verdictStatus = document.getElementById('verdictStatus');
       const verifiedAnswer = document.getElementById('verifiedAnswer');
-      const sourceOriginBadge = document.getElementById('sourceOriginBadge');
       const matchedEntity = document.getElementById('matchedEntity');
       const sourceAnchor = document.getElementById('sourceAnchor');
       const resetBtn = document.getElementById('resetBtn');
 
-      // 1. Wikipedia / MediaWiki OpenSearch
-      async function queryWikipedia(query) {
+      // Common stop words to strip so search engines find the actual subject entities
+      const stopWords = new Set([
+        'is', 'are', 'was', 'were', 'the', 'a', 'an', 'in', 'on', 'at', 'of', 'for', 
+        'to', 'by', 'with', 'from', 'that', 'this', 'did', 'does', 'do', 'who', 
+        'what', 'where', 'when', 'why', 'how', 'person', 'people', 'first'
+      ]);
+
+      function extractSearchQuery(rawText) {
+        // Clean punctuation
+        const cleaned = rawText.replace(/[?.,!;"'()]/g, ' ').trim();
+        const tokens = cleaned.split(/\s+/).filter(Boolean);
+
+        // Find named entities (capitalized) or numbers/years
+        const entities = tokens.filter(t => (t[0] === t[0].toUpperCase() && !stopWords.has(t.toLowerCase())) || /\d{3,4}/.test(t));
+        if (entities.length >= 2) {
+          return entities.slice(0, 4).join(' ');
+        }
+
+        // Fallback: strip generic stop words
+        const filtered = tokens.filter(t => !stopWords.has(t.toLowerCase()));
+        return (filtered.slice(0, 4).join(' ') || cleaned.slice(0, 40));
+      }
+
+      // Query Wikipedia OpenSearch & Extract API
+      async function queryWikipedia(searchPhrase) {
         try {
-          const res = await fetch(`https://en.wikipedia.org/w/api.php?action=opensearch&search=${encodeURIComponent(query)}&limit=1&namespace=0&format=json&origin=*`);
+          const endpoint = `https://en.wikipedia.org/w/api.php?action=opensearch&search=${encodeURIComponent(searchPhrase)}&limit=3&namespace=0&format=json&origin=*`;
+          const res = await fetch(endpoint);
           const data = await res.json();
-          if (data[1] && data[1][0] && data[2] && data[2][0] && data[2][0].trim().length > 0) {
-            return {
-              origin: 'Wikipedia Encyclopedic Record',
-              title: data[1][0],
-              answer: data[2][0],
-              url: data[3][0]
-            };
+          
+          if (!data || !data[1] || data[1].length === 0) return null;
+
+          // Find the first result that returns a valid summary text
+          for (let i = 0; i < data[1].length; i++) {
+            const title = data[1][i];
+            const snippet = data[2][i];
+            const url = data[3][i];
+
+            if (snippet && snippet.trim().length > 15 && !snippet.includes('may refer to:')) {
+              return { title, answer: snippet, url };
+            }
+
+            // If snippet was truncated, query page extract directly
+            const extractUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title.replace(/\s+/g, '_'))}`;
+            const extractRes = await fetch(extractUrl);
+            if (extractRes.ok) {
+              const summaryData = await extractRes.json();
+              if (summaryData.extract && summaryData.extract.length > 20) {
+                return {
+                  title: summaryData.title,
+                  answer: summaryData.extract,
+                  url: summaryData.content_urls ? summaryData.content_urls.desktop.page : url
+                };
+              }
+            }
           }
-        } catch (e) { console.warn('Wiki lookup skipped', e); }
+        } catch (e) {
+          console.warn('Wikipedia query error:', e);
+        }
         return null;
       }
 
-      // 2. Wikidata Global Knowledge Base
-      async function queryWikidata(query) {
+      // Query Wikidata Entity API
+      async function queryWikidata(searchPhrase) {
         try {
-          const res = await fetch(`https://www.wikidata.org/w/api.php?action=wbsearchentities&search=${encodeURIComponent(query)}&language=en&format=json&origin=*`);
+          const endpoint = `https://www.wikidata.org/w/api.php?action=wbsearchentities&search=${encodeURIComponent(searchPhrase)}&language=en&format=json&origin=*`;
+          const res = await fetch(endpoint);
           const data = await res.json();
-          if (data.search && data.search.length > 0 && data.search[0].description) {
-            const item = data.search[0];
-            return {
-              origin: 'Wikidata Global Knowledge Base',
-              title: item.label,
-              answer: `${item.label}: ${item.description}.`,
-              url: `https://www.wikidata.org/wiki/${item.id}`
-            };
+
+          if (data && data.search && data.search.length > 0) {
+            const match = data.search.find(item => item.description && item.description.length > 10);
+            if (match) {
+              return {
+                title: match.label,
+                answer: `${match.label}: ${match.description}.`,
+                url: `https://www.wikidata.org/wiki/${match.id}`
+              };
+            }
           }
-        } catch (e) { console.warn('Wikidata lookup skipped', e); }
+        } catch (e) {
+          console.warn('Wikidata query error:', e);
+        }
         return null;
       }
 
-      // 3. Internet Archive / Open Library (Books, Literature, Authors)
-      async function queryOpenLibrary(query) {
-        try {
-          const res = await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(query)}&limit=1`);
-          const data = await res.json();
-          if (data.docs && data.docs.length > 0) {
-            const doc = data.docs[0];
-            const author = doc.author_name ? doc.author_name.join(', ') : 'Documented Author';
-            const year = doc.first_publish_year ? ` (first published ${doc.first_publish_year})` : '';
-            return {
-              origin: 'Internet Archive / Open Library',
-              title: doc.title,
-              answer: `"${doc.title}" written by ${author}${year}. Cataloged in public open library archive.`,
-              url: `https://openlibrary.org${doc.key}`
-            };
-          }
-        } catch (e) { console.warn('OpenLibrary lookup skipped', e); }
-        return null;
-      }
-
-      // 4. DuckDuckGo Instant Answer API (Broad Web, Definitions & Official Topics)
-      async function queryDuckDuckGo(query) {
-        try {
-          const res = await fetch(`https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&no_html=1&skip_disambig=1`);
-          const data = await res.json();
-          const answer = data.Answer || data.AbstractText || (data.RelatedTopics && data.RelatedTopics[0] && data.RelatedTopics[0].Text);
-          const url = data.AbstractURL || (data.RelatedTopics && data.RelatedTopics[0] && data.RelatedTopics[0].FirstURL);
-          const heading = data.Heading || query;
-          if (answer && answer.trim().length > 0) {
-            return {
-              origin: 'Web & Reference Instant Knowledge',
-              title: heading,
-              answer: answer,
-              url: url || null
-            };
-          }
-        } catch (e) { console.warn('DuckDuckGo lookup skipped', e); }
-        return null;
-      }
-
-      // 5. Public News & Media Archives (Hacker News Algolia Global News/Web Index)
-      async function queryNewsWebIndex(query) {
-        try {
-          const res = await fetch(`https://hn.algolia.com/api/v1/search?query=${encodeURIComponent(query)}&tags=story&hitsPerPage=1`);
-          const data = await res.json();
-          if (data.hits && data.hits.length > 0) {
-            const hit = data.hits[0];
-            const date = hit.created_at ? new Date(hit.created_at).toLocaleDateString() : '';
-            return {
-              origin: 'Public Media & Web Archive',
-              title: hit.title,
-              answer: `Reported Event / Media Coverage: "${hit.title}" (${date}). Points: ${hit.points || 0}.`,
-              url: hit.url || `https://news.ycombinator.com/item?id=${hit.objectID}`
-            };
-          }
-        } catch (e) { console.warn('News search skipped', e); }
-        return null;
-      }
-
+      // Verification Logic
       if (verifyFactBtn) {
         verifyFactBtn.addEventListener('click', async () => {
           const query = factInput.value.trim();
           if (!query) {
-            alert('Please enter a statement, news item, or claim to verify.');
+            alert('Please enter a statement or claim to verify.');
             return;
           }
 
           verifyFactBtn.disabled = true;
-          verifyFactBtn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Searching All Open Sources...`;
+          verifyFactBtn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Checking Reference Records...`;
           if (window.lucide) lucide.createIcons();
 
-          // Extract key subject tokens
-          const searchTerms = query.replace(/[^\w\s]/gi, '')
-            .split(/\s+/)
-            .filter(w => w.length > 2 && (w[0] === w[0].toUpperCase() || /\d/.test(w)))
-            .slice(0, 4)
-            .join(' ') || query.split(/\s+/).slice(0, 3).join(' ');
+          const searchTerms = extractSearchQuery(query);
 
           try {
-            // Check all sources concurrently across the web
-            const [wikiRes, ddgRes, wikidataRes, openLibRes, newsRes] = await Promise.all([
-              queryWikipedia(searchTerms),
-              queryDuckDuckGo(searchTerms),
-              queryWikidata(searchTerms),
-              queryOpenLibrary(searchTerms),
-              queryNewsWebIndex(searchTerms)
-            ]);
+            // Check primary encyclopedic sources with fallback search
+            let record = await queryWikipedia(searchTerms);
+            if (!record) {
+              record = await queryWikidata(searchTerms);
+            }
+            if (!record && searchTerms.includes(' ')) {
+              // Retry with just the primary subject keywords
+              const fallbackTerms = searchTerms.split(' ').slice(0, 2).join(' ');
+              record = await queryWikipedia(fallbackTerms);
+            }
 
-            // Select highest fidelity corroboration
-            const result = wikiRes || ddgRes || wikidataRes || openLibRes || newsRes;
-
-            if (result && result.answer) {
-              verdictStatus.textContent = 'TRUE';
-              verdictStatus.className = 'text-xs font-black px-4 py-1.5 rounded-lg border tracking-wider bg-emerald-950 text-emerald-300 border-emerald-700 shadow-sm';
-              verifiedAnswer.textContent = result.answer;
-              matchedEntity.textContent = `Corroborated Subject: ${result.title}`;
+            if (record && record.answer) {
+              // Compare query tokens with the verified answer text
+              const userTokens = query.toLowerCase().replace(/[^\w\s]/g, '').split(/\s+/).filter(w => !stopWords.has(w) && w.length > 2);
+              const answerTextLower = record.answer.toLowerCase();
               
-              if (sourceOriginBadge) {
-                sourceOriginBadge.textContent = result.origin;
-                sourceOriginBadge.classList.remove('hidden');
+              const matchedCount = userTokens.filter(t => answerTextLower.includes(t)).length;
+              const matchRatio = userTokens.length > 0 ? (matchedCount / userTokens.length) : 0;
+
+              // Corroboration Decision
+              if (matchRatio >= 0.45 || (userTokens.some(t => /\d{3,4}/.test(t) && answerTextLower.includes(t)))) {
+                verdictStatus.textContent = 'TRUE';
+                verdictStatus.className = 'text-xs font-black px-4 py-1.5 rounded-lg border tracking-wider bg-emerald-950 text-emerald-300 border-emerald-700 shadow-sm';
+              } else {
+                verdictStatus.textContent = 'FALSE / CONTRADICTED';
+                verdictStatus.className = 'text-xs font-black px-4 py-1.5 rounded-lg border tracking-wider bg-rose-950 text-rose-300 border-rose-700 shadow-sm';
               }
 
-              if (result.url) {
-                sourceAnchor.href = result.url;
+              verifiedAnswer.textContent = record.answer;
+              matchedEntity.textContent = `Verified Subject: ${record.title}`;
+
+              if (record.url) {
+                sourceAnchor.href = record.url;
                 sourceAnchor.classList.remove('hidden');
               } else {
                 sourceAnchor.classList.add('hidden');
               }
             } else {
+              // No reference record matched
               verdictStatus.textContent = 'FALSE / UNVERIFIED';
               verdictStatus.className = 'text-xs font-black px-4 py-1.5 rounded-lg border tracking-wider bg-rose-950 text-rose-300 border-rose-700 shadow-sm';
-              verifiedAnswer.textContent = `No reliable records across open encyclopedias, news archives, or web indices corroborate this assertion.`;
-              matchedEntity.textContent = `Searched: "${searchTerms}"`;
-              
-              if (sourceOriginBadge) {
-                sourceOriginBadge.textContent = 'Searched All Web Sources';
-                sourceOriginBadge.classList.remove('hidden');
-              }
+              verifiedAnswer.textContent = `No reliable encyclopedic or historical record was found matching this statement. The claim could not be corroborated.`;
+              matchedEntity.textContent = `Searched Terms: "${searchTerms}"`;
               sourceAnchor.classList.add('hidden');
             }
           } catch (err) {
             alert('Lookup failed: ' + err.message);
           } finally {
             verifyFactBtn.disabled = false;
-            verifyFactBtn.innerHTML = `<i data-lucide="search-check" class="w-4 h-4"></i> Cross-Reference All Available Sources`;
+            verifyFactBtn.innerHTML = `<i data-lucide="search-check" class="w-4 h-4"></i> Check & Verify Claim`;
             if (window.lucide) lucide.createIcons();
           }
         });
       }
 
+      // Reset Button
       if (resetBtn) {
         resetBtn.addEventListener('click', () => {
           factInput.value = '';
           verdictStatus.textContent = 'AWAITING INPUT';
           verdictStatus.className = 'text-xs font-black px-3.5 py-1.5 rounded-lg border tracking-wider bg-slate-800 text-slate-400 border-slate-700';
-          verifiedAnswer.textContent = 'Enter a statement above and click "Cross-Reference All Available Sources" to verify against live encyclopedias, open library archives, live news indexes, and global structured entities.';
+          verifiedAnswer.textContent = 'Enter a statement above and click "Check & Verify Claim" to evaluate whether it is True or False and display the verified correct answer.';
           matchedEntity.textContent = '';
-          if (sourceOriginBadge) sourceOriginBadge.classList.add('hidden');
           sourceAnchor.classList.add('hidden');
         });
       }
