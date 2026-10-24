@@ -4,18 +4,31 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VeritasAI Studio - Academic Research & Grounded Writing Suite</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
           colors: {
             brand: {
               50: '#f0f9ff',
               100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
               400: '#38bdf8',
               500: '#0ea5e9',
               600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
               900: '#0c4a6e',
               950: '#082f49'
             }
@@ -24,209 +37,259 @@
       }
     }
   </script>
+
   <style>
-    .tab-btn.active {
-      background: #0ea5e9 !important;
-      color: #ffffff !important;
-      border-color: #38bdf8 !important;
+    /* Technical Grid Canvas in Cohesive Ice-Blue */
+    .bg-grid-cyber {
+      background-color: #030712;
+      background-image: 
+        linear-gradient(to right, rgba(14, 165, 233, 0.08) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(14, 165, 233, 0.08) 1px, transparent 1px),
+        radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.15) 0%, transparent 75%);
+      background-size: 32px 32px, 32px 32px, 100% 100%;
     }
-    .dropzone-active {
+
+    /* Glass Surfaces */
+    .glass-card {
+      background: rgba(13, 23, 42, 0.82);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(56, 189, 248, 0.15);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+    }
+
+    .glass-card-subtle {
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    /* Tab Controls */
+    .tab-panel {
+      display: none;
+    }
+    .tab-panel.active {
+      display: flex;
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%) !important;
+      color: #ffffff !important;
+      border-color: rgba(56, 189, 248, 0.4) !important;
+      box-shadow: 0 0 16px rgba(14, 165, 233, 0.35);
+    }
+
+    /* Dropzone Highlight */
+    .dropzone-hover {
       border-color: #38bdf8 !important;
-      background-color: rgba(14, 165, 233, 0.15) !important;
+      background-color: rgba(14, 165, 233, 0.12) !important;
+      box-shadow: 0 0 20px rgba(14, 165, 233, 0.2) inset;
     }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans antialiased selection:bg-brand-500 selection:text-white">
+<body class="bg-grid-cyber text-slate-100 min-h-screen flex flex-col font-sans antialiased selection:bg-brand-500 selection:text-white relative">
+
+  <!-- Ambient Sky Blue Glow -->
+  <div class="fixed top-[-80px] left-[15%] w-96 h-96 bg-brand-500/10 rounded-full blur-[140px] pointer-events-none -z-10"></div>
+  <div class="fixed bottom-[-80px] right-[10%] w-[420px] h-[420px] bg-brand-600/10 rounded-full blur-[140px] pointer-events-none -z-10"></div>
 
   <!-- Header -->
-  <header class="border-b border-slate-800 bg-slate-900/90 px-4 py-3 sticky top-0 z-50 backdrop-blur">
-    <div class="max-w-7xl mx-auto flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <span class="text-xl">🎓</span>
-        <h1 class="font-extrabold text-lg tracking-tight">Veritas<span class="text-brand-400">Editorial</span></h1>
-        <span class="text-[10px] px-2 py-0.5 rounded font-bold bg-brand-950 text-brand-300 border border-brand-800 ml-2">Academic Grounded</span>
+  <header class="border-b border-brand-900/40 bg-slate-950/85 backdrop-blur-xl sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-brand-400 p-[1px] shadow-lg shadow-brand-500/20 flex items-center justify-center">
+          <div class="w-full h-full bg-slate-950/90 rounded-[11px] flex items-center justify-center text-lg">
+            🎓
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="font-extrabold text-base sm:text-lg tracking-tight text-white">Veritas<span class="text-brand-400">Editorial</span></h1>
+            <span class="px-2 py-0.5 text-[9px] uppercase tracking-wider font-extrabold rounded-full bg-brand-950 text-brand-300 border border-brand-700/60">Academic Grounded</span>
+          </div>
+          <p class="text-[11px] text-slate-400">Grounded Research, Forensics & Style Suite</p>
+        </div>
       </div>
-      <div class="flex items-center gap-2">
-        <a href="https://github.com/sgill77-debug/testing1" target="_blank" rel="noopener noreferrer" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">
-          GitHub Repo ↗
+
+      <div class="flex items-center gap-2.5">
+        <a href="https://github.com/sgill77-debug/testing1" target="_blank" rel="noopener noreferrer" class="text-xs bg-slate-900/80 hover:bg-slate-800 text-slate-300 px-3 py-1.5 rounded-xl border border-white/10 transition flex items-center gap-1.5 shadow-sm">
+          <span>GitHub</span>
+          <span class="text-[10px] text-slate-400">↗</span>
         </a>
-        <button type="button" onclick="resetAll()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">
+        <button type="button" id="globalResetBtn" class="text-xs bg-slate-900/80 hover:bg-rose-950/40 text-slate-400 hover:text-rose-300 px-3 py-1.5 rounded-xl border border-white/10 hover:border-rose-800/50 transition shadow-sm">
           Reset All
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Main Grid -->
-  <main class="max-w-7xl mx-auto w-full p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 flex-1">
+  <!-- Main Container -->
+  <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 py-6 w-full grid grid-cols-1 lg:grid-cols-12 gap-6">
     
     <!-- Left Workspace (7 Columns) -->
     <section class="lg:col-span-7 flex flex-col gap-4">
       
-      <!-- Nav Tabs -->
-      <nav class="grid grid-cols-3 sm:grid-cols-6 gap-1 bg-slate-900 p-1.5 rounded-xl border border-slate-800 text-center">
-        <button type="button" class="tab-btn active text-xs font-bold py-2 px-1 rounded-lg border border-transparent text-slate-300 hover:text-white transition" onclick="switchTab('sources', this)">
-          📚 Sources
+      <!-- Primary Tab Bar -->
+      <nav class="grid grid-cols-3 sm:grid-cols-6 gap-1.5 glass-card p-1.5 rounded-2xl">
+        <button type="button" data-tab="sources" class="tab-btn active text-xs font-bold py-2.5 px-2 rounded-xl border border-transparent text-slate-300 hover:text-white transition flex items-center justify-center gap-1">
+          <span>📚</span> Sources
         </button>
-        <button type="button" class="tab-btn text-xs font-bold py-2 px-1 rounded-lg border border-transparent text-slate-300 hover:text-white transition" onclick="switchTab('text', this)">
-          📝 Paper Draft
+        <button type="button" data-tab="text" class="tab-btn text-xs font-bold py-2.5 px-2 rounded-xl border border-transparent text-slate-300 hover:text-white transition flex items-center justify-center gap-1">
+          <span>📝</span> Paper
         </button>
-        <button type="button" class="tab-btn text-xs font-bold py-2 px-1 rounded-lg border border-transparent text-slate-300 hover:text-white transition" onclick="switchTab('rewriter', this)">
-          ✨ Rewriter
+        <button type="button" data-tab="rewriter" class="tab-btn text-xs font-bold py-2.5 px-2 rounded-xl border border-transparent text-slate-300 hover:text-white transition flex items-center justify-center gap-1">
+          <span>✨</span> Rewrite
         </button>
-        <button type="button" class="tab-btn text-xs font-bold py-2 px-1 rounded-lg border border-transparent text-slate-300 hover:text-white transition" onclick="switchTab('citations', this)">
-          📑 Citations
+        <button type="button" data-tab="citations" class="tab-btn text-xs font-bold py-2.5 px-2 rounded-xl border border-transparent text-slate-300 hover:text-white transition flex items-center justify-center gap-1">
+          <span>📑</span> Cite
         </button>
-        <button type="button" class="tab-btn text-xs font-bold py-2 px-1 rounded-lg border border-transparent text-slate-300 hover:text-white transition" onclick="switchTab('consistency', this)">
-          ⚖️ Style Audit
+        <button type="button" data-tab="consistency" class="tab-btn text-xs font-bold py-2.5 px-2 rounded-xl border border-transparent text-slate-300 hover:text-white transition flex items-center justify-center gap-1">
+          <span>⚖️</span> Style
         </button>
-        <button type="button" class="tab-btn text-xs font-bold py-2 px-1 rounded-lg border border-transparent text-slate-300 hover:text-white transition" onclick="switchTab('fact', this)">
-          🔍 Fact Check
+        <button type="button" data-tab="fact" class="tab-btn text-xs font-bold py-2.5 px-2 rounded-xl border border-transparent text-slate-300 hover:text-white transition flex items-center justify-center gap-1">
+          <span>🔍</span> Facts
         </button>
       </nav>
 
-      <!-- TAB 1: SOURCES & COURSE NOTES INGESTION -->
-      <div id="panel-sources" class="tab-panel flex flex-col gap-3">
-        <div id="sourceDropzone" class="border-2 border-dashed border-slate-800 hover:border-brand-400 rounded-xl p-5 text-center bg-slate-900/40 cursor-pointer transition">
+      <!-- TAB PANEL 1: SOURCES & NOTES INGESTION -->
+      <div id="tab-panel-sources" class="tab-panel active flex-col gap-3">
+        <div id="sourceDropzone" class="border-2 border-dashed border-white/10 hover:border-brand-400 rounded-2xl p-5 text-center glass-card-subtle cursor-pointer transition">
           <input type="file" id="sourceFileInput" class="hidden" accept=".txt,.md,.rtf,.json,.csv" multiple>
-          <div class="flex flex-col items-center gap-1.5">
+          <div class="flex flex-col items-center justify-center gap-1">
             <span class="text-2xl">📥</span>
-            <p class="text-xs font-bold text-slate-200">Upload Lecture Notes, Readings, or Syllabi</p>
-            <p class="text-[11px] text-slate-500">Supports .txt, .md, .rtf transcripts. Uploaded materials ground drafting and citations.</p>
+            <p class="text-xs font-bold text-slate-200">Upload Lecture Notes, Readings, or Syllabus</p>
+            <p class="text-[11px] text-slate-400">Supports .txt, .md, .rtf files to ground your drafts in factual sources</p>
           </div>
         </div>
 
-        <div class="flex justify-between items-center text-[11px] text-slate-400">
-          <span class="font-bold uppercase tracking-wider text-[10px] text-brand-400">Grounded Knowledge Base (Active Sources)</span>
-          <span id="sourceStats">0 sources loaded | 0 words</span>
+        <div class="flex justify-between items-center text-[11px] text-slate-400 px-1">
+          <span class="font-bold uppercase tracking-wider text-[10px] text-brand-400">Active Grounding Repository</span>
+          <span id="sourceStats" class="font-mono">0 sources | 0 words indexed</span>
         </div>
 
         <textarea
           id="sourcesInput"
           rows="8"
-          placeholder="Paste lecture notes, slide outlines, study guides, or reading quotes here..."
-          class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-brand-500 leading-relaxed"
+          placeholder="Paste lecture notes, slide transcripts, study outlines, or reading quotes here..."
+          class="w-full glass-card border border-white/10 rounded-2xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-brand-500 leading-relaxed resize-y"
           oninput="updateSourceStats()"
         ></textarea>
         
-        <div class="flex justify-between items-center">
-          <button type="button" onclick="loadSampleLectureNotes()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">
+        <div class="flex justify-between items-center gap-2">
+          <button type="button" onclick="loadSampleLectureNotes()" class="text-xs glass-card-subtle hover:bg-slate-800 text-slate-300 px-3.5 py-2 rounded-xl border border-white/10 transition">
             Load Sample Lecture Notes
           </button>
-          <button type="button" onclick="crossAuditWithDraft()" class="bg-brand-600 hover:bg-brand-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition">
+          <button type="button" onclick="crossAuditWithDraft()" class="text-xs bg-brand-600 hover:bg-brand-500 text-white font-bold px-4 py-2 rounded-xl transition shadow-md shadow-brand-600/30">
             Audit Draft Against Notes →
           </button>
         </div>
-
-        <div id="sourceCardsList" class="flex flex-col gap-2 mt-1"></div>
       </div>
 
-      <!-- TAB 2: PAPER DRAFT & FORENSICS -->
-      <div id="panel-text" class="tab-panel hidden flex flex-col gap-3">
-        <div class="flex justify-between items-center text-[11px] text-slate-400">
-          <span class="font-bold uppercase tracking-wider text-[10px]">Academic Draft</span>
-          <span id="charCount">0 characters | 0 words</span>
+      <!-- TAB PANEL 2: PAPER DRAFT & FORENSICS -->
+      <div id="tab-panel-text" class="tab-panel flex-col gap-3">
+        <div class="flex justify-between items-center text-[11px] text-slate-400 px-1">
+          <span class="font-bold uppercase tracking-wider text-[10px] text-brand-400">Academic Draft</span>
+          <span id="charCount" class="font-mono">0 chars | 0 words</span>
         </div>
 
         <textarea
           id="textInput"
-          rows="10"
+          rows="8"
           placeholder="Type or paste your academic essay, research paper, or literature review here..."
-          class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-brand-500 leading-relaxed"
+          class="w-full glass-card border border-white/10 rounded-2xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-brand-500 leading-relaxed resize-y"
           oninput="processTextInput()"
         ></textarea>
         
-        <div class="flex justify-between items-center">
-          <button type="button" onclick="loadSamplePaper()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">
+        <div class="flex justify-between items-center gap-2">
+          <button type="button" onclick="loadSamplePaper()" class="text-xs glass-card-subtle hover:bg-slate-800 text-slate-300 px-3.5 py-2 rounded-xl border border-white/10 transition">
             Load Sample Paper
           </button>
           <div class="flex gap-2">
-            <button type="button" onclick="sendToRewriter()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold px-3 py-1.5 rounded-lg text-xs border border-slate-700 transition">
-              Send to Rewriter
+            <button type="button" onclick="sendToRewriter()" class="text-xs bg-slate-800 hover:bg-slate-700 text-brand-300 font-bold px-3.5 py-2 rounded-xl border border-brand-500/30 transition">
+              Send to Rewriter →
             </button>
-            <button type="button" onclick="crossAuditWithDraft()" class="bg-brand-600 hover:bg-brand-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition">
-              Verify with Sources
+            <button type="button" onclick="crossAuditWithDraft()" class="text-xs bg-brand-600 hover:bg-brand-500 text-white font-bold px-4 py-2 rounded-xl transition shadow-md shadow-brand-600/30">
+              Verify Grounding
             </button>
           </div>
         </div>
 
-        <!-- Claim Verification Banner -->
         <div id="groundingAlert" class="hidden p-3 rounded-xl border text-xs"></div>
       </div>
 
-      <!-- TAB 3: 3-WAY REWRITER -->
-      <div id="panel-rewriter" class="tab-panel hidden flex flex-col gap-3">
-        <div class="flex justify-between items-center text-xs text-slate-400">
-          <span class="font-bold uppercase tracking-wider text-[10px]">Academic Polish & Flow</span>
-          <span id="rewriterStats">0 words</span>
+      <!-- TAB PANEL 3: REWRITER -->
+      <div id="tab-panel-rewriter" class="tab-panel flex-col gap-3">
+        <div class="flex justify-between items-center text-xs text-slate-400 px-1">
+          <span class="font-bold uppercase tracking-wider text-[10px] text-brand-400">Editorial Rewriter</span>
+          <span id="rewriterStats" class="font-mono">0 words</span>
         </div>
         <textarea
           id="rewriterInput"
-          rows="8"
-          placeholder="Type or paste text here. Overused AI clichés and verbose phrases will receive 3 distinct rewrites..."
-          class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-brand-500 leading-relaxed"
+          rows="7"
+          placeholder="Paste draft here. Clichés and bloated transitions will receive 3 instant cadence rewrites..."
+          class="w-full glass-card border border-white/10 rounded-2xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-brand-500 leading-relaxed resize-y"
           oninput="runRewriterAnalysis()"
         ></textarea>
         
-        <div class="flex justify-between items-center">
-          <button type="button" onclick="applyAllRewrites()" class="text-xs bg-emerald-700 hover:bg-emerald-600 text-white font-bold px-3 py-1.5 rounded-lg transition">
-            Accept All Academic Tightenings
+        <div class="flex justify-between items-center gap-2">
+          <button type="button" onclick="applyAllRewrites()" class="text-xs bg-emerald-700 hover:bg-emerald-600 text-white font-bold px-3.5 py-2 rounded-xl transition border border-emerald-500/30">
+            Accept All Tightenings
           </button>
-          <button type="button" id="copyRewriterBtn" onclick="copyRewriterText()" class="text-xs bg-brand-600 hover:bg-brand-500 text-white font-bold px-4 py-1.5 rounded-lg transition">
-            Copy Text
+          <button type="button" id="copyRewriterBtn" onclick="copyRewriterText()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold px-3.5 py-2 rounded-xl border border-white/10 transition">
+            Copy Result
           </button>
         </div>
 
         <div id="rewriterCards" class="flex flex-col gap-2.5 mt-1 max-h-72 overflow-y-auto pr-1"></div>
       </div>
 
-      <!-- TAB 4: CITATION GENERATOR -->
-      <div id="panel-citations" class="tab-panel hidden flex flex-col gap-3">
-        <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-4 flex flex-col gap-3">
-          <span class="text-xs font-bold text-brand-400 uppercase tracking-wider">Instant Citation & In-Text Mapper</span>
+      <!-- TAB PANEL 4: CITATIONS -->
+      <div id="tab-panel-citations" class="tab-panel flex-col gap-3">
+        <div class="glass-card-subtle border border-white/10 rounded-2xl p-4 flex flex-col gap-3">
+          <span class="text-xs font-bold text-brand-400 uppercase tracking-wider">Citation & In-Text Mapper</span>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-            <input type="text" id="citeAuthor" placeholder="Author(s) (e.g. Smith, J. & Lee, R.)" class="bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 focus:outline-none focus:border-brand-500">
-            <input type="text" id="citeYear" placeholder="Year (e.g. 2024)" class="bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 focus:outline-none focus:border-brand-500">
-            <input type="text" id="citeTitle" placeholder="Title of Article / Book / Lecture" class="bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 focus:outline-none focus:border-brand-500 sm:col-span-2">
-            <input type="text" id="citeSource" placeholder="Journal, Publisher, or Course Name" class="bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 focus:outline-none focus:border-brand-500">
-            <input type="text" id="citePages" placeholder="Page / Slide Number (e.g. 42 or Slide 12)" class="bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 focus:outline-none focus:border-brand-500">
+            <input type="text" id="citeAuthor" placeholder="Author(s) (e.g. Baddeley, A. & Hitch, G.)" class="glass-card border border-white/10 rounded-xl p-2.5 text-slate-200 focus:outline-none focus:border-brand-500">
+            <input type="text" id="citeYear" placeholder="Year (e.g. 1974)" class="glass-card border border-white/10 rounded-xl p-2.5 text-slate-200 focus:outline-none focus:border-brand-500">
+            <input type="text" id="citeTitle" placeholder="Title of Article / Chapter / Lecture" class="glass-card border border-white/10 rounded-xl p-2.5 text-slate-200 focus:outline-none focus:border-brand-500 sm:col-span-2">
+            <input type="text" id="citeSource" placeholder="Journal, Publisher, or Course Title" class="glass-card border border-white/10 rounded-xl p-2.5 text-slate-200 focus:outline-none focus:border-brand-500">
+            <input type="text" id="citePages" placeholder="Page / Slide Number (e.g. 42 or Slide 12)" class="glass-card border border-white/10 rounded-xl p-2.5 text-slate-200 focus:outline-none focus:border-brand-500">
           </div>
-          <button type="button" onclick="generateCitations()" class="bg-brand-600 hover:bg-brand-500 text-white font-bold px-4 py-2 rounded-lg text-xs self-end transition">
-            Generate Formatted Formats
+          <button type="button" onclick="generateCitations()" class="bg-brand-600 hover:bg-brand-500 text-white font-bold px-4 py-2 rounded-xl text-xs self-end transition shadow-md shadow-brand-600/30">
+            Generate In-Text & Bib Formats
           </button>
         </div>
 
         <div id="citationOutputCards" class="flex flex-col gap-2 mt-1"></div>
       </div>
 
-      <!-- TAB 5: CONSISTENCY AUDITOR -->
-      <div id="panel-consistency" class="tab-panel hidden flex flex-col gap-3">
-        <div class="flex justify-between items-center text-xs text-slate-400">
-          <span class="font-bold uppercase tracking-wider text-[10px]">Academic Style & Acronym Audit</span>
-          <button type="button" onclick="runConsistencyAudit()" class="text-xs bg-brand-600 hover:bg-brand-500 text-white font-bold px-3 py-1 rounded-lg transition">
-            Run Style Check
+      <!-- TAB PANEL 5: STYLE AUDIT -->
+      <div id="tab-panel-consistency" class="tab-panel flex-col gap-3">
+        <div class="flex justify-between items-center text-xs text-slate-400 px-1">
+          <span class="font-bold uppercase tracking-wider text-[10px] text-brand-400">Document Consistency Audit</span>
+          <button type="button" onclick="runConsistencyAudit()" class="text-xs bg-brand-600 hover:bg-brand-500 text-white font-bold px-3 py-1.5 rounded-xl transition shadow-md shadow-brand-600/30">
+            Re-Audit
           </button>
         </div>
         <textarea
           id="consistencyInput"
-          rows="8"
-          placeholder="Paste paper to detect mixed US/UK spellings, undefined abbreviations, and informal colloquialisms..."
-          class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-brand-500 leading-relaxed"
+          rows="7"
+          placeholder="Paste manuscript to audit dialect collisions (analyze vs. analyse) and undefined acronyms..."
+          class="w-full glass-card border border-white/10 rounded-2xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-brand-500 leading-relaxed resize-y"
           oninput="runConsistencyAudit()"
         ></textarea>
         
-        <div id="consistencyReport" class="flex flex-col gap-2 mt-1 max-h-72 overflow-y-auto pr-1"></div>
+        <div id="consistencyReport" class="flex flex-col gap-2.5 mt-1 max-h-72 overflow-y-auto pr-1"></div>
       </div>
 
-      <!-- TAB 6: FACT CHECK -->
-      <div id="panel-fact" class="tab-panel hidden flex flex-col gap-3">
+      <!-- TAB PANEL 6: FACT CHECK -->
+      <div id="tab-panel-fact" class="tab-panel flex-col gap-3">
         <textarea
           id="factInput"
           rows="6"
-          placeholder="Paste factual statements or claims to cross-reference with public knowledge records (e.g. 'DNA structure was resolved in 1953')..."
-          class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3.5 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-500"
+          placeholder="Paste factual statements or claims to cross-reference with public knowledge records..."
+          class="w-full glass-card border border-white/10 rounded-2xl p-4 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-brand-500"
         ></textarea>
-        <button type="button" onclick="analyzeFact()" class="bg-amber-600 hover:bg-amber-500 text-white font-bold px-4 py-2 rounded-lg text-xs self-end transition">
+        <button type="button" onclick="analyzeFact()" class="bg-brand-600 hover:bg-brand-500 text-white font-bold px-4 py-2 rounded-xl text-xs self-end transition shadow-md shadow-brand-600/30">
           Cross-Reference Registry
         </button>
         <div id="factResults" class="flex flex-col gap-2 mt-1"></div>
@@ -237,41 +300,51 @@
     <!-- Right Report Panel (5 Columns) -->
     <section class="lg:col-span-5 flex flex-col gap-4">
       
-      <!-- Primary Verdict Card -->
-      <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-xl">
-        <div class="flex items-center justify-between mb-2">
-          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Source Grounding & Integrity</span>
-          <span id="verdictBadge" class="text-[10px] px-2 py-0.5 rounded font-bold bg-slate-800 text-slate-400 border border-slate-700">Ready</span>
+      <!-- Primary Gauge Card -->
+      <div class="glass-card rounded-2xl p-5 relative overflow-hidden">
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-brand-400 animate-pulse"></span>
+            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Grounding & Integrity</span>
+          </div>
+          <span id="verdictBadge" class="text-[10px] px-2.5 py-0.5 rounded-full font-bold bg-slate-800 text-slate-400 border border-white/10">Ready</span>
         </div>
-        <div class="flex items-baseline gap-2">
-          <span id="scoreVal" class="text-4xl font-extrabold text-white">0%</span>
+        
+        <div class="flex items-baseline gap-2 mb-2">
+          <span id="scoreVal" class="text-5xl font-black text-white tracking-tight">0%</span>
           <span id="scoreSub" class="text-xs text-slate-400">Course Source Alignment</span>
         </div>
-        <div class="w-full bg-slate-800 rounded-full h-2 mt-3 overflow-hidden">
-          <div id="scoreBar" class="bg-brand-500 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+
+        <div class="w-full bg-slate-900/80 rounded-full h-2.5 p-0.5 border border-white/10 overflow-hidden">
+          <div id="scoreBar" class="bg-gradient-to-r from-brand-600 to-brand-400 h-1.5 rounded-full transition-all duration-500" style="width: 0%"></div>
         </div>
       </div>
 
       <!-- Metrics Strip -->
-      <div class="grid grid-cols-3 gap-2 text-center text-xs">
-        <div class="bg-slate-900 border border-slate-800 p-2.5 rounded-xl">
-          <p class="text-[9px] text-slate-400 uppercase font-bold">Readability</p>
-          <p id="readabilityVal" class="text-base font-bold text-brand-300 mt-0.5">--</p>
+      <div class="grid grid-cols-3 gap-2.5 text-center text-xs">
+        <div class="glass-card-subtle rounded-xl p-3 border border-white/5">
+          <p class="text-[9px] text-slate-400 uppercase font-bold tracking-wider">Readability</p>
+          <p id="readabilityVal" class="text-base font-bold text-brand-300 mt-1 font-mono">--</p>
         </div>
-        <div class="bg-slate-900 border border-slate-800 p-2.5 rounded-xl">
-          <p class="text-[9px] text-slate-400 uppercase font-bold">Burstiness (σ)</p>
-          <p id="burstVal" class="text-base font-bold text-slate-200 mt-0.5">--</p>
+        <div class="glass-card-subtle rounded-xl p-3 border border-white/5">
+          <p class="text-[9px] text-slate-400 uppercase font-bold tracking-wider">Burstiness (σ)</p>
+          <p id="burstVal" class="text-base font-bold text-slate-200 mt-1 font-mono">--</p>
         </div>
-        <div class="bg-slate-900 border border-slate-800 p-2.5 rounded-xl">
-          <p class="text-[9px] text-slate-400 uppercase font-bold">Lexical TTR</p>
-          <p id="ttrVal" class="text-base font-bold text-slate-200 mt-0.5">--</p>
+        <div class="glass-card-subtle rounded-xl p-3 border border-white/5">
+          <p class="text-[9px] text-slate-400 uppercase font-bold tracking-wider">Lexical TTR</p>
+          <p id="ttrVal" class="text-base font-bold text-slate-200 mt-1 font-mono">--</p>
         </div>
       </div>
 
-      <!-- Telemetry Card -->
-      <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex-1 flex flex-col shadow-xl">
-        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Academic Grounding Diagnostic</span>
-        <div id="diagText" class="text-xs font-mono text-slate-300 space-y-1.5 leading-relaxed">
+      <!-- Telemetry Output -->
+      <div class="glass-card rounded-2xl p-5 flex-1 flex flex-col">
+        <div class="flex items-center justify-between pb-3 mb-3 border-b border-white/10">
+          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+            <span>🔬</span> Forensic Telemetry
+          </span>
+          <span id="telemetryStatus" class="text-[10px] font-mono text-brand-400">IDLE</span>
+        </div>
+        <div id="diagText" class="text-xs font-mono text-slate-300 space-y-2 leading-relaxed max-h-[300px] overflow-y-auto pr-1">
           Upload lecture slides or notes in the Sources tab, then write your paper to audit source alignment.
         </div>
       </div>
@@ -280,55 +353,77 @@
   </main>
 
   <script>
-    // --- 1. RESILIENT TAB CONTROLLER ---
-    function switchTab(name, btn) {
-      document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
-      const active = document.getElementById('panel-' + name);
-      if (active) active.classList.remove('hidden');
+    // --- 1. TAB CONTROLLER ---
+    function activateTab(tabKey) {
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        if (btn.getAttribute('data-tab') === tabKey) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
 
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      if (btn) btn.classList.add('active');
+      document.querySelectorAll('.tab-panel').forEach(panel => {
+        if (panel.id === `tab-panel-${tabKey}`) {
+          panel.classList.add('active');
+        } else {
+          panel.classList.remove('active');
+        }
+      });
 
-      if (name === 'rewriter' && !document.getElementById('rewriterInput').value) {
-        document.getElementById('rewriterInput').value = document.getElementById('textInput').value;
-        runRewriterAnalysis();
+      if (tabKey === 'rewriter' && !document.getElementById('rewriterInput').value.trim()) {
+        const src = document.getElementById('textInput').value;
+        if (src.trim()) {
+          document.getElementById('rewriterInput').value = src;
+          runRewriterAnalysis();
+        }
       }
-      if (name === 'consistency' && !document.getElementById('consistencyInput').value) {
-        document.getElementById('consistencyInput').value = document.getElementById('textInput').value;
-        runConsistencyAudit();
+      if (tabKey === 'consistency' && !document.getElementById('consistencyInput').value.trim()) {
+        const src = document.getElementById('textInput').value || document.getElementById('rewriterInput').value;
+        if (src.trim()) {
+          document.getElementById('consistencyInput').value = src;
+          runConsistencyAudit();
+        }
       }
     }
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => activateTab(btn.getAttribute('data-tab')));
+    });
 
     // --- 2. VERDICT ENGINE ---
     function setVerdict(score, verdictText, isOrganic, detailsHtml) {
       document.getElementById('scoreVal').textContent = score + '%';
       document.getElementById('scoreBar').style.width = score + '%';
+      document.getElementById('telemetryStatus').textContent = 'ACTIVE';
 
       const badge = document.getElementById('verdictBadge');
       badge.textContent = verdictText;
-      badge.className = isOrganic
-        ? 'text-[10px] px-2 py-0.5 rounded font-bold bg-emerald-950 text-emerald-300 border border-emerald-800'
-        : 'text-[10px] px-2 py-0.5 rounded font-bold bg-rose-950 text-rose-300 border border-rose-800';
+      if (isOrganic) {
+        badge.className = 'text-[10px] px-2.5 py-0.5 rounded-full font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-800 shadow-sm';
+        document.getElementById('scoreBar').className = 'bg-gradient-to-r from-emerald-500 to-teal-400 h-1.5 rounded-full transition-all duration-500';
+      } else {
+        badge.className = 'text-[10px] px-2.5 py-0.5 rounded-full font-bold bg-rose-950/80 text-rose-300 border border-rose-800 shadow-sm';
+        document.getElementById('scoreBar').className = 'bg-gradient-to-r from-rose-500 to-amber-500 h-1.5 rounded-full transition-all duration-500';
+      }
 
       document.getElementById('diagText').innerHTML = detailsHtml;
     }
 
-    // --- 3. SOURCES & LECTURE NOTES INGESTION ---
-    let uploadedSourceFiles = [];
-
+    // --- 3. SOURCES INGESTION & DRAG AND DROP ---
     const sourceDropzone = document.getElementById('sourceDropzone');
     const sourceFileInput = document.getElementById('sourceFileInput');
 
     sourceDropzone.addEventListener('click', () => sourceFileInput.click());
     sourceDropzone.addEventListener('dragover', (e) => {
       e.preventDefault();
-      sourceDropzone.classList.add('dropzone-active');
+      sourceDropzone.classList.add('dropzone-hover');
     });
-    sourceDropzone.addEventListener('dragleave', () => sourceDropzone.classList.remove('dropzone-active'));
+    sourceDropzone.addEventListener('dragleave', () => sourceDropzone.classList.remove('dropzone-hover'));
     sourceDropzone.addEventListener('drop', (e) => {
       e.preventDefault();
-      sourceDropzone.classList.remove('dropzone-active');
-      if (e.dataTransfer.files.length) {
+      sourceDropzone.classList.remove('dropzone-hover');
+      if (e.dataTransfer && e.dataTransfer.files.length) {
         handleSourceFiles(e.dataTransfer.files);
       }
     });
@@ -340,7 +435,6 @@
 
     function handleSourceFiles(fileList) {
       Array.from(fileList).forEach(file => {
-        uploadedSourceFiles.push(file.name);
         const reader = new FileReader();
         reader.onload = (e) => {
           const area = document.getElementById('sourcesInput');
@@ -370,46 +464,43 @@ Miller's Law (1956) demonstrated capacity limits around 7 ± 2 items, later revi
       updateSourceStats();
     }
 
-    // --- 4. GROUNDING AUDITOR: CROSS-CHECK DRAFT AGAINST SOURCES ---
+    // --- 4. GROUNDING AUDIT ---
     function crossAuditWithDraft() {
       const draft = document.getElementById('textInput').value.trim();
       const sources = document.getElementById('sourcesInput').value.trim();
 
       if (!sources) {
-        alert("Please upload lecture notes or paste source materials first in the 'Sources' tab.");
-        const sourcesTabBtn = document.querySelectorAll('.tab-btn')[0];
-        switchTab('sources', sourcesTabBtn);
+        alert("Please upload lecture notes or paste sources first in the Sources tab.");
+        activateTab('sources');
         return;
       }
       if (!draft) {
-        alert("Please enter draft text to audit in the 'Paper Draft' tab.");
-        const draftTabBtn = document.querySelectorAll('.tab-btn')[1];
-        switchTab('text', draftTabBtn);
+        alert("Please enter draft text to audit in the Paper Draft tab.");
+        activateTab('text');
         return;
       }
 
-      // Tokenize source terms
       const sourceTokens = new Set((sources.toLowerCase().match(/\b[a-z]{4,}\b/g) || []));
       const draftSentences = draft.match(/[^.!?]+[.!?]+|\S+/g) || [draft];
 
       let groundedCount = 0;
       let auditDetails = [];
 
-      draftSentences.forEach((sentence, idx) => {
+      draftSentences.forEach((sentence) => {
         const sentenceTokens = (sentence.toLowerCase().match(/\b[a-z]{4,}\b/g) || []);
         if (!sentenceTokens.length) return;
         const matches = sentenceTokens.filter(t => sourceTokens.has(t));
         const overlapRatio = matches.length / sentenceTokens.length;
 
-        if (overlapRatio >= 0.3) {
+        if (overlapRatio >= 0.28) {
           groundedCount++;
           auditDetails.push(`<div class="p-2 rounded bg-emerald-950/40 border border-emerald-800 text-xs text-emerald-300">
-            <strong>✓ Grounded in Course Material:</strong> "${sentence.trim().slice(0, 90)}..."
+            <strong>✓ Corroborated in Notes:</strong> "${sentence.trim().slice(0, 85)}..."
           </div>`);
         } else {
           auditDetails.push(`<div class="p-2 rounded bg-rose-950/40 border border-rose-800 text-xs text-rose-300">
-            <strong>⚠️ Possible Ungrounded Claim:</strong> "${sentence.trim().slice(0, 90)}..."
-            <div class="text-[10px] text-rose-400 mt-0.5">Missing direct corroboration in uploaded lecture notes.</div>
+            <strong>⚠️ Possible Ungrounded Claim:</strong> "${sentence.trim().slice(0, 85)}..."
+            <div class="text-[10px] text-rose-400 mt-0.5">Missing direct match in uploaded lecture notes.</div>
           </div>`);
         }
       });
@@ -419,12 +510,12 @@ Miller's Law (1956) demonstrated capacity limits around 7 ± 2 items, later revi
 
       setVerdict(
         groundingScore,
-        isWellGrounded ? "Grounded in Course Notes" : "Contains Ungrounded Claims",
+        isWellGrounded ? "Grounded in Sources" : "Ungrounded Claims Found",
         isWellGrounded,
         `<div class="space-y-1.5">
           <div>• <strong>Sentences Evaluated:</strong> ${draftSentences.length}</div>
-          <div>• <strong>Grounded Claims:</strong> ${groundedCount} (${groundingScore}%)</div>
-          <div class="mt-2 text-[11px] font-bold text-slate-300">Detailed Sentence Audit:</div>
+          <div>• <strong>Corroborated Claims:</strong> ${groundedCount} (${groundingScore}%)</div>
+          <div class="mt-2 text-[11px] font-bold text-slate-300">Sentence Decomposition:</div>
           <div class="max-h-48 overflow-y-auto space-y-1 mt-1 pr-1">${auditDetails.join('')}</div>
         </div>`
       );
@@ -432,17 +523,17 @@ Miller's Law (1956) demonstrated capacity limits around 7 ± 2 items, later revi
       const alertBox = document.getElementById('groundingAlert');
       alertBox.classList.remove('hidden');
       alertBox.className = isWellGrounded 
-        ? 'p-3 rounded-xl border border-emerald-800 bg-emerald-950/30 text-emerald-300 text-xs' 
-        : 'p-3 rounded-xl border border-amber-800 bg-amber-950/30 text-amber-300 text-xs';
-      alertBox.innerHTML = `<strong>Grounding Check:</strong> ${groundingScore}% of claims match terms from uploaded course materials. Check right-hand diagnostics for line-by-line verification.`;
+        ? 'p-3 rounded-xl border border-emerald-800 bg-emerald-950/40 text-emerald-300 text-xs' 
+        : 'p-3 rounded-xl border border-amber-800 bg-amber-950/40 text-amber-300 text-xs';
+      alertBox.innerHTML = `<strong>Grounding Check:</strong> ${groundingScore}% of claims align with uploaded course materials. See diagnostics for details.`;
     }
 
-    // --- 5. TEXT FORENSICS & METRICS ---
+    // --- 5. TEXT FORENSICS ---
     function processTextInput() {
       const text = document.getElementById('textInput').value;
       const chars = text.length;
       const words = text.trim() ? text.trim().split(/\s+/).length : 0;
-      document.getElementById('charCount').textContent = `${chars} characters | ${words} words`;
+      document.getElementById('charCount').textContent = `${chars} chars | ${words} words`;
 
       if (!text.trim()) return;
 
@@ -478,14 +569,12 @@ Miller's Law (1956) demonstrated capacity limits around 7 ± 2 items, later revi
     }
 
     function sendToRewriter() {
-      const txt = document.getElementById('textInput').value;
-      document.getElementById('rewriterInput').value = txt;
-      const rewriterTabBtn = document.querySelectorAll('.tab-btn')[2];
-      switchTab('rewriter', rewriterTabBtn);
+      document.getElementById('rewriterInput').value = document.getElementById('textInput').value;
+      activateTab('rewriter');
       runRewriterAnalysis();
     }
 
-    // --- 6. 3-WAY REWRITER ---
+    // --- 6. REWRITER ENGINE ---
     const REWRITE_RULES = [
       { match: /\bin order to\b/gi, tighten: 'to', vary: 'so we can', executive: 'to directly' },
       { match: /\bit is important to note that\b/gi, tighten: 'notably,', vary: 'crucially,', executive: 'importantly,' },
@@ -511,22 +600,22 @@ Miller's Law (1956) demonstrated capacity limits around 7 ± 2 items, later revi
           found++;
           const original = match[0];
           const card = document.createElement('div');
-          card.className = "p-3 bg-slate-900 border border-slate-800 rounded-xl flex flex-col gap-2";
+          card.className = "p-3 glass-card rounded-xl flex flex-col gap-2 border border-white/5";
           card.innerHTML = `
             <div class="flex items-center justify-between">
-              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-rose-950 text-rose-300 border border-rose-800">Academic Cliché</span>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-rose-950/80 text-rose-300 border border-rose-800">Academic Cliché</span>
               <span class="text-xs text-rose-400 font-mono line-through">${original}</span>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-1">
-              <button type="button" onclick="applySingleRewrite('${original}', '${rule.tighten}')" class="text-left p-2 rounded-lg bg-slate-950 hover:bg-slate-800 border border-slate-800 transition">
+              <button type="button" onclick="applySingleRewrite('${original}', '${rule.tighten}')" class="text-left p-2 rounded-lg bg-slate-950/80 hover:bg-slate-800 border border-white/5 transition">
                 <span class="text-[9px] uppercase tracking-wider text-emerald-400 font-bold block">Tighten</span>
                 <span class="text-xs text-slate-200">${rule.tighten}</span>
               </button>
-              <button type="button" onclick="applySingleRewrite('${original}', '${rule.vary}')" class="text-left p-2 rounded-lg bg-slate-950 hover:bg-slate-800 border border-slate-800 transition">
+              <button type="button" onclick="applySingleRewrite('${original}', '${rule.vary}')" class="text-left p-2 rounded-lg bg-slate-950/80 hover:bg-slate-800 border border-white/5 transition">
                 <span class="text-[9px] uppercase tracking-wider text-brand-400 font-bold block">Vary Flow</span>
                 <span class="text-xs text-slate-200">${rule.vary}</span>
               </button>
-              <button type="button" onclick="applySingleRewrite('${original}', '${rule.executive}')" class="text-left p-2 rounded-lg bg-slate-950 hover:bg-slate-800 border border-slate-800 transition">
+              <button type="button" onclick="applySingleRewrite('${original}', '${rule.executive}')" class="text-left p-2 rounded-lg bg-slate-950/80 hover:bg-slate-800 border border-white/5 transition">
                 <span class="text-[9px] uppercase tracking-wider text-amber-400 font-bold block">Formal Stance</span>
                 <span class="text-xs text-slate-200">${rule.executive}</span>
               </button>
@@ -537,7 +626,7 @@ Miller's Law (1956) demonstrated capacity limits around 7 ± 2 items, later revi
       });
 
       if (found === 0) {
-        container.innerHTML = '<div class="text-xs text-emerald-400 p-3 border border-emerald-900 bg-emerald-950/30 rounded-xl">✓ No repetitive AI phrases or clunky transitions detected.</div>';
+        container.innerHTML = '<div class="text-xs text-emerald-400 p-3 border border-emerald-900/60 bg-emerald-950/30 rounded-xl">✓ No repetitive synthetic clichés or clunky transitions detected.</div>';
       }
     }
 
@@ -559,36 +648,34 @@ Miller's Law (1956) demonstrated capacity limits around 7 ± 2 items, later revi
       await navigator.clipboard.writeText(document.getElementById('rewriterInput').value);
       const b = document.getElementById('copyRewriterBtn');
       b.textContent = 'Copied!';
-      setTimeout(() => b.textContent = 'Copy Text', 1500);
+      setTimeout(() => b.textContent = 'Copy Result', 1500);
     }
 
-    // --- 7. CITATION & IN-TEXT FORMATTER ---
+    // --- 7. CITATION ENGINE ---
     function generateCitations() {
-      const author = document.getElementById('citeAuthor').value.trim() || 'Author, A.';
-      const year = document.getElementById('citeYear').value.trim() || '2024';
-      const title = document.getElementById('citeTitle').value.trim() || 'Title of Document';
-      const source = document.getElementById('citeSource').value.trim() || 'Academic Publisher';
+      const author = document.getElementById('citeAuthor').value.trim() || 'Baddeley, A.';
+      const year = document.getElementById('citeYear').value.trim() || '1974';
+      const title = document.getElementById('citeTitle').value.trim() || 'Working Memory Model';
+      const source = document.getElementById('citeSource').value.trim() || 'Psychology Press';
       const pages = document.getElementById('citePages').value.trim();
 
       const lastSurname = author.split(',')[0].trim();
       const inTextParenthetical = pages ? `(${lastSurname}, ${year}, p. ${pages})` : `(${lastSurname}, ${year})`;
-      const inTextNarrative = `${lastSurname} (${year})`;
 
       const apa = `${author} (${year}). *${title}*. ${source}.`;
       const mla = `${author}. "${title}." *${source}*, ${year}.`;
-      const chicago = `${author}. "${title}." ${source} (${year}).`;
 
       const out = document.getElementById('citationOutputCards');
       out.innerHTML = `
-        <div class="p-3 bg-slate-900 border border-slate-800 rounded-xl flex flex-col gap-2 text-xs">
+        <div class="glass-card-subtle border border-white/10 rounded-2xl p-4 flex flex-col gap-2.5 text-xs">
           <div class="flex justify-between items-center text-brand-400 font-bold">
-            <span>APA 7th Format</span>
+            <span>APA 7th Reference</span>
             <button onclick="navigator.clipboard.writeText('${apa.replace(/'/g, "\\'")}')" class="text-[10px] text-slate-400 hover:text-white">Copy</button>
           </div>
           <div class="font-mono text-slate-200">${apa}</div>
           
           <div class="flex justify-between items-center text-brand-400 font-bold mt-2">
-            <span>MLA 9th Format</span>
+            <span>MLA 9th Reference</span>
             <button onclick="navigator.clipboard.writeText('${mla.replace(/'/g, "\\'")}')" class="text-[10px] text-slate-400 hover:text-white">Copy</button>
           </div>
           <div class="font-mono text-slate-200">${mla}</div>
@@ -597,12 +684,12 @@ Miller's Law (1956) demonstrated capacity limits around 7 ± 2 items, later revi
             <span>In-Text Parenthetical</span>
             <button onclick="navigator.clipboard.writeText('${inTextParenthetical}')" class="text-[10px] text-slate-400 hover:text-white">Copy</button>
           </div>
-          <div class="font-mono text-emerald-300 font-bold">${inTextParenthetical}</div>
+          <div class="font-mono text-brand-300 font-bold">${inTextParenthetical}</div>
         </div>
       `;
     }
 
-    // --- 8. CONSISTENCY & STYLE AUDITOR ---
+    // --- 8. CONSISTENCY AUDITOR ---
     const SPELLING_PAIRS = [
       { us: 'analyze', uk: 'analyse' },
       { us: 'behavior', uk: 'behaviour' },
@@ -624,18 +711,16 @@ Miller's Law (1956) demonstrated capacity limits around 7 ± 2 items, later revi
         const hasUS = new RegExp(`\\b${pair.us}\\b`, 'i').test(text);
         const hasUK = new RegExp(`\\b${pair.uk}\\b`, 'i').test(text);
         if (hasUS && hasUK) {
-          dialectIssues.push(`Mixed spelling: <strong>${pair.us}</strong> (US) vs <strong>${pair.uk}</strong> (UK)`);
+          dialectIssues.push(`Mixed dialect: <strong>${pair.us}</strong> (US) vs <strong>${pair.uk}</strong> (UK)`);
         }
       });
 
       if (dialectIssues.length) {
         issueCount++;
         const card = document.createElement('div');
-        card.className = "p-3 bg-slate-900 border border-slate-800 rounded-xl text-xs flex flex-col gap-1";
+        card.className = "p-3 glass-card rounded-xl text-xs flex flex-col gap-1 border border-amber-900/40";
         card.innerHTML = `
-          <div class="flex items-center gap-2">
-            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-800">Spelling Inconsistency</span>
-          </div>
+          <span class="text-[9px] font-bold px-2 py-0.5 rounded bg-amber-950/80 text-amber-300 border border-amber-800 w-max">Spelling Inconsistency</span>
           <div class="text-slate-300 mt-1">${dialectIssues.join('<br>')}</div>
         `;
         report.appendChild(card);
@@ -651,28 +736,26 @@ Miller's Law (1956) demonstrated capacity limits around 7 ± 2 items, later revi
       if (unexpanded.length) {
         issueCount++;
         const card = document.createElement('div');
-        card.className = "p-3 bg-slate-900 border border-slate-800 rounded-xl text-xs flex flex-col gap-1";
+        card.className = "p-3 glass-card rounded-xl text-xs flex flex-col gap-1 border border-brand-900/40";
         card.innerHTML = `
-          <div class="flex items-center gap-2">
-            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-brand-950 text-brand-300 border border-brand-800">Unexpanded Acronym</span>
-          </div>
-          <div class="text-slate-300 mt-1">Acronyms without definition: <strong>${unexpanded.slice(0, 5).join(', ')}</strong></div>
+          <span class="text-[9px] font-bold px-2 py-0.5 rounded bg-brand-950/80 text-brand-300 border border-brand-800 w-max">Undefined Acronym</span>
+          <div class="text-slate-300 mt-1">Abbreviations without explicit definitions: <strong>${unexpanded.slice(0, 5).join(', ')}</strong></div>
         `;
         report.appendChild(card);
       }
 
       if (issueCount === 0) {
-        report.innerHTML = '<div class="text-xs text-emerald-400 p-3 border border-emerald-900 bg-emerald-950/30 rounded-xl">✓ No spelling dialect collisions or unexpanded abbreviations identified.</div>';
+        report.innerHTML = '<div class="text-xs text-emerald-400 p-3 border border-emerald-900/60 bg-emerald-950/30 rounded-xl">✓ No spelling dialect collisions or unexpanded abbreviations identified.</div>';
       }
     }
 
     // --- 9. FACT CHECKING ---
     async function analyzeFact() {
       const text = document.getElementById('factInput').value.trim();
-      if (!text) return alert("Please enter a factual assertion to verify.");
+      if (!text) return alert("Please enter a factual claim to check.");
 
       const results = document.getElementById('factResults');
-      results.innerHTML = '<span class="text-xs text-slate-400">Querying encyclopedia records...</span>';
+      results.innerHTML = '<span class="text-xs text-slate-400">Searching public encyclopedic records...</span>';
       const keywords = text.replace(/[^\w\s]/gi, '').split(/\s+/).filter(w => w.length > 3).slice(0, 3).join(' ') || text;
 
       try {
@@ -683,14 +766,14 @@ Miller's Law (1956) demonstrated capacity limits around 7 ± 2 items, later revi
 
         if (snippet && link) {
           results.innerHTML = `
-            <div class="p-3 bg-slate-900 border border-slate-800 rounded-lg text-xs space-y-1">
+            <div class="p-3 glass-card rounded-xl text-xs space-y-1 border border-emerald-800/60">
               <span class="text-emerald-400 font-bold">✓ Corroborated Record Found</span>
               <p class="text-slate-300">${snippet}</p>
               <a href="${link}" target="_blank" rel="noopener noreferrer" class="text-brand-400 hover:underline inline-block mt-1">Read entry ↗</a>
             </div>`;
-          setVerdict(90, "Corroborated", true, `<div>• Reference matched on public registry.</div>`);
+          setVerdict(92, "Corroborated", true, `<div>• Reference matched on public registry records.</div>`);
         } else {
-          results.innerHTML = `<div class="p-2.5 text-xs text-amber-300 bg-amber-950/40 rounded border border-amber-900">No direct record found for "${keywords}".</div>`;
+          results.innerHTML = `<div class="p-3 text-xs text-amber-300 bg-amber-950/40 rounded-xl border border-amber-900">No direct record found for "${keywords}".</div>`;
           setVerdict(35, "Unverified", false, `<div>• No matching records located for search query.</div>`);
         }
       } catch (err) {
@@ -698,26 +781,29 @@ Miller's Law (1956) demonstrated capacity limits around 7 ± 2 items, later revi
       }
     }
 
-    // --- 10. RESET ALL ---
-    function resetAll() {
+    // --- 10. GLOBAL RESET ---
+    document.getElementById('globalResetBtn').addEventListener('click', () => {
       document.querySelectorAll('textarea').forEach(t => t.value = '');
+      document.querySelectorAll('input[type="text"]').forEach(i => i.value = '');
       document.getElementById('rewriterCards').innerHTML = '';
       document.getElementById('consistencyReport').innerHTML = '';
       document.getElementById('citationOutputCards').innerHTML = '';
       document.getElementById('factResults').innerHTML = '';
       document.getElementById('groundingAlert').classList.add('hidden');
-      document.getElementById('charCount').textContent = '0 characters | 0 words';
-      document.getElementById('sourceStats').textContent = '0 sources loaded | 0 words';
+      document.getElementById('charCount').textContent = '0 chars | 0 words';
+      document.getElementById('sourceStats').textContent = '0 sources | 0 words indexed';
       document.getElementById('rewriterStats').textContent = '0 words';
       document.getElementById('ttrVal').textContent = '--';
       document.getElementById('burstVal').textContent = '--';
       document.getElementById('readabilityVal').textContent = '--';
       document.getElementById('scoreVal').textContent = '0%';
       document.getElementById('scoreBar').style.width = '0%';
-      document.getElementById('verdictBadge').textContent = 'Ready';
-      document.getElementById('verdictBadge').className = 'text-[10px] px-2 py-0.5 rounded font-bold bg-slate-800 text-slate-400 border border-slate-700';
+      document.getElementById('telemetryStatus').textContent = 'IDLE';
+      const badge = document.getElementById('verdictBadge');
+      badge.textContent = 'Ready';
+      badge.className = 'text-[10px] px-2.5 py-0.5 rounded-full font-bold bg-slate-800 text-slate-400 border border-white/10';
       document.getElementById('diagText').textContent = 'Upload lecture slides or notes in the Sources tab, then write your paper to audit source alignment.';
-    }
+    });
   </script>
 </body>
 </html>
